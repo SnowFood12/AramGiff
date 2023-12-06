@@ -22,7 +22,10 @@ namespace Aram.Controllers
 		{
 			return View();
 		}
-
+		public IActionResult Invoice()
+		{
+			return View();
+		}
 		public IActionResult Privacy()
 		{
 			return View();
