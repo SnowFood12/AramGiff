@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Aram.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AramContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AramContext") ?? throw new InvalidOperationException("Connection string 'AramContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
