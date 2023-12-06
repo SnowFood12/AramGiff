@@ -1,0 +1,409 @@
+﻿
+@{
+    ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+	.active__phan--trang {
+		color:white;
+		background-color: #be7a65 ;
+		padding : 5px 15px; 
+		border-radius: 50%;
+
+	}
+	.PhanTrang{
+		display: flex; 
+		justify-content:center; 
+		align-items:center;
+		gap: 20px ;
+		cursor: pointer;
+	}
+
+	.PhanTrang li {
+		padding: 5px 15px; 
+	}
+</style>
+
+<div class="hero-wrap hero-bread" style="background-image: url('/img/zyro-image\ \(11\).png');">
+	<div class="container">
+		<div class="row no-gutters slider-text align-items-center justify-content-center">
+			<div class="col-md-9 ftco-animate text-center">
+				<p class="breadcrumbs"><span>Dự án</span></p>
+				<h1 class="mb-0 bread">Thành phố xanh</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<section style="margin-top: 10rem;">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 mb-5 ftco-animate">
+				<a href="images/product-1.jpg" class="image-popup">
+					<img src="/img/zyro-image (10).png"
+						 class="img-fluid" alt="Colorlib Template">
+				</a>
+			</div>
+			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+				<h3>Cà phê trung nguyên</h3>
+				<!-- <div class="rating d-flex">
+						<p class="text-left mr-4">
+							<a href="#" class="mr-2">5.0</a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+							<a href="#"><span class="ion-ios-star-outline"></span></a>
+						</p>
+						<p class="text-left mr-4">
+							<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+						</p>
+						<p class="text-left">
+							<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+						</p>
+					</div> -->
+				<p class="price"><span>120.000 đ</span></p>
+				<p>
+					Thơm ngon bổ rẻ
+				</p>
+				<div class="row mt-4">
+					<div class="col-md-6">
+						<div class="form-group d-flex">
+							<div class="select-wrap">
+							</div>
+						</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="input-group col-md-6 d-flex mb-3">
+						<span class="input-group-btn mr-2">
+							<button type="button" class="quantity-left-minus btn" id="minus" data-field="">
+								<i class="fa-solid fa-minus"></i>
+							</button>
+						</span>
+						<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
+							   min="1" max="100">
+						<span class="input-group-btn ml-2">
+							<button type="button" class="quantity-right-plus btn" id="plus" data-field="">
+								<i class="fa-solid fa-plus"></i>
+							</button>
+						</span>
+					</div>
+					<div class="w-100"></div>
+				</div>
+				<button style="color: black;" type="button" class="btn btn-outline-dark">Thêm vào giỏ hàng</button>
+				<button style="color: #be7a65 ;" type="button" class="btn btn-dark">Mua ngay</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-center ftco-animate">
+				<h2 class="mb-4">Sản phẩm tương ứng</h2>
+				<p>Các phẩm tương ứng co trong cửa hàng</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+				<div class="product">
+					<a href="#" class="img-prod">
+						<img class="img-fluid" src="/img/zyro-image (10).png"
+							 alt="Colorlib Template">
+					</a>
+					<div class="text py-3 pb-4 px-3 text-center">
+						<h3><a href="#">Cà phê trung nguyên</a></h3>
+						<div class="d-flex">
+							<div class="pricing">
+								<p class="price"><span class="price-sale">Còn hàng</span></p>
+								<p class="price"><span class="price-sale">$80.00</span></p>
+							</div>
+						</div>
+						<div class="bottom-area d-flex px-3">
+							<div class="m-auto d-flex">
+								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+									<span><i class="fa-solid fa-list"></i></span>
+								</a>
+								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<span><i class="fa-solid fa-cart-shopping"></i></span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col text-center">
+			<div class="block-27">
+				<ul class="PhanTrang">
+					<li class="active__phan--trang"><span>1</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+	<div class="container py-4">
+		<div class="row d-flex justify-content-center py-5">
+			<div class="col-md-6">
+				<h2 style="font-size: 22px;" class="mb-0">Thông tin cửa hàng</h2>
+				<span>Buôn Ma Thuột</span> <br />
+				<span>1234567890</span> <br />
+				<span>09, Hà Huy Tập, Phường Tân An, Tp Buôn Ma Thuật</span>
+			</div>
+			<div class="col-md-6 d-flex align-items-center">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.281317086491!2d108.07528347484316!3d12.825089318073942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3171ff3be174457d%3A0x1998b51af8f35ea2!2zMDkgSMOgIEh1eSBU4bqtcCwgUXXhuqNuZyBQaMO6LCBDxrAgTSdnYXIsIMSQ4bqvayBM4bqvaywgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1701832986553!5m2!1svi!2s" 
+				width="600" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	let thispage = 1;
+	let limit = 8;
+	let list = document.querySelectorAll('.contaner__content--trangchu')
+
+	function loadItem() {
+		let beginGet = limit * (thispage - 1);
+		let endGet = limit * thispage - 1;
+		list.forEach((item, key) => {
+			if (key >= beginGet && key <= endGet) {
+				item.style.display = 'block';
+			}
+			else {
+				item.style.display = 'none'
+			}
+		})
+		listpage();
+	}
+	loadItem()
+
+	function listpage() {
+		let count = Math.ceil(list.length / limit)
+		document.querySelector('.PhanTrang').innerHTML = '';
+		for (let i = 1; i <= count; i++) {
+			let newpage = document.createElement('li');
+			newpage.innerText = i;
+			if (i == thispage) {
+				newpage.classList.add('active__phan--trang');
+			}
+			newpage.setAttribute('onclick', `changePage(${i})`)
+			document.querySelector('.PhanTrang').appendChild(newpage);
+		}
+	}
+	function changePage(i) {
+		thispage = i;
+		loadItem();
+	}
+
+	//thêm số lượng
+	var them = document.getElementById('plus');
+	var giam = document.getElementById('minus');
+	var input = document.getElementById('quantity');
+	var dem = input.value;
+	them.addEventListener('click', function(){
+		input.value = dem++; 
+	});
+	giam.addEventListener('click', function () {
+		if ( dem == 0 ){
+			dem = 1
+		}
+		input.value = dem--;
+	});
+</script>

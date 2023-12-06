@@ -2,6 +2,27 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+	.active__phan--trang {
+		color: white;
+		background-color: #be7a65;
+		padding: 5px 15px;
+		border-radius: 50%;
+	}
+
+	.PhanTrang {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		cursor: pointer;
+	}
+
+		.PhanTrang li {
+			padding: 5px 15px;
+		}
+</style>
+
 <div class="hero-wrap hero-bread" style="background-image: url('/img/zyro-image\ \(9\).png');">
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -45,7 +66,7 @@
 			</div>
 		</section>
 		<div class="row">
-			<div class="col-md-6 col-lg-3 ftco-animate">
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
 				<div class="product">
 					<a href="#" class="img-prod">
 						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
@@ -71,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
 				<div class="product">
 					<a href="#" class="img-prod">
 						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
@@ -97,9 +118,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
 				<div class="product">
-					<a href="#" class="img-prod">
+					<a asp-action="Product" asp-controller="Home" class="img-prod">
 						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
 					</a>
 					<div class="text py-3 pb-4 px-3 text-center">
@@ -123,7 +144,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate">
+			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
 				<div class="product">
 					<a href="#" class="img-prod">
 						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
@@ -153,12 +174,50 @@
 		<div class="row mt-5">
 			<div class="col text-center">
 				<div class="block-27">
-					<ul>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
+					<ul class="PhanTrang">
+						<li class="active__phan--trang"><span>1</span></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<script>
+	let thispage = 1;
+	let limit = 8;
+	let list = document.querySelectorAll('.contaner__content--trangchu')
+
+	function loadItem() {
+		let beginGet = limit * (thispage - 1);
+		let endGet = limit * thispage - 1;
+		list.forEach((item, key) => {
+			if (key >= beginGet && key <= endGet) {
+				item.style.display = 'block';
+			}
+			else {
+				item.style.display = 'none'
+			}
+		})
+		listpage();
+	}
+	loadItem()
+
+	function listpage() {
+		let count = Math.ceil(list.length / limit)
+		document.querySelector('.PhanTrang').innerHTML = '';
+		for (let i = 1; i <= count; i++) {
+			let newpage = document.createElement('li');
+			newpage.innerText = i;
+			if (i == thispage) {
+				newpage.classList.add('active__phan--trang');
+			}
+			newpage.setAttribute('onclick', `changePage(${i})`)
+			document.querySelector('.PhanTrang').appendChild(newpage);
+		}
+	}
+	function changePage(i) {
+		thispage = i;
+		loadItem();
+	}
+</script>
