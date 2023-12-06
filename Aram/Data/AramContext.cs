@@ -15,5 +15,7 @@ namespace Aram.Data
         }
 
         public DbSet<Aram.Models.CuaHang> CuaHang { get; set; } = default!;
+
+        public DbSet<Aram.Models.SanPham> SanPham { get; set; } = default!;
     }
 }

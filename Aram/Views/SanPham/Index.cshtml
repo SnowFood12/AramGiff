@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Aram.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="@ViewBag.chID">Create New</a>
+</p>
+
+<dl class="row">
+    <dt class="col-sm-2">
+        Tên cửa hàng
+    </dt>
+    <dd class="col-sm-10">
+        @ViewBag.chName.Name
+    </dd>
+    <dt class="col-sm-2">
+        Số điện thoại
+    </dt>
+    <dd class="col-sm-10">
+        @ViewBag.chName.SoDT
+    </dd>
+    
+    <dt class="col-sm-2">
+        Địa chỉ
+    </dt>
+    <dd class="col-sm-10">
+        @ViewBag.chName.DiaChi
+    </dd>
+</dl>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PicData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CuaHang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoaiSP)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PicData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiSP.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
