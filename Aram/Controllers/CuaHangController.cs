@@ -135,6 +135,7 @@ namespace Aram.Controllers
             {
                 return NotFound();
             }
+
             //kiểm lỗi cửa hàng
             Regex kuTuDacBiet = new Regex("^[A-Za-z\\s]+$");
             if (cuaHang.Name == null)
@@ -151,7 +152,7 @@ namespace Aram.Controllers
             }
             //kiểm lỗi số điện thoại
             Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
-            var ktDT = _context.CuaHang.FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
+            var ktDT = _context.CuaHang.Where(x => x.SoDT == cuaHang.SoDT && x.Id != id).ToList();
             if (cuaHang.SoDT == null)
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại không được để trống");
@@ -178,11 +179,13 @@ namespace Aram.Controllers
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt hoặc số");
             }
             //hết kiểm lỗi
+            
 
             if (ModelState.IsValid)
             {
                 try
                 {
+
                     _context.Update(cuaHang);
                     await _context.SaveChangesAsync();
                 }
