@@ -4,6 +4,7 @@ using Aram.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aram.Migrations
 {
     [DbContext(typeof(AramContext))]
-    partial class AramContextModelSnapshot : ModelSnapshot
+    [Migration("20231206122733_addTaiKhoan")]
+    partial class addTaiKhoan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,15 +49,10 @@ namespace Aram.Migrations
                     b.Property<string>("SoDT")
                         .HasColumnType("char(10)");
 
-                    b.Property<int?>("TaiKhoanId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaiKhoanId");
 
                     b.ToTable("CUA_HANG");
                 });
@@ -111,56 +109,10 @@ namespace Aram.Migrations
                     b.ToTable("SAN_PHAM");
                 });
 
-            modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("LoaiTK")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<DateTime>("NgayTao")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("SoDT")
-                        .HasColumnType("char(10)");
-
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TAI_KHOAN");
-                });
-
-            modelBuilder.Entity("Aram.Models.CuaHang", b =>
-                {
-                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
-                        .WithMany("CuaHangs")
-                        .HasForeignKey("TaiKhoanId");
-
-                    b.Navigation("TaiKhoan");
-                });
-
             modelBuilder.Entity("Aram.Models.SanPham", b =>
                 {
                     b.HasOne("Aram.Models.CuaHang", "CuaHang")
-                        .WithMany("SanPhams")
+                        .WithMany("SanPham")
                         .HasForeignKey("CuaHangId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -178,17 +130,12 @@ namespace Aram.Migrations
 
             modelBuilder.Entity("Aram.Models.CuaHang", b =>
                 {
-                    b.Navigation("SanPhams");
+                    b.Navigation("SanPham");
                 });
 
             modelBuilder.Entity("Aram.Models.LoaiSP", b =>
                 {
                     b.Navigation("SanPhams");
-                });
-
-            modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
-                {
-                    b.Navigation("CuaHangs");
                 });
 #pragma warning restore 612, 618
         }
