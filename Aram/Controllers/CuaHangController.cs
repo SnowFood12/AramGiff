@@ -135,6 +135,49 @@ namespace Aram.Controllers
             {
                 return NotFound();
             }
+            //kiểm lỗi cửa hàng
+            Regex kuTuDacBiet = new Regex("^[A-Za-z\\s]+$");
+            if (cuaHang.Name == null)
+            {
+                ModelState.AddModelError("Name", "Tên cửa hàng không được để trống");
+            }
+            else if (cuaHang.Name.Length > 50)
+            {
+                ModelState.AddModelError("Name", "Tên cửa hàng không được dài quá 50 kí tự");
+            }
+            else if (!kuTuDacBiet.IsMatch(cuaHang.Name))
+            {
+                ModelState.AddModelError("Name", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
+            }
+            //kiểm lỗi số điện thoại
+            Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
+            var ktDT = _context.CuaHang.FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
+            if (cuaHang.SoDT == null)
+            {
+                ModelState.AddModelError("SoDT", "Số điện thoại không được để trống");
+            }
+            else if (!KTsoDT.IsMatch(cuaHang.SoDT))
+            {
+                ModelState.AddModelError("SoDT", "Số điện thoại không hợp lệ");
+            }
+            else if (ktDT != null)
+            {
+                ModelState.AddModelError("SoDT", "Số điện thoại đã được sử dụng");
+            }
+            //kiểm lỗi địa chỉ
+            if (cuaHang.DiaChi == null)
+            {
+                ModelState.AddModelError("DiaChi", "Địa Chỉ không được để trống");
+            }
+            else if (cuaHang.DiaChi.Length > 200)
+            {
+                ModelState.AddModelError("DiaChi", "Địa Chỉ không được quá 200 ký tự");
+            }
+            else if (!kuTuDacBiet.IsMatch(cuaHang.DiaChi))
+            {
+                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt hoặc số");
+            }
+            //hết kiểm lỗi
 
             if (ModelState.IsValid)
             {
