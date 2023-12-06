@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
@@ -20,6 +21,8 @@ namespace Aram.Models
         public string? DiaChi { get; set; }
         [Column(TypeName = "text")]
         public string? LinkMap { get; set; }
+        [DefaultValue(true)]
+        public bool TrangThai { get; set; }
         public virtual ICollection<SanPham>? SanPham { get; set; }
     }
 }
