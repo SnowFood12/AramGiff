@@ -56,12 +56,12 @@
     width: 20rem;
     border-radius: 5px;
     font-size: 16px;
-    border: 1px solid #808289;
+    border: 2px solid #808289;
 }
 
     .txt__login:focus {
         outline: none;
-        border: 1px solid #CE3452;
+        border: 2px solid #b26c3d;
     }
 
 .lbl__login {
@@ -96,7 +96,7 @@
 
 .btn__login {
     padding: 12px;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
     width: calc(100% - 100px);
     margin-left: 50px;
     margin-top: 20px;
@@ -189,4 +189,8 @@
 }
 .lbl-login{
     margin-left: 80px;
+}
+.lbl_dangky{
+    padding-left:85px;
+    padding-bottom:50px;
 }
