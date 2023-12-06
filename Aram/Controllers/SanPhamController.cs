@@ -19,13 +19,13 @@ namespace Aram.Controllers
         {
             _context = context;
         }
-
         // GET: SanPhams
         public async Task<IActionResult> Index(int id)
         {
             var aramContext = _context.SanPham.Where(x => x.CuaHangId == id);
+            
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
-            ViewBag.chID = id.ToString();
+            ViewBag.chID = id;
             return View(await aramContext.ToListAsync());
         }
 
@@ -50,8 +50,9 @@ namespace Aram.Controllers
         }
 
         // GET: SanPhams/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+            ViewBag.chID = id;
             ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id");
             ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Name");
             return View();
