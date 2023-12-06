@@ -12,5 +12,21 @@ namespace Aram.Controllers
         {
             return View();
         }
+        public IActionResult DangNhap()
+        {
+            return View();
+        }
+        public IActionResult QuenMatKhau()
+        {
+            return View();
+        }
+        public IActionResult NhapOTP()
+        {
+            return View();
+        }
+        public IActionResult DoiMatKhauMoi()
+        {
+            return View();
+        }
     }
 }
