@@ -1,8 +1,9 @@
 ﻿.col-md-4 {
     margin: 0 auto;
 }
-.row{
+.row_aram{
     margin: 7rem auto;
+    width: 100% ;
 }
 .form-group--btn{
     display: flex;
@@ -34,4 +35,31 @@ a.btn__them:hover {
 }
 .form-control{
     width: 100% ;
+}
+.main__tim--kiem{
+    display:flex; 
+    justify-content: right;
+    width: 90% ;
+}
+.ipt__tim--kiem{
+    padding: 5px 10px;
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 2px 0 0 2px;
+}
+.ipt__tim--kiem:focus{
+    outline: none;
+}
+.btn__tim--kiem{
+    padding: 0px 10px; 
+    border: 1px solid;
+    background-color: white ;
+    border-radius: 0 2px 2px 0 ;
+    border-left: none;
+    cursor:pointer;
+}
+.btn__tim--kiem:hover{
+    background-color: #be7a65; 
+    color: white;
+    border: 1px solid #be7a65;
 }
