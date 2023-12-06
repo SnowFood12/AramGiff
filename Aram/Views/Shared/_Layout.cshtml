@@ -41,12 +41,13 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          	<li class="nav-item"><a asp-action="Index" asp-controller="Home" class="nav-link">Trang chủ</a></li>
-
+                <li class="nav-item"><a asp-action="ListInvoice" asp-controller="Home" class="nav-link">Đơn hàng</a></li>
 	        	<li class="nav-item active dropdown">
               		<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý</a>
               		<div class="dropdown-menu" aria-labelledby="dropdown04">
               			<a class="dropdown-item" asp-action="Index" asp-controller="CuaHang">Cửa hàng</a>
-                            <a class="dropdown-item" asp-action="Index" asp-controller="SanPham">Sản phẩm</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="SanPham">Sản phẩm</a>
+                        <a class="dropdown-item">Đơn hàng</a>
               		</div>
             	</li>
 	          <li class="nav-item cta cta-colored"><a asp-action="Invoice" asp-controller="Home" class="nav-link"><i class="fa-solid fa-cart-shopping"></i>[0]</a></li>
@@ -59,7 +60,7 @@
 
     @RenderBody()
 	
-    <footer class="ftco-footer ftco-section">
+    <footer style="border-top: 1px solid #be7a65; height: 10rem;   background: url(/img/z4948448986151_c1d081626f73786c95fd363e3d17c8fa.jpg) no-repeat fixed !important;" class="ftco-footer ftco-section">
       <div class="container">
       	<div class="row">
       	</div>

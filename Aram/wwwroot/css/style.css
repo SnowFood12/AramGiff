@@ -57,7 +57,9 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff; }
+    background-color: #f5f5f5 !important;
+
+}
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -8656,6 +8658,7 @@ h1, h2, h3, h4, h5,
   width: 100%;
   margin-bottom: 30px;
   position: relative;
+  border-radius: 5px;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
@@ -8751,9 +8754,11 @@ h1, h2, h3, h4, h5,
       .product .text p.price span.price-dc {
         text-decoration: line-through;
         color: #b3b3b3; }
-      .product .text p.price span.price-sale {
-        color: #A64C32;
-       }
+        .product .text p.price span.price-sale {
+            color: #ec4b1c;
+            font-size: 20px;
+            font-weight: 500;
+        }
     .product .text .pricing {
       width: 100%;
       -moz-transition: all 0.3s ease;
@@ -8775,7 +8780,7 @@ h1, h2, h3, h4, h5,
         .product .text .bottom-area a {
             color: #fff;
             width: 100%;
-            background: #be7a65;
+            background: #ff7100 !important;
             width: 40px;
             height: 40px;
             font-size: 13px;

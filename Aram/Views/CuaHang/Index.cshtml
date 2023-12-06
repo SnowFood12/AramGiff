@@ -4,12 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
+<link rel="stylesheet" href="/css/CuaHang/Create.css">
+
 <div style="width: 90%; 
             margin: 7rem auto; 
-            border: 1px solid black; 
-            padding: 20px 0px;">
+            padding: 20px 0px;
+            background: #fff;">
+    <div class="main__tim--kiem">
+        <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" /> 
+        <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
     <table class="table">
-        <thead style="background-color: #be7a65; color:white">
+        <thead style="background-color: #dad9d9; color: black;">
             <tr>
                 <th>
                     Tên cửa hàng
@@ -21,14 +28,14 @@
                     Địa chỉ
                 </th>
                 <th>
-                    <a asp-action="Create" class="btn" style=" border-radius: 2px; border:1px solid white; color: white;">Create New</a>
+                    <a asp-action="Create" class="btn" style=" border-radius: 2px; border:1px solid black; color: black;">Create New</a>
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr style="color: black;">
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -39,9 +46,9 @@
                         @Html.DisplayFor(modelItem => item.DiaChi)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #be7a65 !important;"></i></a> |
-                        <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info" style="color: #be7a65 !important;"></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #be7a65 !important;"></i></a>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
+                        <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
                     </td>v
                 </tr>
             }
