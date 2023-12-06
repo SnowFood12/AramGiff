@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/TaiKhoan/DangKy.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-main">
+        <div class="container">
+            <img src="/img/points1.png" alt="" class="shape s1">
+            <img src="/img/letters.png" alt="" class="shape s2">
+            <img src="/img/half-circle.png" alt="" class="shape s3">
+            <img src="/img/points4.png" alt="" class="shape s4">
+            <div class="container__form--main">
+                <div class="form__login--main">
+                    <div class="lbl__login--big">
+                        <strong>ĐĂNG KÝ</strong> <br>
+                        <span class="lbl__login--small">
+                        </span>
+                    </div>
+                    @*<form action="">*@
+                        <div class="ipt__login">
+                            <label for="" class="lbl__login">Tên đăng nhập</label><br>
+                            <input type="text" name="TenDangNhap" id="" class="txt__login"><br>
+                            <span class="erro__login"></span>
+                        </div>
+                        <div class="ipt__login">
+                            <label for="" class="lbl__login">Email</label><br>
+                            <input type="email" name="Email" id="" class="txt__login"><br>
+                            <span class="erro__login"></span>
+                        </div>
+                        <div class="ipt__login" id="show">
+                            <label for="" class="lbl__login">Mật khẩu</label><br>
+                            <input type="password" name="MatKhau" id="password" class="txt__login"><br>
+                            <span class="erro__login"></span>
+                            <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
+                            <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
+                        </div>
+                        <div class="ipt__login" id="show">
+                            <label for="" class="lbl__login">Xác nhận mật khẩu</label><br>
+                            <input type="password" name="MatKhau" id="password" class="txt__login"><br>
+                            <span class="erro__login"></span><br>
+                            <span>Bạn đã có tài khoản?</span><a class="forget__password" ">   Đăng nhập</a>
+                            <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
+                            <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
+                        </div>
+                        <button class="btn__login">Đăng nhập</button>
+                   @* </form>*@
+
+                </div>
+                <div class="form__login--main img__main">
+                    <img src="/img/anh-9-1613563165.jpg" alt="" class="img__login--main">
+                    <img src="" alt="" class="logo">
+                    <div class="lop__phu"></div>
+                    <div class="cut">
+                        <div class="close">
+                            <a  class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -46,9 +46,9 @@
                         @Html.DisplayFor(modelItem => item.DiaChi)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #2c5f84 !important; font-size:20px;"></i></a> |
-                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:20px; margin-left: 10px"></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #c10d0d !important; font-size:20px; margin-left: 10px"></i></a>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #be7a65 !important;"></i></a> |
+                        <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info" style="color: #be7a65 !important;"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #be7a65 !important;"></i></a>
                     </td>v
                 </tr>
             }
