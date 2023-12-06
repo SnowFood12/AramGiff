@@ -1,3 +1,37 @@
 ﻿.col-md-4 {
     margin: 0 auto;
 }
+.row{
+    margin: 7rem auto;
+}
+.form-group--btn{
+    display: flex;
+    gap:20px;
+}
+.btn__them {
+    background-color: white;
+    color: #be7a65 ; 
+    border: 1px solid ;
+    padding: 5px 10px;
+    cursor:pointer;
+    border-radius: 2px ;
+}
+    .btn__them:hover {
+        background-color: #be7a65; 
+        color: white;
+
+    }
+a.btn__them {
+    color: white;
+    background-color: #c72626;
+}
+a.btn__them:hover {
+    color: #c72626;
+    background: white ;
+}
+.control-label{
+    color: black !important; 
+}
+.form-control{
+    width: 100% ;
+}
