@@ -161,7 +161,7 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại không hợp lệ");
             }
-            else if (ktDT != null)
+            else if (ktDT.Count > 0)
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại đã được sử dụng");
             }
