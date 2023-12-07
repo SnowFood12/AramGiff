@@ -8,7 +8,6 @@ namespace Aram.Models
     public class TaiKhoan
     {
         [Key]
-        public int Id { get; set; }
         [StringLength(15)]
         public string? TenTK  { get; set; }
         [StringLength(15)]
