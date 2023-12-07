@@ -1,4 +1,4 @@
-﻿
+﻿@model Aram.Models.TaiKhoan
 @{
     Layout = null;
 }
@@ -27,34 +27,34 @@
                         <span class="lbl__login--small">
                         </span>
                     </div>
-                    @*<form action="">*@
+                    <form asp-action="DangKy">
                         <div class="ipt__login">
                             <label for="" class="lbl__login">Tên đăng nhập</label><br>
-                            <input type="text" name="TenDangNhap" id="" class="txt__login"><br>
-                            <span class="erro__login"></span>
+                            <input type="text" asp-for="Name" id="" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="Name"></span>
                         </div>
                         <div class="ipt__login">
                             <label for="" class="lbl__login">Email</label><br>
-                            <input type="email" name="Email" id="" class="txt__login"><br>
-                            <span class="erro__login"></span>
+                            <input type="email" asp-for="Email" id="" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="Email"></span>
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Mật khẩu</label><br>
-                            <input type="password" name="MatKhau" id="password" class="txt__login"><br>
-                            <span class="erro__login"></span>
+                            <input type="password" asp-for="Password" id="password" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="Password"></span>
                             <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
                             <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Xác nhận mật khẩu</label><br>
-                            <input type="password" name="MatKhau" id="password" class="txt__login"><br>
-                            <span class="erro__login"></span><br>
-                            <span>Bạn đã có tài khoản?</span><a class="forget__password" ">   Đăng nhập</a>
+                            <input type="password" name="XacNhanMatKhau" id="password" class="txt__login"><br>
+                            <span class="erro__login">@Html.ValidationMessage("XacNhanMatKhau")</span><br>
+                            <span>Bạn đã có tài khoản?</span><a class="forget__password" asp-action="DangNhap" asp-controller="TaiKhoan">   Đăng nhập</a>
                             <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
                             <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
                         </div>
-                        <button class="btn__login">Đăng nhập</button>
-                   @* </form>*@
+                        <button class="btn__login" type="submit" asp-action="DangKy" asp-controller="TaiKhoan">Đăng ký</button>
+                   </form>
 
                 </div>
                 <div class="form__login--main img__main">
