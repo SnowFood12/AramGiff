@@ -22,7 +22,7 @@ namespace Aram.Controllers
         // GET: SanPhams
         public async Task<IActionResult> Index(int id)
         {
-            var aramContext = _context.SanPham.Where(x => x.CuaHangId == id);
+            var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
             
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
@@ -50,11 +50,12 @@ namespace Aram.Controllers
         }
 
         // GET: SanPhams/Create
-        public IActionResult Create(int id)
+        public IActionResult Create(int chID)
         {
-            ViewBag.chID = id;
-            ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id");
-            ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Name");
+            ViewBag.chID = chID;
+            ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", chID);
+            var loaisps = new SelectList(_context.LoaiSP, "Id", "Ten");
+            ViewData["LoaiSP"] = loaisps;
             return View();
         }
 
@@ -63,16 +64,26 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int chID,[Bind("Id,Ten,Gia,PicData,CuaHangId,LoaiSPId")] SanPham sanPham)
+        public async Task<IActionResult> Create(SanPham sanPham, IFormFile imageSP)
         {
             if (ModelState.IsValid)
             {
+                if(imageSP != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        imageSP.CopyToAsync(memoryStream);
+                        sanPham.PicData = memoryStream.ToArray();
+                    }
+                }
                 _context.Add(sanPham);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = sanPham.CuaHangId });
             }
             ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);
-            ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Name", sanPham.LoaiSPId);
+            var loaisps = new SelectList(_context.LoaiSP, "Id", "Ten");
+            ViewData["LoaiSP"] = loaisps;
+            ViewBag.chID = sanPham.CuaHangId;
             return View(sanPham);
         }
 
