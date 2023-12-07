@@ -36,10 +36,6 @@ namespace Aram.Migrations
                     b.Property<string>("LinkMap")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<DateTime>("NgayTaoCuaHang")
                         .HasColumnType("Date");
 
@@ -48,6 +44,10 @@ namespace Aram.Migrations
 
                     b.Property<int?>("TaiKhoanId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
@@ -67,7 +67,7 @@ namespace Aram.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Ten")
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("TrangThai")
@@ -123,22 +123,29 @@ namespace Aram.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("GioiTinh")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("HoTen")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<bool>("LoaiTK")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("MatKhau")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<DateTime>("NgayTao")
                         .HasColumnType("date");
 
-                    b.Property<string>("Password")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
                     b.Property<string>("SoDT")
                         .HasColumnType("char(10)");
+
+                    b.Property<string>("TenTK")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
