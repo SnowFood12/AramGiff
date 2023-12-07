@@ -12,15 +12,21 @@ namespace Aram.Controllers
     {
         private readonly AramContext _context;
         private readonly IConfiguration _config;
+		private static string LuuTenTK;
+        private static string LuuSDT;
+        private static string LuuEmail;
 
-        public TaiKhoanController (AramContext context, IConfiguration config)
+		public TaiKhoanController (AramContext context, IConfiguration config)
         {
             _context = context;
             _config = config;
         }
         public IActionResult Index()
         {
-            return View();
+            ViewBag.TenTK = LuuTenTK;
+            ViewBag.SDT = LuuSDT;
+            ViewBag.Email = LuuEmail;
+			return View();
         }
         public IActionResult DangKy([Bind("ID,Name,Password,Email,SoDT,NgayTao,LoaiTK,TrangThai")] TaiKhoan taiKhoan, string XacNhanMatKhau)
         {
@@ -40,7 +46,7 @@ namespace Aram.Controllers
                 ModelState.AddModelError("Name", "Tên đăng nhập đã tồn tại!");
             }
 
-            // Kiểm tra email
+            // Kiểm tra email đúng định dạng
             if (taiKhoan.Email == null || taiKhoan.Email.Trim() == "")
             {
                 ModelState.AddModelError("Email", "Email không được để trống!");
@@ -93,20 +99,31 @@ namespace Aram.Controllers
         }
         public IActionResult DangNhap([Bind("ID,Name,Password,Email,SoDT,NgayTao,LoaiTK,TrangThai")] TaiKhoan taiKhoan)
         {
-            taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == taiKhoan.TenTK && x.MatKhau == taiKhoan.MatKhau);
+            if (taiKhoan.Name == null)
+			{
+                ModelState.AddModelError("Name", "Tên đăng nhập không được để trống!");
+            }
+            else if(taiKhoan.Name.Length < 8 || taiKhoan.Name.Length > 15)
+            {
+                ModelState.AddModelError("Name", "Tên đăng nhập phải từ 8 kí tự trờ lên!");
+
+			}
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Kiểm tra tài khoản có tồn tại trong CSDL không
-                  
-                    if (taiKhoan != null)
+					// Kiểm tra tài khoản có tồn tại trong CSDL không
+					taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.Name == taiKhoan.Name && x.Password == taiKhoan.Password);
+					if (taiKhoan != null)
                     {
-                        return RedirectToAction("Index", "Home");
+						LuuTenTK = taiKhoan.Name;
+						LuuSDT = taiKhoan.SoDT;
+                        LuuEmail = taiKhoan.Email;
+						return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng!");
+                        ModelState.AddModelError("Password", "Tên đăng nhập hoặc mật khẩu không đúng!");
                     }
                 }
                 catch (Exception ex)
