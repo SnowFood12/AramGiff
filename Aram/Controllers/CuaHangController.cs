@@ -129,7 +129,7 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SoDT,NgayTaoCuaHang,DiaChi")] CuaHang cuaHang)
+        public async Task<IActionResult> Edit(int id, CuaHang cuaHang)
         {
             if (id != cuaHang.Id)
             {
