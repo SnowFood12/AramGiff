@@ -55,11 +55,11 @@
                             @Html.DisplayFor(modelItem => item.Gia)
                         </td>
                         <td>
-                            <img src="/img/387200086_3577064259232610_1304488237168037483_n.jpg" style="width:50px;" />
+                            <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" / height="50px">
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
                         </td>
                     </tr>
                 }

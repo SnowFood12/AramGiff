@@ -51,7 +51,7 @@
 <div class="row_aram">
     <div class="col-md-4">
         <span style="font-size: 20px;">Cập nhật thông tin sản phẩm</span>
-        <form asp-action="Edit" asp-route-cuahangid="@ViewBag.chID" enctype="multipart/form-data" method="post">
+        <form asp-action="Edit" asp-route-id="@ViewBag.spID" asp-route-cuahangid="@ViewBag.chID" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Tên sản phẩm</label>
@@ -75,7 +75,7 @@
 
                 <input asp-for="PicData" type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
                 <div class="form-control" style="height: 200px !important;">
-                    <img src="/img/386107835_3577064765899226_4485664415835025727_n.jpg" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
+                    <img src="@Url.Action("GetImage", "SanPham", new { id = Model.Id })" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
                 </div>
                 <span asp-validation-for="PicData" class="text-danger"></span>
             </div>

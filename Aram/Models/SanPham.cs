@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aram.Models
@@ -14,6 +15,8 @@ namespace Aram.Models
         public byte[]? PicData { get; set; }
         public int CuaHangId { get; set; }
         public int LoaiSPId { get; set; }
+        [DefaultValue("default")]
+        public string? TrangThai { get; set; }
         public CuaHang? CuaHang { get; set; }
         public LoaiSP? LoaiSP { get; set; }
     }

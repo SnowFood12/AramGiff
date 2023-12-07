@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Aram.Data;
 using Aram.Models;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Net.WebSockets;
 
 namespace Aram.Controllers
 {
@@ -20,13 +21,26 @@ namespace Aram.Controllers
             _context = context;
         }
         // GET: SanPhams
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int id, int chID)
         {
             var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
             
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
-            ViewBag.chID = id;
+            ViewBag.chID = chID;
             return View(await aramContext.ToListAsync());
+        }
+
+        public IActionResult GetImage(int id)
+        {
+            SanPham image = _context.SanPham.Find(id);
+            if (image.PicData != null)
+            {
+                return File(image.PicData, "image/jpeg"); // Trả về hình ảnh dưới dạng file
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET: SanPhams/Details/5
@@ -53,7 +67,7 @@ namespace Aram.Controllers
         public IActionResult Create(int chID)
         {
             ViewBag.chID = chID;
-            ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", chID);
+           /* ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", chID);*/
             var loaisps = new SelectList(_context.LoaiSP, "Id", "Ten");
             ViewData["LoaiSP"] = loaisps;
             return View();
@@ -80,7 +94,7 @@ namespace Aram.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = sanPham.CuaHangId });
             }
-            ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);
+            /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
             var loaisps = new SelectList(_context.LoaiSP, "Id", "Ten");
             ViewData["LoaiSP"] = loaisps;
             ViewBag.chID = sanPham.CuaHangId;
@@ -100,8 +114,10 @@ namespace Aram.Controllers
             {
                 return NotFound();
             }
-            ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);
-            ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Id", sanPham.LoaiSPId);
+            /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
+            ViewData["LoaiSP"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Ten", sanPham.LoaiSPId);
+            ViewBag.spID = id;
+            ViewBag.chID = sanPham.CuaHangId;
             return View(sanPham);
         }
 
@@ -110,8 +126,9 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Ten,Gia,PicData,CuaHangId,LoaiSPId")] SanPham sanPham)
+        public async Task<IActionResult> Edit(int id, SanPham sanPham)
         {
+            
             if (id != sanPham.Id)
             {
                 return NotFound();
@@ -135,15 +152,15 @@ namespace Aram.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index) , new { id = sanPham.CuaHangId});
             }
-            ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);
+            /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
             ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Id", sanPham.LoaiSPId);
             return View(sanPham);
         }
 
         // GET: SanPhams/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int chID)
         {
             if (id == null || _context.SanPham == null)
             {
@@ -158,14 +175,14 @@ namespace Aram.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.chID = chID;
             return View(sanPham);
         }
 
         // POST: SanPhams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int chID)
         {
             if (_context.SanPham == null)
             {
@@ -174,11 +191,12 @@ namespace Aram.Controllers
             var sanPham = await _context.SanPham.FindAsync(id);
             if (sanPham != null)
             {
+                
                 _context.SanPham.Remove(sanPham);
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = chID });
         }
 
         private bool SanPhamExists(int id)
