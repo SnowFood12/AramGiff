@@ -23,7 +23,7 @@ namespace Aram.Models
         public string? LinkMap { get; set; }
         [DefaultValue(true)]
         public bool TrangThai { get; set; }
-        public int? TaiKhoanId { get; set; }
+        public string? TenTK { get; set; }
         public TaiKhoan? TaiKhoan { get; set; }
         public virtual ICollection<SanPham>? SanPhams { get; set; }
     }

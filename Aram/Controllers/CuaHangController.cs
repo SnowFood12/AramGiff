@@ -61,16 +61,16 @@ namespace Aram.Controllers
         {
             //kiểm lỗi cửa hàng
             Regex kuTuDacBiet = new Regex("^[A-Za-z\\s]+$");
-            if (cuaHang.Name == null)
+            if (cuaHang.Ten == null)
             {
-                ModelState.AddModelError("Name", "Tên cửa hàng không được để trống");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
             }
-            else if (cuaHang.Name.Length > 50)
+            else if (cuaHang.Ten.Length > 50)
             {
-                ModelState.AddModelError("Name", "Tên cửa hàng không được dài quá 50 kí tự");
-            } else if (!kuTuDacBiet.IsMatch(cuaHang.Name))
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
+            } else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
             {
-                ModelState.AddModelError("Name", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
             }
             //kiểm lỗi số điện thoại
             Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
@@ -138,17 +138,17 @@ namespace Aram.Controllers
 
             //kiểm lỗi cửa hàng
             Regex kuTuDacBiet = new Regex("^[A-Za-z\\s]+$");
-            if (cuaHang.Name == null)
+            if (cuaHang.Ten == null)
             {
-                ModelState.AddModelError("Name", "Tên cửa hàng không được để trống");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
             }
-            else if (cuaHang.Name.Length > 50)
+            else if (cuaHang.Ten.Length > 50)
             {
-                ModelState.AddModelError("Name", "Tên cửa hàng không được dài quá 50 kí tự");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
             }
-            else if (!kuTuDacBiet.IsMatch(cuaHang.Name))
+            else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
             {
-                ModelState.AddModelError("Name", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
             }
             //kiểm lỗi số điện thoại
             Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
