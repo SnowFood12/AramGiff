@@ -18,6 +18,11 @@ namespace Aram.Controllers
 			return View();
 		}
 
+		public IActionResult MainHome() // trang chủ
+		{
+			return View();
+		}
+
 		public IActionResult Product()
 		{
 			return View();

@@ -11,7 +11,7 @@ namespace Aram.Models
         [Key]
         public int Id { get; set; }
         [Column(TypeName = "nvarchar(50)")]
-        public string? Name { get; set; }
+        public string? Ten { get; set; }
         [DefaultValue(true)]
         public bool TrangThai { get; set; }
         public ICollection<SanPham>? SanPhams { get; set; }
