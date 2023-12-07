@@ -18,5 +18,6 @@ namespace Aram.Data
 
         public DbSet<Aram.Models.SanPham> SanPham { get; set; } = default!;
         public DbSet<Aram.Models.TaiKhoan> TaiKhoan { get; set; } = default!;
+        public DbSet<Aram.Models.LoaiSP> LoaiSP { get; set; } = default!;
     }
 }

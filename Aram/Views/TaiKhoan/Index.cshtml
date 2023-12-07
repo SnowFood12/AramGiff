@@ -11,14 +11,14 @@
 				<form action="#" class="billing-form">
 					<h3 class="mb-4 billing-heading">Thông tin tài khoản</h3>
 					<div class="row align-items-end">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="form-group">
 								<label for="firstname">Họ Tên</label>
-								<input type="text" class="form-control" placeholder="@ViewBag.TenTK">
+								<input type="text" class="form-control" placeholder="@ViewBag.HoTen">
 							</div>
 						</div>
 						<div class="w-100"></div>
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label for="country">Giới tính</label>
 								<div class="select-wrap">
@@ -30,6 +30,19 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="towncity">Số điện thoại</label>
+								<input type="text" class="form-control" placeholder="@ViewBag.SDT">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="postcodezip">Email</label>
+								<input type="text" class="form-control" placeholder="@ViewBag.Email">
+							</div>
+						</div>
+						<div class="w-100"></div>
 						<div class="col-md-12">
 							<div class="form-group">
 								<label for="country">Địa chỉ</label>
@@ -39,27 +52,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="w-100"></div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="towncity">Số điện thoại</label>
-								<input type="text" class="form-control" placeholder="@ViewBag.SDT">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="postcodezip">Email</label>
-								<input type="text" class="form-control" placeholder="@ViewBag.Email">
-							</div>
-						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<input type="submit" value="Lưu" style="padding: 5px 30px;
-																		background: white; 
+																		background: green; 
 																		border-radius: 3px; 
 																		cursor: pointer; 
-																		color:#2d91c7; 
-																		border: 1px solid; ">
+																		color:#ffff; 
+																		border: 1px solid; margin-left:255px;">
 							</div>
 						</div>
 					</div>
