@@ -10,10 +10,13 @@
             margin: 7rem auto; 
             padding: 20px 0px;
             background: #fff;">
-    <div class="main__tim--kiem">
-        <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" /> 
-        <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
+    <div class="main__tieude">
+        <p class="tieu__de">Danh sách cửa hàng</p>
+        <div class="main__tim--kiem">
+            <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
+            <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>  
 
     <table class="table">
         <thead style="background-color: #dad9d9; color: black;">
@@ -49,7 +52,7 @@
                         <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
                         <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a> |
                         <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
-                    </td>v
+                    </td>
                 </tr>
             }
         </tbody>

@@ -39,7 +39,8 @@ a.btn__them:hover {
 .main__tim--kiem{
     display:flex; 
     justify-content: right;
-    width: 90% ;
+    width: 80% ;
+    margin-bottom: 30px;
 }
 .ipt__tim--kiem{
     padding: 5px 10px;
@@ -58,8 +59,19 @@ a.btn__them:hover {
     border-left: none;
     cursor:pointer;
 }
-.btn__tim--kiem:hover{
-    background-color: #be7a65; 
-    color: white;
-    border: 1px solid #be7a65;
+    .btn__tim--kiem:hover {
+        background-color: #c25f11;
+        color: white;
+        border: 1px solid #c25f11;
+    }
+.main__tieude {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+}
+.tieu__de{
+    font-size: 20px;
+    color: brown; 
+    font-weight: 500;
 }
