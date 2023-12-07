@@ -99,11 +99,11 @@ namespace Aram.Controllers
         }
         public IActionResult DangNhap([Bind("ID,Name,Password,Email,SoDT,NgayTao,LoaiTK,TrangThai")] TaiKhoan taiKhoan)
         {
-            if (taiKhoan.Name == null)
+            if (taiKhoan.TenTK == null)
 			{
                 ModelState.AddModelError("Name", "Tên đăng nhập không được để trống!");
             }
-            else if(taiKhoan.Name.Length < 8 || taiKhoan.Name.Length > 15)
+            else if(taiKhoan.TenTK.Length < 8 || taiKhoan.TenTK.Length > 15)
             {
                 ModelState.AddModelError("Name", "Tên đăng nhập phải từ 8 kí tự trờ lên!");
 
@@ -113,10 +113,10 @@ namespace Aram.Controllers
                 try
                 {
 					// Kiểm tra tài khoản có tồn tại trong CSDL không
-					taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.Name == taiKhoan.Name && x.Password == taiKhoan.Password);
+					taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == taiKhoan.TenTK && x.MatKhau == taiKhoan.MatKhau);
 					if (taiKhoan != null)
                     {
-						LuuTenTK = taiKhoan.Name;
+						LuuTenTK = taiKhoan.TenTK;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
 						return RedirectToAction("Index", "Home");
