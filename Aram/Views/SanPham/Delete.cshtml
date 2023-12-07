@@ -4,7 +4,7 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+@* <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -48,4 +48,49 @@
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
+</div> *@
+
+<link rel="stylesheet" href="/css/CuaHang/Create.css">
+
+
+
+<div class="row_aram">
+    <div class="col-md-4">
+        <span style="font-size: 20px;color: #dc6363;">Bạn có muốn xoá sản phẩm này không?</span>
+        <form asp-action="Edit" asp-route-cuahangid="@ViewBag.chID" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Tên sản phẩm</label>
+                <input asp-for="Ten" class="form-control" disabled />
+                <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Đơn giá</label>
+                <input asp-for="Gia" class="form-control" disabled />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiSPId" class="control-label">Loại sản phẩm</label>
+
+@*                 <select asp-for="LoaiSPId" class="form-control" asp-items="ViewBag.LoaiSP"></select> *@
+
+                <input asp-for="LoaiSP" class="form-control" disabled /> @* --> phần này truyền cái tên lại sản phẩm vào *@
+            </div>
+            <div class="form-group">
+
+                <input asp-for="PicData" type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
+                <div class="form-control" style="height: 200px !important;">
+                    <img src="#" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
+                </div>
+                <span asp-validation-for="PicData" class="text-danger"></span>
+            </div>
+
+            <div class="form-group--btn">
+                <input type="submit" value="Xoá" class="btn__them" />
+                <div>
+                    <a asp-action="Index" asp-route-id="@ViewBag.chID" type="button" class="btn__them">Quay lại</a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

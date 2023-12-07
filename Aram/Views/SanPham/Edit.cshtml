@@ -3,21 +3,13 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>SanPham</h4>
-<hr />
-<div class="row">
+@* <div class="row">
     <div class="col-md-4">
-
-        
-
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Ten" class="control-label"></label>
+                <label asp-for="Ten" class="control-label">Tên sản phầm</label>
                 <input asp-for="Ten" class="form-control" />
                 <span asp-validation-for="Ten" class="text-danger"></span>
             </div>
@@ -50,5 +42,64 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div> *@
+
+<link rel="stylesheet" href="/css/CuaHang/Create.css">
+
+
+
+<div class="row_aram">
+    <div class="col-md-4">
+        <span style="font-size: 20px;">Cập nhật thông tin sản phẩm</span>
+        <form asp-action="Edit" asp-route-cuahangid="@ViewBag.chID" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Tên sản phẩm</label>
+                <input asp-for="Ten" class="form-control" />
+                <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Đơn giá</label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiSPId" class="control-label">Loại sản phẩm</label>
+                <select asp-for="LoaiSPId" class="form-control" asp-items="ViewBag.LoaiSP"></select> @* --> truyền tên loại sản phẩm *@
+            </div>
+            <div class="form-group">
+                <label asp-for="PicData" for="img" class="control-label" style="border: 1px solid;
+                                                                                cursor: pointer;
+                                                                                padding:5px 10px;
+                                                                                background: white ;">Thêm hình ảnh</label>
+
+                <input asp-for="PicData" type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
+                <div class="form-control" style="height: 200px !important;">
+                    <img src="/img/386107835_3577064765899226_4485664415835025727_n.jpg" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
+                </div>
+                <span asp-validation-for="PicData" class="text-danger"></span>
+            </div>
+
+            <div class="form-group--btn">
+                <input type="submit" value="Lưu" class="btn__them" />
+                <div>
+                    <a asp-action="Index" asp-route-id="@ViewBag.chID" type="button" class="btn__them">Quay lại</a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+<script>
+    function displayImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('myImage').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 
