@@ -81,7 +81,7 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SanPham sanPham, IFormFile? imageSP)
         {
-            if(sanPham != null)
+            if(sanPham.Ten != null)
             {
                 sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
             }
@@ -173,7 +173,7 @@ namespace Aram.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             imageSP.CopyToAsync(memoryStream);
-                            sanPham.PicData = memoryStream.ToArray();
+                            sp.PicData = memoryStream.ToArray();
                         }
                     }
                     
