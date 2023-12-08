@@ -186,7 +186,7 @@ namespace Aram.Controllers
                         LuuHoTen = taiKhoan.HoTen;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
-						return RedirectToAction("Index", "Home");
+						return RedirectToAction("MainHome", "Home");
                     }
                     else
                     {
