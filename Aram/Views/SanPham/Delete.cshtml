@@ -70,17 +70,17 @@
                 <span asp-validation-for="Gia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LoaiSPId" class="control-label">Loại sản phẩm</label>
+                <label asp-for="LoaiSP" class="control-label">Loại sản phẩm</label>
 
-@*                 <select asp-for="LoaiSPId" class="form-control" asp-items="ViewBag.LoaiSP"></select> *@
+                @* <select asp-for="LoaiSP" class="form-control" asp-items="ViewBag.LoaiSP"></select>  *@
 
-                <input asp-for="LoaiSP" class="form-control" disabled /> @* --> phần này truyền cái tên lại sản phẩm vào *@
+                <input asp-for="LoaiSP.Ten" class="form-control" disabled /> 
             </div>
             <div class="form-group">
 
                 <input asp-for="PicData" type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
                 <div class="form-control" style="height: 200px !important;">
-                    <img src="#" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
+                    <img src="#" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> 
                 </div>
                 <span asp-validation-for="PicData" class="text-danger"></span>
             </div>

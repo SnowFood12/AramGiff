@@ -65,15 +65,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="LoaiSPId" class="control-label">Loại sản phẩm</label>
-                <select asp-for="LoaiSPId" class="form-control" asp-items="ViewBag.LoaiSP"></select> @* --> truyền tên loại sản phẩm *@
+                <select asp-for="LoaiSPId" class="form-control" asp-items="ViewBag.LoaiSPId"></select> @* --> truyền tên loại sản phẩm *@
             </div>
             <div class="form-group">
-                <label asp-for="PicData" for="img" class="control-label" style="border: 1px solid;
+                <label for="img" class="control-label" style="border: 1px solid;
                                                                                 cursor: pointer;
                                                                                 padding:5px 10px;
                                                                                 background: white ;">Thêm hình ảnh</label>
 
-                <input asp-for="PicData" type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
+                <input type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
                 <div class="form-control" style="height: 200px !important;">
                     <img src="@Url.Action("GetImage", "SanPham", new { id = Model.Id })" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
                 </div>

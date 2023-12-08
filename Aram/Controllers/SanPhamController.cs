@@ -102,7 +102,7 @@ namespace Aram.Controllers
         }
 
         // GET: SanPhams/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int chID)
         {
             if (id == null || _context.SanPham == null)
             {
@@ -115,9 +115,9 @@ namespace Aram.Controllers
                 return NotFound();
             }
             /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
-            ViewData["LoaiSP"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Ten", sanPham.LoaiSPId);
+            ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Ten", sanPham.LoaiSPId);
             ViewBag.spID = id;
-            ViewBag.chID = sanPham.CuaHangId;
+            ViewBag.chID = chID;
             return View(sanPham);
         }
 
@@ -126,9 +126,10 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SanPham sanPham)
+        public async Task<IActionResult> Edit(int id, SanPham sanPham, IFormFile imageSP)
         {
-            
+            SanPham sp = _context.SanPham.FirstOrDefault(x => x.Id == id);
+            sanPham.PicData = sp.PicData;
             if (id != sanPham.Id)
             {
                 return NotFound();
@@ -138,6 +139,14 @@ namespace Aram.Controllers
             {
                 try
                 {
+                    if (imageSP != null)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            imageSP.CopyToAsync(memoryStream);
+                            sanPham.PicData = memoryStream.ToArray();
+                        }
+                    }
                     _context.Update(sanPham);
                     await _context.SaveChangesAsync();
                 }
@@ -155,7 +164,9 @@ namespace Aram.Controllers
                 return RedirectToAction(nameof(Index) , new { id = sanPham.CuaHangId});
             }
             /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
-            ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Id", sanPham.LoaiSPId);
+            ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Ten", sanPham.LoaiSPId);
+            ViewBag.chID = sanPham.CuaHangId;
+            ViewBag.spID = id;
             return View(sanPham);
         }
 
@@ -188,7 +199,7 @@ namespace Aram.Controllers
             {
                 return Problem("Entity set 'AramContext.SanPham'  is null.");
             }
-            var sanPham = await _context.SanPham.FindAsync(id);
+            var sanPham = await _context.SanPham.Include(x => x.LoaiSP).FirstOrDefaultAsync(m => m.Id == id); ;
             if (sanPham != null)
             {
                 
