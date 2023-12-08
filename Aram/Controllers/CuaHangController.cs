@@ -60,7 +60,7 @@ namespace Aram.Controllers
         public async Task<IActionResult> Create(CuaHang cuaHang)
         {
             //kiểm lỗi cửa hàng
-            Regex kuTuDacBiet = new Regex("^[A-Za-z\\s]+$");
+            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s]+$");
             if (cuaHang.Ten == null)
             {
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
