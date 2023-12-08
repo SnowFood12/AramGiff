@@ -26,5 +26,6 @@ namespace Aram.Models
         [DefaultValue(1)]
         public bool TrangThai { get; set; }
         public virtual ICollection<CuaHang>? CuaHangs { get; set; }
+        public virtual ICollection<DonHang>? DonHangs { get; set; }
     }
 }
