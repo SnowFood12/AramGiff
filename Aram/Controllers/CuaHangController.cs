@@ -59,8 +59,12 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CuaHang cuaHang)
         {
-            cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
-            cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
+            if(cuaHang.Ten != null)
+            {
+                cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
+
+            }
+
             //kiểm lỗi cửa hàng
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
             if (cuaHang.Ten == null)
@@ -87,11 +91,17 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại đã được sử dụng");
             }
+            if(cuaHang.DiaChi != null)
+            {
+
+                cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
+            }
                 //kiểm lỗi địa chỉ
             if (cuaHang.DiaChi == null)
             {
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được để trống");
-            } else if (cuaHang.DiaChi.Length > 200)
+            }
+            else if (cuaHang.DiaChi.Length > 200)
             {
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được quá 200 ký tự");
             } else if(!kuTuDacBiet.IsMatch(cuaHang.DiaChi))
@@ -141,8 +151,15 @@ namespace Aram.Controllers
 
             //kiểm lỗi cửa hàng
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
-            cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
-            cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
+            if(cuaHang.Ten != null)
+            {
+                cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
+            }
+            if (cuaHang.DiaChi != null)
+            {
+                cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
+            }
+            
             if (cuaHang.Ten == null)
             {
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
