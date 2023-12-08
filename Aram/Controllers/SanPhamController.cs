@@ -21,12 +21,12 @@ namespace Aram.Controllers
             _context = context;
         }
         // GET: SanPhams
-        public async Task<IActionResult> Index(int id, int chID)
+        public async Task<IActionResult> Index(int id)
         {
             var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
             
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
-            ViewBag.chID = chID;
+            ViewBag.chID = id;
             return View(await aramContext.ToListAsync());
         }
 
