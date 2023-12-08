@@ -3,7 +3,48 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    .toggle {
+        display: inline-block;
+        height: 25px;
+        position: relative;
+        width: 60px;
+    }
 
+        .toggle input[type="checkbox"] {
+            display: none;
+        }
+
+        .toggle .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 17px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50px;
+        }
+
+        .toggle .slider {
+            background-color: #ccc;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            transition: .4s;
+            position: relative;
+            border-radius: 50px;
+        }
+
+        .toggle input[type="checkbox"]:checked + .slider {
+            background-color: #dd781a;
+        }
+
+            .toggle input[type="checkbox"]:checked + .slider:before {
+                transform: translateX(26px);
+            }
+</style>
 <link rel="stylesheet" href="/css/CuaHang/Create.css">
 
 <div style="width: 90%;
@@ -44,35 +85,64 @@
         <tbody>
             @{
                 int dem = 0 ;
-                @foreach (var item in Model)
+                            @foreach (var item in Model)
                 {
                     dem++;
-                    <tr style="color: black;">
-                        <td>
-                            @dem
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Ten)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Gia)
-                        </td>
-                        <td>
-                            <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
-                        </td>
-                        <td>
-                            <label class="toggle" for="toggle">
-                                <input type="checkbox" id="toggle">
-                                <div class="slider"></div>
-                            </label>
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
-                        </td>
-                    </tr>
+                                <tr style="color: black;">
+                                    <td>
+                                        @dem
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ten)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Gia)
+                                    </td>
+                                    <td>
+                                        <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
+                                    </td>
+                                    <td>
+                                        <form asp-action="Test" asp-controller="SanPham">
+                                            <label class="toggle" for="@item.Id" >
+                                                <input type="checkbox" id="@item.Id" data-id="@item.CuaHangId" name="TrangThai" class="check">
+                                                <div class="slider"></div>
+                                            </label>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
+                                    </td>
+                                </tr>
                 }
             }
         </tbody>
     </table>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var cbk = document.querySelectorAll('.check')
+    var dataId = cbk.dataset.id;
+    console.log(dataId);
+    $.ajax({
+        url: '/SanPham/Check',
+        type: 'GET',
+        data: { id: dataId },
+        dataType: 'json',
+        success: function (result) {
+            result.forEach(function (item) {
+                console.log(item.trangThai)
+            });
+        }
+    })
+    var i = 1;
+    if (i == 0) {
+        cbk.checked = true;
+    }
+    else {
+        cbk.checked = false;
+    }
+    cbk.addEventListener('input', function () {
+
+    }); 
+</script>
