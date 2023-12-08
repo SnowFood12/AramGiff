@@ -4,6 +4,12 @@
     ViewData["Title"] = "Index";
 }
 <style>
+    .Thoat{
+        color: #ff7800;
+    }
+    .Thoat:hover{
+        color: black !important;
+    }
     .toggle {
         display: inline-block;
         height: 25px;
@@ -52,7 +58,7 @@
             padding: 20px 0px;
             background: #fff;">
     <div class="main__tieude">
-        <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten"</p>
+        <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten" <a class="Thoat" asp-action="Index" asp-controller="CuaHang"><i class="fa-solid fa-right-from-bracket"></i></a></p>
         <div class="main__tim--kiem">
             <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
             <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
