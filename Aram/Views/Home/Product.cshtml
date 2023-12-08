@@ -40,12 +40,12 @@
 		<div class="row" style="background-color: white; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 			<div class="col-lg-6 mb-5 ftco-animate">
 				<a href="images/product-1.jpg" class="image-popup">
-					<img src="/img/zyro-image (10).png"
-						 class="img-fluid" alt="Colorlib Template">
+					<img src="@Url.Action("GetImage", "SanPham", new { id = @ViewBag.ThongTinSanPhamId.Id})"
+						 class="img-fluid" alt="Colorlib Template" style="margin-top:3rem;">
 				</a>
 			</div>
 			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-				<h3 style="margin-top:6rem;">Cà phê trung nguyên</h3>
+				<h3 style="margin-top:6rem; color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
 				<!-- <div class="rating d-flex">
 						<p class="text-left mr-4">
 							<a href="#" class="mr-2">5.0</a>
@@ -62,11 +62,8 @@
 							<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
 						</p>
 					</div> -->
-				<p class="price"><span style="color: #a41a1a; font-size:16px;">Còn hàng</span></p>
-				<p class="price"><span style="color: #ec4b1c; font-weight:600;">120.000 đ</span></p>
-				<p>
-					Thơm ngon bổ rẻ
-				</p>
+				<p class="price"><span style="color: #a41a1a; font-size:16px;">@ViewBag.ThongTinSanPhamId.TrangThai</span></p>
+				<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia</span></p>
 				<div class="row mt-4">
 					<div class="col-md-6">
 						<div class="form-group d-flex">
@@ -109,114 +106,38 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png"
-							 alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cà phê trung nguyên</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Còn hàng</span></p>
-								<p class="price"><span class="price-sale">$80.00</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png"
-							 alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cà phê trung nguyên</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Còn hàng</span></p>
-								<p class="price"><span class="price-sale">$80.00</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
+			@{
+				@foreach (var item in ViewBag.ThongTinSanPham)
+				{
+					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+						<div class="product">
+							<a href="#" class="img-prod">
+								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = item.Id})"
+									 alt="Colorlib Template">
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<h3><a href="#">@item.Ten</a></h3>
+								<div class="d-flex">
+									<div class="pricing">
+										<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">@item.TrangThai</span></p>
+										<p class="price"><span class="price-sale">@item.Gia</span></p>
+									</div>
+								</div>
+								<div class="bottom-area d-flex px-3">
+									<div class="m-auto d-flex">
+										<a asp-action="Product" asp-controller="Home" asp-route-id="@item.Id" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+											<span><i class="fa-solid fa-list"></i></span>
+										</a>
+										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+											<span><i class="fa-solid fa-cart-shopping"></i></span>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png"
-							 alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cà phê trung nguyên</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Còn hàng</span></p>
-								<p class="price"><span class="price-sale">$80.00</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png"
-							 alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cà phê trung nguyên</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Còn hàng</span></p>
-								<p class="price"><span class="price-sale">$80.00</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				}
+			}
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -234,14 +155,14 @@
 	<div class="container py-4">
 		<div class="row d-flex justify-content-center py-5">
 			<div class="col-md-6">
-				<h2 style="font-size: 22px;" class="mb-0">Thông tin cửa hàng</h2>
-				<span>Buôn Ma Thuột</span> <br />
-				<span>1234567890</span> <br />
-				<span>09, Hà Huy Tập, Phường Tân An, Tp Buôn Ma Thuật</span>
+				<h2 style="font-size: 22px; color:black !important;" class="mb-0">Thông tin cửa hàng</h2>
+				<span>@ViewBag.Shop.Ten</span> <br />
+				<span>@ViewBag.Shop.SoDT</span> <br />
+				<span>@ViewBag.Shop.DiaChi</span>
 			</div>
 			<div class="col-md-6 d-flex align-items-center">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.281317086491!2d108.07528347484316!3d12.825089318073942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3171ff3be174457d%3A0x1998b51af8f35ea2!2zMDkgSMOgIEh1eSBU4bqtcCwgUXXhuqNuZyBQaMO6LCBDxrAgTSdnYXIsIMSQ4bqvayBM4bqvaywgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1701832986553!5m2!1svi!2s" 
-				width="600" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				<iframe src="@ViewBag.Shop.LinkMap"
+						width="600" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 			</div>
 		</div>
 	</div>

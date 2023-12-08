@@ -66,111 +66,37 @@
 			</div>
 		</section>
 		<div class="row">
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/386107835_3577064765899226_4485664415835025727_n.jpg" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/387035236_3577064775899225_8340409580806128791_n.jpg" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
+			@{
+				@foreach( var item in ViewBag.ThongTinSanPham)
+				{
+					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+						<div class="product">
+							<a href="#" class="img-prod">
+								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = @item.Id})" alt="Colorlib Template">
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<h3><a href="#">@item.Ten</a></h3>
+								<h3><a href="#" class="product__trang--thai">@item.TrangThai</a></h3>
+								<div class="d-flex">
+									<div class="pricing">
+										<p class="price"><span class="price-sale">@item.Gia</span></p>
+									</div>
+								</div>
+								<div class="bottom-area d-flex px-3">
+									<div class="m-auto d-flex">
+										<a asp-action="Product" asp-controller="Home" asp-route-id="@item.Id" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+											<span><i class="fa-solid fa-list"></i></span>
+										</a>
+										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+											<span><i class="fa-solid fa-cart-shopping"></i></span>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a asp-action="Product" asp-controller="Home" class="img-prod">
-						<img class="img-fluid" src="/img/392953015_3582076508731385_1897574593657592923_n.jpg" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/401833736_839817791484768_3258195375558851274_n.jpg" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
+				}
+			}
 		</div>
 		<div class="row mt-5">
 			<div class="col text-center">

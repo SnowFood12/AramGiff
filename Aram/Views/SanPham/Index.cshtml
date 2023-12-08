@@ -34,6 +34,9 @@
                     Hình ảnh
                 </th>
                 <th>
+                    Trạng thái
+                </th>
+                <th>
                     <a asp-action="Create" asp-controller="SanPham" asp-route-chID="@ViewBag.chID" class="btn" style=" border-radius: 2px; border:1px solid black; color: black;">Thêm sản phẩm</a>
                 </th>
             </tr>
@@ -55,7 +58,13 @@
                             @Html.DisplayFor(modelItem => item.Gia)
                         </td>
                         <td>
-                            <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" / height="50px">
+                            <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
+                        </td>
+                        <td>
+                            <label class="toggle" for="toggle">
+                                <input type="checkbox" id="toggle">
+                                <div class="slider"></div>
+                            </label>
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
