@@ -59,8 +59,10 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CuaHang cuaHang)
         {
+            cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
+            cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
             //kiểm lỗi cửa hàng
-            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s]+$");
+            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
             if (cuaHang.Ten == null)
             {
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
@@ -70,7 +72,7 @@ namespace Aram.Controllers
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
             } else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
             {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt");
             }
             //kiểm lỗi số điện thoại
             Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
@@ -94,7 +96,7 @@ namespace Aram.Controllers
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được quá 200 ký tự");
             } else if(!kuTuDacBiet.IsMatch(cuaHang.DiaChi))
             {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt hoặc số");
+                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
             }
             //hết kiểm lỗi
 
@@ -138,7 +140,7 @@ namespace Aram.Controllers
             }
 
             //kiểm lỗi cửa hàng
-            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s]+$");
+            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
             cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
             cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
             if (cuaHang.Ten == null)
@@ -152,7 +154,7 @@ namespace Aram.Controllers
             }
             else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
             {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt hoặc số");
+                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt");
             }
             //kiểm lỗi số điện thoại
             Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
@@ -180,7 +182,7 @@ namespace Aram.Controllers
             }
             else if (!kuTuDacBiet.IsMatch(cuaHang.DiaChi))
             {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt hoặc số");
+                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
             }
             //hết kiểm lỗi
 
