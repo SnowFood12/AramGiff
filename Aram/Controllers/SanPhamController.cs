@@ -81,7 +81,10 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SanPham sanPham, IFormFile? imageSP)
         {
-            sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
+            if(sanPham.Ten != null)
+            {
+                sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
+            }
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
             //kiểm lỗi ten san pham
             if (sanPham.Ten == null)
@@ -170,7 +173,7 @@ namespace Aram.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             imageSP.CopyToAsync(memoryStream);
-                            sanPham.PicData = memoryStream.ToArray();
+                            sp.PicData = memoryStream.ToArray();
                         }
                     }
                     
@@ -229,11 +232,23 @@ namespace Aram.Controllers
             var sanPham = await _context.SanPham.Include(x => x.LoaiSP).FirstOrDefaultAsync(m => m.Id == id); ;
             if (sanPham != null)
             {
+                if ( sanPham.TrangThai == true )
+                {
+                    sanPham.TrangThai = false;
+                    _context.SanPham.Update(sanPham);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    sanPham.TrangThai = true;
+                    _context.SanPham.Update(sanPham);
+                    _context.SaveChanges();
+                }
                 
-                _context.SanPham.Remove(sanPham);
+/*                _context.SanPham.Remove(sanPham);*/
             }
             
-            await _context.SaveChangesAsync();
+/*            await _context.SaveChangesAsync();*/
             return RedirectToAction(nameof(Index), new { id = chID });
         }
 

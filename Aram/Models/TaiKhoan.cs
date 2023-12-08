@@ -21,10 +21,11 @@ namespace Aram.Models
         public string? SoDT { get; set; }
         [Column(TypeName = "date")]
         public DateTime NgayTao { get; set; }
-        [DefaultValue(false)]
+        [DefaultValue(0)]
         public bool LoaiTK { get; set; }
-        [DefaultValue(true)]
+        [DefaultValue(1)]
         public bool TrangThai { get; set; }
         public virtual ICollection<CuaHang>? CuaHangs { get; set; }
+        public virtual ICollection<DonHang>? DonHangs { get; set; }
     }
 }

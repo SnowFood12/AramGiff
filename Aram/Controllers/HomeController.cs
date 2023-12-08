@@ -51,6 +51,13 @@ namespace Aram.Controllers
 
 		public IActionResult MainHome() // trang chủ
 		{
+			var ListProduct = _context.SanPham.Take(8).ToList();
+
+			var LastProduct = _context.SanPham.OrderBy( a => a.Id).Last(); 
+
+			ViewBag.LastProduct = LastProduct;
+
+			ViewBag.ListProduct = ListProduct;
 			return View();
 		}
 

@@ -21,13 +21,10 @@ namespace Aram.Models
         public string? DiaChi { get; set; }
         [Column(TypeName = "text")]
         public string? LinkMap { get; set; }
+        [DefaultValue(1)]
         public bool TrangThai { get; set; }
         public string? TenTK { get; set; }
         public TaiKhoan? TaiKhoan { get; set; }
         public virtual ICollection<SanPham>? SanPhams { get; set; }
-        public CuaHang()
-        {
-            TrangThai = true;
-        }
     }
 }
