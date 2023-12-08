@@ -1,4 +1,4 @@
-﻿
+﻿@model Aram.Models.TaiKhoan
 @{
     Layout = null;
 }
@@ -29,16 +29,16 @@
                             Hãy nhập tên đăng nhập và email của tài khoản.
                         </span>
                     </div>
-                    <form action="">
+                    <form asp-action="QuenMatKhau" method="post">
                         <div class="ipt__login">
                             <label for="" class="lbl__login">Tên đăng nhập</label><br>
-                            <input type="text" name="TenDangNhap" id="" class="txt__login"><br>
-                            <span class="erro__login">@ViewBag.LoiTK</span>
+                            <input type="text" asp-for="TenTK" id="" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="TenTK"></span>
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Email</label><br>
-                            <input type="email" name="email" id="email" class="txt__login"><br>
-                            <span class="erro__login">@ViewBag.LoiEmail</span><br>
+                            <input type="email" asp-for="Email" id="" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="Email"></span><br>
                         </div>
                         <button class="btn__login" >Gửi mã OTP</button>
                     </form>

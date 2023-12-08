@@ -241,5 +241,15 @@ namespace Aram.Controllers
         {
           return (_context.SanPham?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        [HttpGet]
+        public JsonResult Check( int id)
+        {
+            var TrangThai = _context.SanPham.Where( a => a.CuaHangId == id).Select(a => new
+            {
+                a.TrangThai
+            });
+            return Json(TrangThai); 
+        }
     }
 }

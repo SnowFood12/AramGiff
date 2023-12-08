@@ -7,6 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aram.Controllers
 {
@@ -38,6 +39,11 @@ namespace Aram.Controllers
             ViewBag.Email = LuuEmail;
 			return View();
         }
+        public IActionResult DangKy()
+        {
+            return View();
+        }
+        [HttpPost]
         public IActionResult DangKy(TaiKhoan taiKhoan, string XacNhanMatKhau)
         {
             //Kiểm tra tên đăng nhập
@@ -47,9 +53,9 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("TenTK", "Tên đăng nhập không thể trống!");
             }
-            else if (taiKhoan.TenTK.Length < 8 || taiKhoan.TenTK.Length > 15)
+            else if (taiKhoan.TenTK.Length < 6 || taiKhoan.TenTK.Length > 15)
             {
-                ModelState.AddModelError("TenTK", "Tên đăng nhập phải từ 8 đến 15 ký tự!");
+                ModelState.AddModelError("TenTK", "Tên đăng nhập phải từ 6 đến 15 ký tự!");
             }
             else if (ktTenDangNhap != null)
             {
@@ -59,7 +65,6 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("TenTK", "Tên đăng nhập không được chứa ký tự đặc biệt!");
             }
-            //Thiếu khoảng trắng, ký tự đặc biệt
 
             // Kiểm tra email đúng định dạng
             if (taiKhoan.Email == null || taiKhoan.Email.Trim() == "")
@@ -80,9 +85,9 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("MatKhau", "Mật khẩu không được để trống!");
             }
-            else if (taiKhoan.MatKhau.Length < 8)
+            else if (taiKhoan.MatKhau.Length < 6)
             {
-                ModelState.AddModelError("MatKhau", "Mật khẩu phải từ 8 ký tự trở lên.");
+                ModelState.AddModelError("MatKhau", "Mật khẩu phải từ 6 ký tự trở lên!");
             }
 
             // Kiểm tra xác thực mật khẩu
@@ -163,17 +168,35 @@ namespace Aram.Controllers
             }
             return View();
         }
+        
+        public IActionResult DangNhap()
+        {
+            return View();
+        }
+        [HttpPost]
         public IActionResult DangNhap([Bind("TenTK,MatKhau,HoTen,GioiTinh,Email,SoDT,NgayTao,LoaiTK,TrangThai")] TaiKhoan taiKhoan)
         {
             if (taiKhoan.TenTK == null)
 			{
-                ViewBag.LoiTK = "Tên đăng nhập không được để trống!";
+                ModelState.AddModelError("TenTK","Tên đăng nhập không được để trống!");
             }
-            else if(taiKhoan.TenTK.Length < 8 || taiKhoan.TenTK.Length > 15)
+            else if(taiKhoan.TenTK.Length < 6 || taiKhoan.TenTK.Length > 15)
             {
-                ModelState.AddModelError("Name", "Tên đăng nhập phải từ 8 kí tự trờ lên!");
+                ModelState.AddModelError("TenTK", "Tên đăng nhập phải từ 6 kí tự trờ lên!");
 
 			}
+            else if (Regex.IsMatch(taiKhoan.TenTK, @"\s") || Regex.IsMatch(taiKhoan.TenTK, @"[^a-zA-Z0-9]"))
+            {
+                ModelState.AddModelError("TenTK", "Tên đăng nhập không được chứa ký tự đặc biệt!");
+            }
+            if (taiKhoan.MatKhau == null)
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu không được để trống!");
+            }
+            else if (taiKhoan.MatKhau.Length < 6)
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu phải từ 6 kí tự trở lên!");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -190,7 +213,7 @@ namespace Aram.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("Password", "Tên đăng nhập hoặc mật khẩu không đúng!");
+                        ModelState.AddModelError("MatKhau", "Tên đăng nhập hoặc mật khẩu không đúng!");
                     }
                 }
                 catch (Exception ex)
@@ -249,31 +272,36 @@ namespace Aram.Controllers
 			return RedirectToAction("NhapOTP", "TaiKhoan");
 		}
 		private System.Timers.Timer otpResetTimer;
-		public IActionResult QuenMatKhau(string TenDangNhap, string email)
+        public IActionResult QuenMatKhau()
         {
-            if(TenDangNhap == null)
+            return View();
+        }
+        [HttpPost]
+		public IActionResult QuenMatKhau(TaiKhoan taiKhoan)
+        {
+            if(taiKhoan.TenTK == null)
             {
-                ViewBag.LoiTK = "Tên đăng nhập không được để trống!";
+                ModelState.AddModelError("TenTK"," Tên đăng nhập không được để trống!");
             }
-            else if (TenDangNhap.Length < 8 || TenDangNhap.Length > 15)
+            else if (taiKhoan.TenTK.Length < 8 || taiKhoan.TenTK.Length > 15)
             {
-                ViewBag.LoiTK = "Tên đăng nhập phải từ 8 kí tự trở lên!";
+                ModelState.AddModelError("TenTK", "Tên đăng nhập phải từ 8 kí tự trở lên!");
             }
-            else if (email == null)
+            else if (taiKhoan.Email == null)
             {
-                ViewBag.LoiEmail = "Email không được để trống!";
+                ModelState.AddModelError("Email", "Email không được để trống!");
             }
-            else if (!email.EndsWith("@gmail.com"))
+            else if (!taiKhoan.Email.EndsWith("@gmail.com"))
             {
-                ViewBag.LoiEmail = "Email không đúng định dạng @gmail.com!";
+                ModelState.AddModelError("Email", "Email không đúng định dạng @gmail.com!");
             }
-                TaiKhoan taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == TenDangNhap && x.Email == email);
+             taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == taiKhoan.TenTK && x.Email == taiKhoan.Email);
 			if (taiKhoan != null)
             {
                 string maOTP = GenerateOTP();
-                SendEmail(email, maOTP);
-                LuuTenTK = TenDangNhap;
-                LuuEmail = email;
+                SendEmail(taiKhoan.Email, maOTP);
+                LuuTenTK = taiKhoan.TenTK;
+                LuuEmail = taiKhoan.Email;
 				currentOTP = maOTP;
 				// Đặt hẹn giờ reset OTP sau 2 phút
 				otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
@@ -284,30 +312,25 @@ namespace Aram.Controllers
 			}
 				return View();
 		}
+        public IActionResult NhapOTP()
+        {
+            return View();
+        }
+        [HttpPost]
         public IActionResult NhapOTP(string otp)
         {
 			string storeOTP = currentOTP;
-
-			ViewBag.ShowError = false; // Biến để xác định xem có hiển thị thông báo lỗi hay không
-
 			if (string.IsNullOrEmpty(otp))
 			{
-				ViewBag.ShowError = true;
 				ViewBag.LoiNhapOTP = "Mã OTP không được để trống!";
 			}
 			else if (otp.Length != 6)
 			{
-				ViewBag.ShowError = true;
 				ViewBag.LoiNhapOTP = "Mã OTP phải có đúng 6 số!";
 			}
 			else if (otp != storeOTP)
 			{
-				ViewBag.ShowError = true;
 				ViewBag.LoiNhapOTP = "Mã xác thực OTP không trùng khớp!";
-			}
-			else
-			{
-				ViewBag.LoiNhapOTP = null;
 			}
 
 			if (ModelState.IsValid)
