@@ -139,12 +139,15 @@ namespace Aram.Controllers
 
             //kiểm lỗi cửa hàng
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s]+$");
+            cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
+            cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
             if (cuaHang.Ten == null)
             {
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
             }
             else if (cuaHang.Ten.Length > 50)
             {
+
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
             }
             else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
