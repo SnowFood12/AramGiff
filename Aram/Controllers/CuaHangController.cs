@@ -24,7 +24,7 @@ namespace Aram.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.CuaHang != null ? 
-                          View(await _context.CuaHang.ToListAsync()) :
+                          View(await _context.CuaHang.Where(x => x.TrangThai == true).ToListAsync()) :
                           Problem("Entity set 'AramContext.CuaHang'  is null.");
         }
 
@@ -101,7 +101,7 @@ namespace Aram.Controllers
              if (ModelState.IsValid)
             {
                 cuaHang.NgayTaoCuaHang = DateTime.Now;
-                cuaHang.TenTK = "tuan1234";
+                cuaHang.TenTK = "admin";
                 _context.Add(cuaHang);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -130,7 +130,7 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,CuaHang cuaHang)
+        public async Task<IActionResult> Edit(int id, CuaHang cuaHang)
         {
             if (id != cuaHang.Id)
             {

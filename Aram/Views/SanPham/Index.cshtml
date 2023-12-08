@@ -4,73 +4,66 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="/css/CuaHang/Create.css">
 
-<p>
-    <a @Html.ActionLink("Create", "Create", "SanPham", new { chID = @ViewBag.chID}) >Create</a>
-</p>
+<div style="width: 90%;
+            margin: 7rem auto;
+            padding: 20px 0px;
+            background: #fff;">
+    <div class="main__tieude">
+        <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten"</p>
+        <div class="main__tim--kiem">
+            <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
+            <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
 
-<dl class="row">
-    <dt class="col-sm-2">
-        Tên cửa hàng
-    </dt>
-    <dd class="col-sm-10">
-        @ViewBag.chName.Ten
-    </dd>
-    <dt class="col-sm-2">
-        Số điện thoại
-    </dt>
-    <dd class="col-sm-10">
-        @ViewBag.chName.SoDT
-    </dd>
-    
-    <dt class="col-sm-2">
-        Địa chỉ
-    </dt>
-    <dd class="col-sm-10">
-        @ViewBag.chName.DiaChi
-    </dd>
-</dl>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ten)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PicData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoaiSP)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PicData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiSP.Ten)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <table class="table">
+        <thead style="background-color: #dad9d9; color: black;">
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+                <th>
+                    Hình ảnh
+                </th>
+                <th>
+                    <a asp-action="Create" asp-controller="SanPham" asp-route-chID="@ViewBag.chID" class="btn" style=" border-radius: 2px; border:1px solid black; color: black;">Thêm sản phẩm</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int dem = 0 ;
+                @foreach (var item in Model)
+                {
+                    dem++;
+                    <tr style="color: black;">
+                        <td>
+                            @dem
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gia)
+                        </td>
+                        <td>
+                            <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" / height="50px">
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
