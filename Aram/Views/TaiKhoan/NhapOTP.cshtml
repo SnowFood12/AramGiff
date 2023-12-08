@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/TaiKhoan/NhapOTP.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-main">
+        <div class="container">
+            <img src="/img/points1.png" alt="" class="shape s1">
+            <img src="/img/letters.png" alt="" class="shape s2">
+            <img src="/img/half-circle.png" alt="" class="shape s3">
+            <img src="/img/points4.png" alt="" class="shape s4">
+            <div class="container__form--main">
+                <div class="form__login--main">
+                    <div class="lbl__login--big">
+                        <strong>XÁC THỰC MÃ OTP</strong> <br>
+                        <span class="lbl__login--small">
+                            Nhập mã OTP được gửi đến gmail của bạn.
+                        </span>
+                    </div>
+                    <form action="" method="post">
+                        <div class="ipt__login" id="show">
+                            <label for="" class="lbl__login">Nhập mã xác thực</label><br>
+                            <input type="text" name="otp" id="password" class="txt__login"><br>
+                            <span class="erro__login"><i class="fa-solid fa-circle-exclamation" style="color: #ce3452;"></i>@ViewBag.LoiNhapOTP</span><br>
+                            <div class ="countDown"><span id="countdown"></span></div>
+                            <button class="show__password" id="resetCountdownButton" asp-action="SendOTP" asp-controller="TaiKhoan"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+
+                        </div>
+                        <button class="btn__login">Gửi mã xác nhận</button>
+                    </form>
+                    <div class="list__box">
+                        <div class="box item"></div>
+                        <div class="box"></div>
+                        <div class="box item"></div>
+                    </div>
+
+                </div>
+                <div class="form__login--main img__main">
+                    <img src="/img/anh-9-1613563165.jpg" alt="" class="img__login--main">
+                    <img src="" alt="" class="logo">
+                    <div class="lop__phu"></div>
+                    <div class="cut">
+                        <div class="close">
+                            <a asp-action="MainHome" asp-controller="Home" class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var countdownTime = 120000; // Thời gian 2 phút
+
+    function updateCountdown() {
+        var minutes = Math.floor(countdownTime / 60000);
+        var seconds = Math.floor((countdownTime % 60000) / 1000);
+
+        // Thêm số 0 vào phía trước giờ và phút khi giá trị nhỏ hơn 10
+        var formattedMinutes = minutes.toString().padStart(2, '0');
+        var formattedSeconds = seconds.toString().padStart(2, '0');
+
+        document.getElementById("countdown").innerHTML = "Mã OTP sẽ hết hạn trong " + formattedMinutes + ":" + formattedSeconds;
+        countdownTime -= 1000;
+
+        if (countdownTime < 0) {
+            clearInterval(countdownInterval);
+            // Thực hiện các hành động khi hết thời gian đếm ngược tại đây
+        }
+    }
+
+    function resetCountdown() {
+        countdownTime = 120000; // Đặt lại thời gian countdown
+        updateCountdown();
+    }
+
+    updateCountdown();
+
+    var countdownInterval = setInterval(updateCountdown, 1000);
+
+    document.getElementById("resetCountdownButton").onclick = resetCountdown;
+</script>
+</html>

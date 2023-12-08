@@ -1,3 +1,77 @@
 ﻿.col-md-4 {
     margin: 0 auto;
 }
+.row_aram{
+    margin: 7rem auto;
+    width: 100% ;
+}
+.form-group--btn{
+    display: flex;
+    gap:20px;
+}
+.btn__them {
+    background-color: white;
+    color: #be7a65 ; 
+    border: 1px solid ;
+    padding: 5px 10px;
+    cursor:pointer;
+    border-radius: 2px ;
+}
+    .btn__them:hover {
+        background-color: #be7a65; 
+        color: white;
+
+    }
+a.btn__them {
+    color: white;
+    background-color: #c72626;
+}
+a.btn__them:hover {
+    color: #c72626;
+    background: white ;
+}
+.control-label{
+    color: black !important; 
+}
+.form-control{
+    width: 100% ;
+}
+.main__tim--kiem{
+    display:flex; 
+    justify-content: right;
+    width: 80% ;
+    margin-bottom: 30px;
+}
+.ipt__tim--kiem{
+    padding: 5px 10px;
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 2px 0 0 2px;
+}
+.ipt__tim--kiem:focus{
+    outline: none;
+}
+.btn__tim--kiem{
+    padding: 0px 10px; 
+    border: 1px solid;
+    background-color: white ;
+    border-radius: 0 2px 2px 0 ;
+    border-left: none;
+    cursor:pointer;
+}
+    .btn__tim--kiem:hover {
+        background-color: #c25f11;
+        color: white;
+        border: 1px solid #c25f11;
+    }
+.main__tieude {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+}
+.tieu__de{
+    font-size: 20px;
+    color: brown; 
+    font-weight: 500;
+}

@@ -1,0 +1,66 @@
+﻿@model Aram.Models.TaiKhoan
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/TaiKhoan/QuenMatKhau.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-main">
+        <div class="container">
+            <img src="/img/points1.png" alt="" class="shape s1">
+            <img src="/img/letters.png" alt="" class="shape s2">
+            <img src="/img/half-circle.png" alt="" class="shape s3">
+            <img src="/img/points4.png" alt="" class="shape s4">
+            <div class="container__form--main">
+                <div class="form__login--main">
+                    <div class="btn_quaylai"><a asp-action="DangNhap" asp-controller="TaiKhoan"><i class="fa-solid fa-arrow-left-long"></i></a></div>
+                    <div class="lbl__login--big">
+                        <strong>QUÊN MẬT KHẨU</strong> <br>
+                        <span class="lbl__login--small">
+                            Hãy nhập tên đăng nhập và email của tài khoản.
+                        </span>
+                    </div>
+                    <form asp-action="QuenMatKhau" method="post">
+                        <div class="ipt__login">
+                            <label for="" class="lbl__login">Tên đăng nhập</label><br>
+                            <input type="text" asp-for="TenTK" id="" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="TenTK"></span>
+                        </div>
+                        <div class="ipt__login" id="show">
+                            <label for="" class="lbl__login">Email</label><br>
+                            <input type="email" asp-for="Email" id="" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="Email"></span><br>
+                        </div>
+                        <button class="btn__login" >Gửi mã OTP</button>
+                    </form>
+                    <div class="list__box">
+                        <div class="box"></div>
+                        <div class="box item"></div>
+                        <div class="box item"></div>
+                    </div>
+
+                </div>
+                <div class="form__login--main img__main">
+                    <img src="/img/anh-9-1613563165.jpg" alt="" class="img__login--main">
+                    <img src="" alt="" class="logo">
+                    <div class="lop__phu"></div>
+                    <div class="cut">
+                        <div class="close">
+                            <a asp-action="MainHome" asp-controller="Home" class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

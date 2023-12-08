@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Aram.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .Thoat{
+        color: #ff7800;
+    }
+    .Thoat:hover{
+        color: black !important;
+    }
+    .toggle {
+        display: inline-block;
+        height: 25px;
+        position: relative;
+        width: 60px;
+    }
+
+        .toggle input[type="checkbox"] {
+            display: none;
+        }
+
+        .toggle .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 17px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50px;
+        }
+
+        .toggle .slider {
+            background-color: #ccc;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            transition: .4s;
+            position: relative;
+            border-radius: 50px;
+        }
+
+        .toggle input[type="checkbox"]:checked + .slider {
+            background-color: #dd781a;
+        }
+
+            .toggle input[type="checkbox"]:checked + .slider:before {
+                transform: translateX(26px);
+            }
+</style>
+<link rel="stylesheet" href="/css/CuaHang/Create.css">
+
+<div style="width: 90%;
+            margin: 7rem auto;
+            padding: 20px 0px;
+            background: #fff;">
+    <div class="main__tieude">
+        <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten" <a class="Thoat" asp-action="Index" asp-controller="CuaHang"><i class="fa-solid fa-right-from-bracket"></i></a></p>
+        <div class="main__tim--kiem">
+            <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
+            <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead style="background-color: #dad9d9; color: black;">
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+                <th>
+                    Hình ảnh
+                </th>
+                <th>
+                    Trạng thái
+                </th>
+                <th>
+                    <a asp-action="Create" asp-controller="SanPham" asp-route-chID="@ViewBag.chID" class="btn" style=" border-radius: 2px; border:1px solid black; color: black;">Thêm sản phẩm</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int dem = 0 ;
+                @foreach (var item in Model)
+                {
+                    dem++;
+                    <tr style="color: black;">
+                        <td>
+                            @dem
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gia)
+                        </td>
+                        <td>
+                            <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
+                        </td>
+                        <td>
+                            @{
+                                if (item.TrangThai == true)
+                                {
+                                    <p>Còn hàng</p>
+                                }
+                                else
+                                {
+                                    <p>Hết hàng</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-rotate" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   
+</script>

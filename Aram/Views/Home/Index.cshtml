@@ -5,11 +5,44 @@
 <style>
 	.active__phan--trang {
 		color: white;
-		background-color: #be7a65;
+		background-color: #dd781a;
 		padding: 5px 15px;
 		border-radius: 50%;
 	}
 
+	.goi__y{
+		position: absolute;
+		width: 100%;
+		height: 10rem;
+		background-color: white;
+		top: 3.5rem; 
+		z-index: 1;
+		overflow-y: auto;
+		visibility: hidden;
+	}
+
+	.goi__y::-webkit-scrollbar {
+		width: 1px; /* Chiều rộng của thanh cuộn */
+	}
+
+	.goi__y::-webkit-scrollbar-thumb {
+		background-color: white; /* Màu nền của thanh cuộn */
+		border-radius: 5px; /* Góc bo của thanh cuộn */
+	}
+
+	.goi__y::-webkit-scrollbar-track {
+		background-color: white; /* Màu nền của vùng bên trong thanh cuộn */
+	}
+	.goi__item{
+		list-style: none;
+		color: black !important;
+		cursor: pointer;
+		padding: 5px 10px;
+	}
+
+	.goi__item:hover{
+		background-color: #f5f5f5;
+	}
 	.PhanTrang {
 		display: flex;
 		justify-content: center;
@@ -34,15 +67,18 @@
 	</div>
 </div>
 
-<section class="ftco-section">
+<section class="ftco-section" >
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-5 text-center">
 				<ul class="product-category">
-					<li><a href="#" class="active">Vải thổ cẩm</a></li>
-					<li><a href="#">cà phê</a></li>
-					<li><a href="#">Rượu cần</a></li>
-					<li><a href="#">Mật ong hoa cà phê</a></li>
+					<li><a asp-action="Index" asp-controller="Home" class="active">Tất cả</a></li>
+					@{
+						foreach (var item in ViewBag.LoaiSanPham)
+						{
+							<li><a asp-action="LocSanPham" asp-controller="Home" asp-route-id="@item.Id">@item.Ten</a></li>
+						}
+					}
 				</ul>
 			</div>
 		</div>
@@ -56,9 +92,17 @@
 					</div>
 					<div class="col-md-6 d-flex align-items-center">
 						<form action="#" class="subscribe-form">
-							<div class="form-group d-flex">
+							<div class="form-group d-flex" style="position:relative;">
 								<input type="text" class="form-control" placeholder="Tìm kiếm">
 								<button type="submit" class="submit px-3"><i class="fa-solid fa-magnifying-glass"></i></button>
+								<div class="goi__y">
+									<li class="goi__item">Vải thổ cẩm</li>
+									<li class="goi__item">Vải thổ cẩm</li>
+									<li class="goi__item">Vải thổ cẩm</li>
+									<li class="goi__item">Vải thổ cẩm</li>
+									<li class="goi__item">Vải thổ cẩm</li>
+									<li class="goi__item">Vải thổ cẩm</li>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -66,110 +110,47 @@
 			</div>
 		</section>
 		<div class="row">
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
+			@{
+				@foreach( var item in ViewBag.ThongTinSanPham)
+				{
+					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+						<div class="product">
+							<a class="img-prod" style="height: 240px; object-fit: cover">
+								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = @item.Id})" alt="Colorlib Template">
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<h3><a href="#">@item.Ten</a></h3>
+								@{
+									if (item.TrangThai == true)
+									{
+										<h3><a href="#" class="product__trang--thai">Còn Hàng</a></h3>
+									}
+									else
+									{
+										<h3><a href="#" class="product__trang--thai">Hết hàng</a></h3>
+									}
+								}
+								
+								<div class="d-flex">
+									<div class="pricing">
+										<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
+									</div>
+								</div>
+								<div class="bottom-area d-flex px-3">
+									<div class="m-auto d-flex">
+										<a asp-action="Product" asp-controller="Home" asp-route-id="@item.Id" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+											<span><i class="fa-solid fa-list"></i></span>
+										</a>
+										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+											<span><i class="fa-solid fa-cart-shopping"></i></span>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a asp-action="Product" asp-controller="Home" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-				<div class="product">
-					<a href="#" class="img-prod">
-						<img class="img-fluid" src="/img/zyro-image (10).png" alt="Colorlib Template">
-					</a>
-					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="#">Cafe trung nguyên</a></h3>
-						<h3><a href="#" class="product__trang--thai">Còn bán</a></h3>
-						<div class="d-flex">
-							<div class="pricing">
-								<p class="price"><span class="price-sale">120.000 đ</span></p>
-							</div>
-						</div>
-						<div class="bottom-area d-flex px-3">
-							<div class="m-auto d-flex">
-								<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-									<span><i class="fa-solid fa-list"></i></span>
-								</a>
-								<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-									<span><i class="fa-solid fa-cart-shopping"></i></span>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				}
+			}
 		</div>
 		<div class="row mt-5">
 			<div class="col text-center">

@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/TaiKhoan/DoiMatKhauMoi.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-main">
+        <div class="container">
+            <img src="/img/points1.png" alt="" class="shape s1">
+            <img src="/img/letters.png" alt="" class="shape s2">
+            <img src="/img/half-circle.png" alt="" class="shape s3">
+            <img src="/img/points4.png" alt="" class="shape s4">
+            <div class="container__form--main">
+                <div class="form__login--main">
+                    <div class="lbl__login--big">
+                        <strong>CẬP NHẬT MẬT KHẨU</strong> <br>
+                        <span class="lbl__login--small">
+                            Điền mật khẩu mới cho tài khoản của bạn.
+                        </span>
+                    </div>
+                    <form action="">
+                        <div class="ipt__login">
+                            <label for="" class="lbl__login">Mật khẩu mới</label><br>
+                            <input type="text" name="MatKhauMoi" id="new__password" class="txt__login"><br>
+                            <span class="erro__login"></span>
+                        </div>
+                        <div class="ipt__login" id="show">
+                            <label for="" class="lbl__login">Xác nhận mật khẩu</label><br>
+                            <input type="text" name="XacNhanMatKhauMoi" id="password" class="txt__login"><br>
+                            <span class="erro__login"></span><br>
+                            <a class="forget__password">Quay lại đăng nhập!</a>
+                            <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
+                            <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
+                        </div>
+                        <button class="btn__login">Cập nhật mật khẩu</button>
+                    </form>
+                    <div class="list__box">
+                        <div class="box item"></div>
+                        <div class="box item"></div>
+                        <div class="box"></div>
+                    </div>
+
+                </div>
+                <div class="form__login--main img__main">
+                    <img src="/img/anh-9-1613563165.jpg" alt="" class="img__login--main">
+                    <img src="" alt="" class="logo">
+                    <div class="lop__phu"></div>
+                    <div class="cut">
+                        <div class="close">
+                            <a asp-action="MainHome" asp-controller="Home" class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var show = document.getElementById('show__password')
+    var slash = document.getElementById('slash__password')
+    var password = document.getElementById('password')
+
+    slash.addEventListener('click', function () {
+        password.type = 'text';
+        slash.style.visibility = 'hidden'
+        show.style.visibility = 'visible'
+    })
+    show.addEventListener('click', function () {
+        password.type = 'password';
+        show.style.visibility = 'hidden'
+        slash.style.visibility = 'visible'
+    })
+</script>
+</html>

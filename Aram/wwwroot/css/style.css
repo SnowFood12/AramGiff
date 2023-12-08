@@ -57,7 +57,9 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff; }
+    background-color: #f5f5f5 !important;
+
+}
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -6518,7 +6520,9 @@ button.bg-dark:focus {
 
 .mb-5,
 .my-5 {
-  margin-bottom: 3rem !important; }
+  margin-bottom: 3rem !important;
+  margin-top: -35px;
+}
 
 .ml-5,
 .mx-5 {
@@ -8017,10 +8021,11 @@ a {
 
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
-  line-height: 1.5;
-  font-weight: 400;
-  color: #000000;
-  font-family: "Poppins", Arial, sans-serif; }
+    line-height: 1.5;
+    font-weight: 500;
+    color: black;
+    font-family: "Poppins", Arial, sans-serif;
+}
 
 .text-primary {
   color: #82ae46 !important; }
@@ -8041,12 +8046,14 @@ h1, h2, h3, h4, h5,
     color: white; }
 
 .ftco-navbar-light {
-  background: #be7a6582 !important;
-  z-index: 3;
-  top: 0;
-  position: absolute;
-  width: 100%;
-  padding: 0; }
+    background: #b26c3d9a !important;
+    z-index: 3;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 90px;
+    padding: 0;
+}
   @media (max-width: 991.98px) {
     .ftco-navbar-light {
       background: #000000 !important;
@@ -8099,9 +8106,10 @@ h1, h2, h3, h4, h5,
     border-radius: 0; }
     .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item {
       font-size: 14px; }
-      .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item:hover, .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item:focus {
-        background: transparent;
-        color: #000000; }
+        .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item:hover, .ftco-navbar-light .navbar-nav > .nav-item .dropdown-menu .dropdown-item:focus {
+            background: transparent;
+            color: #dd781a;
+        }
   .ftco-navbar-light .navbar-nav > .nav-item.ftco-seperator {
     position: relative;
     margin-left: 20px;
@@ -8148,6 +8156,7 @@ h1, h2, h3, h4, h5,
       outline: none !important; }
   .ftco-navbar-light.scrolled {
     position: fixed;
+    height:60px;
     right: 0;
     left: 0;
     top: 0;
@@ -8191,12 +8200,13 @@ h1, h2, h3, h4, h5,
       color: white !important; }
       .ftco-navbar-light.scrolled .nav-link.active {
         color: #82ae46 !important; }
-    .ftco-navbar-light.scrolled.awake {
-      margin-top: 0px;
-      -webkit-transition: .3s all ease-out;
-      -o-transition: .3s all ease-out;
-      transition: .3s all ease-out;
-      background-color: #be7a6582 !important; }
+.ftco-navbar-light.scrolled.awake {
+    margin-top: 0px;
+    -webkit-transition: .3s all ease-out;
+    -o-transition: .3s all ease-out;
+    transition: .3s all ease-out;
+    background-color: #b26c3d9a !important;
+}
     .ftco-navbar-light.scrolled.sleep {
       -webkit-transition: .3s all ease-out;
       -o-transition: .3s all ease-out;
@@ -8635,17 +8645,17 @@ h1, h2, h3, h4, h5,
   font-weight: 400;
   font-size: 16px; }
     .product-category li a {
-        color: #be7a65;
+        color: #dd781a;
         padding: 5px 20px;
-        -webkit-border-radius: 5px;
+        -webkit-border-radius: 1px;
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
-        border-radius: 5px;
+        border-radius: 1px;
     }
-    .product-category li a.active {
-        background: #be7a65;
-        color: #fff;
-    }
+        .product-category li a.active {
+            background: #dd781a;
+            color: #fff;
+        }
 
 .ftco-product .owl-carousel .owl-stage-outer {
   padding-bottom: 2em;
@@ -8656,6 +8666,7 @@ h1, h2, h3, h4, h5,
   width: 100%;
   margin-bottom: 30px;
   position: relative;
+  border-radius: 5px;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
@@ -8751,9 +8762,11 @@ h1, h2, h3, h4, h5,
       .product .text p.price span.price-dc {
         text-decoration: line-through;
         color: #b3b3b3; }
-      .product .text p.price span.price-sale {
-        color: #A64C32;
-       }
+        .product .text p.price span.price-sale {
+            color: #ec4b1c;
+            font-size: 20px;
+            font-weight: 500;
+        }
     .product .text .pricing {
       width: 100%;
       -moz-transition: all 0.3s ease;
@@ -8775,7 +8788,7 @@ h1, h2, h3, h4, h5,
         .product .text .bottom-area a {
             color: #fff;
             width: 100%;
-            background: #be7a65;
+            background: #ff7100 !important;
             width: 40px;
             height: 40px;
             font-size: 13px;
@@ -8939,7 +8952,7 @@ h1, h2, h3, h4, h5,
   .table tbody tr td {
     text-align: center !important;
     vertical-align: middle;
-    padding: 40px 10px;
+    padding: 20px 10px;
     border: 1px solid transparent !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important; }
     .table tbody tr td.product-remove a {
@@ -9103,7 +9116,7 @@ h1, h2, h3, h4, h5,
       color: black !important;
       font-size: 14px;
       font-weight: 300;
-      border-radius: 5px 0 0 5px; }
+      border-radius: 1px 0 0 1px; }
       .subscribe-form .form-group input:focus{
         border: 1px solid #fd7e14;
       }
@@ -9112,10 +9125,10 @@ h1, h2, h3, h4, h5,
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
         -ms-border-radius: 0;
-        border-radius: 0 5px 5px 0;
+        border-radius: 0 1px 1px 0;
         font-size: 12px;
         border: none;
-        background: #be7a65 !important;
+        background: #dd781a !important;
     }
       .subscribe-form .form-group .submit:hover {
         cursor: pointer; }
@@ -9357,7 +9370,7 @@ textarea.form-control {
       font-size: 12px;
       font-weight: 500; }
   .ftco-services .services:hover .icon, .ftco-services .services:focus .icon {
-    background: #82ae46; }
+     }
     .ftco-services .services:hover .icon span, .ftco-services .services:focus .icon span {
       color: #fff; }
 
@@ -9444,8 +9457,9 @@ textarea.form-control {
       margin: 5px;
       border-radius: 50%;
       background: rgba(0, 0, 0, 0.2); }
-      .testimony-section .owl-dots .owl-dot.active {
-        background: #82ae46; }
+        .testimony-section .owl-dots .owl-dot.active {
+            background: #dd781a;
+        }
 
 .testimony-wrap {
   display: block;
@@ -9486,16 +9500,17 @@ textarea.form-control {
     position: relative;
     border-left: 1px solid #e6e6e6; }
     .testimony-wrap .line:after {
-      position: absolute;
-      top: 50%;
-      left: -2px;
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-      content: '';
-      width: 3px;
-      height: 30px;
-      background: #82ae46; }
+        position: absolute;
+        top: 50%;
+        left: -2px;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        content: '';
+        width: 3px;
+        height: 30px;
+        background: #dd781a;
+    }
 
 .image-popup {
   cursor: -webkit-zoom-in;

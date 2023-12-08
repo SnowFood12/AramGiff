@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aram.Migrations
 {
     [DbContext(typeof(AramContext))]
-    [Migration("20231206043504_addnewDB")]
-    partial class addnewDB
+    [Migration("20231208031221_suaTrangThai")]
+    partial class suaTrangThai
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,11 +34,10 @@ namespace Aram.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DiaChi")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("ntext");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("LinkMap")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("NgayTaoCuaHang")
                         .HasColumnType("Date");
@@ -46,7 +45,22 @@ namespace Aram.Migrations
                     b.Property<string>("SoDT")
                         .HasColumnType("char(10)");
 
+                    b.Property<string>("TaiKhoanTenTK")
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Ten")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TenTK")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TaiKhoanTenTK");
 
                     b.ToTable("CUA_HANG");
                 });
@@ -59,7 +73,7 @@ namespace Aram.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Ten")
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("TrangThai")
@@ -88,11 +102,13 @@ namespace Aram.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte[]>("PicData")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Ten")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -103,10 +119,57 @@ namespace Aram.Migrations
                     b.ToTable("SAN_PHAM");
                 });
 
+            modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
+                {
+                    b.Property<string>("TenTK")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("GioiTinh")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("HoTen")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("LoaiTK")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MatKhau")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<DateTime>("NgayTao")
+                        .HasColumnType("date");
+
+                    b.Property<string>("SoDT")
+                        .HasColumnType("char(10)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TenTK");
+
+                    b.ToTable("TAI_KHOAN");
+                });
+
+            modelBuilder.Entity("Aram.Models.CuaHang", b =>
+                {
+                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
+                        .WithMany("CuaHangs")
+                        .HasForeignKey("TaiKhoanTenTK");
+
+                    b.Navigation("TaiKhoan");
+                });
+
             modelBuilder.Entity("Aram.Models.SanPham", b =>
                 {
                     b.HasOne("Aram.Models.CuaHang", "CuaHang")
-                        .WithMany("SanPham")
+                        .WithMany("SanPhams")
                         .HasForeignKey("CuaHangId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -124,12 +187,17 @@ namespace Aram.Migrations
 
             modelBuilder.Entity("Aram.Models.CuaHang", b =>
                 {
-                    b.Navigation("SanPham");
+                    b.Navigation("SanPhams");
                 });
 
             modelBuilder.Entity("Aram.Models.LoaiSP", b =>
                 {
                     b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
+                {
+                    b.Navigation("CuaHangs");
                 });
 #pragma warning restore 612, 618
         }
