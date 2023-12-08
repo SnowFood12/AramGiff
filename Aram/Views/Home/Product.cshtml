@@ -39,9 +39,9 @@
 	<div class="container">
 		<div class="row" style="background-color: white; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 			<div class="col-lg-6 mb-5 ftco-animate">
-				<a href="images/product-1.jpg" class="image-popup">
+				<a class="image-popup">
 					<img src="@Url.Action("GetImage", "SanPham", new { id = @ViewBag.ThongTinSanPhamId.Id})"
-						 class="img-fluid" alt="Colorlib Template" style="margin-top:3rem;">
+						 class="img-fluid" alt="Colorlib Template" style="margin-top:3rem; height: 25rem; width: 100%; object-fit: cover;" />
 				</a>
 			</div>
 			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
@@ -72,7 +72,7 @@
 						<p class="price"><span style="color: #a41a1a; font-size:16px;">Hết hàng</span></p>
 					}
 				}
-				<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia</span></p>
+				<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia.ToString("C3")</span></p>
 				<div class="row mt-4">
 					<div class="col-md-6">
 						<div class="form-group d-flex">
@@ -120,7 +120,7 @@
 				{
 					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
 						<div class="product">
-							<a href="#" class="img-prod">
+							<a class="img-prod" style="height: 240px; object-fit: cover;">
 								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = item.Id})"
 									 alt="Colorlib Template">
 							</a>
@@ -128,8 +128,17 @@
 								<h3><a href="#">@item.Ten</a></h3>
 								<div class="d-flex">
 									<div class="pricing">
-										<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">@item.TrangThai</span></p>
-										<p class="price"><span class="price-sale">@item.Gia</span></p>
+										@{
+											if (item.TrangThai == true)
+											{
+												<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Còn hàng</span></p>
+											}
+											else
+											{
+												<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Hết hàng</span></p>
+											}
+										}
+										<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
 									</div>
 								</div>
 								<div class="bottom-area d-flex px-3">
