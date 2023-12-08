@@ -283,9 +283,9 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("TenTK"," Tên đăng nhập không được để trống!");
             }
-            else if (taiKhoan.TenTK.Length < 8 || taiKhoan.TenTK.Length > 15)
+            else if (taiKhoan.TenTK.Length < 6 || taiKhoan.TenTK.Length > 15)
             {
-                ModelState.AddModelError("TenTK", "Tên đăng nhập phải từ 8 kí tự trở lên!");
+                ModelState.AddModelError("TenTK", "Tên đăng nhập phải từ 6 kí tự trở lên!");
             }
             else if (taiKhoan.Email == null)
             {
