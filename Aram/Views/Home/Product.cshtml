@@ -62,7 +62,16 @@
 							<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
 						</p>
 					</div> -->
-				<p class="price"><span style="color: #a41a1a; font-size:16px;">@ViewBag.ThongTinSanPhamId.TrangThai</span></p>
+				@{
+					if (ViewBag.ThongTinSanPhamId.TrangThai == true)
+					{
+						<p class="price"><span style="color: #a41a1a; font-size:16px;">Còn hàng</span></p>
+					}
+					else
+					{
+						<p class="price"><span style="color: #a41a1a; font-size:16px;">Hết hàng</span></p>
+					}
+				}
 				<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia</span></p>
 				<div class="row mt-4">
 					<div class="col-md-6">

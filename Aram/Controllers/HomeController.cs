@@ -51,6 +51,8 @@ namespace Aram.Controllers
 
 		public IActionResult MainHome() // trang chủ
 		{
+			var ListProduct = _context.SanPham.Take(8).ToList();
+			ViewBag.ListProduct = ListProduct;
 			return View();
 		}
 
