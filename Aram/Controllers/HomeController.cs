@@ -3,6 +3,7 @@ using Aram.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Net.WebSockets;
 
 namespace Aram.Controllers
 {
@@ -20,6 +21,7 @@ namespace Aram.Controllers
 
 		public IActionResult Index()
 		{
+			var LoaiSanPham = _context.LoaiSP.ToList();
 			var TongTinSanPham = _context.SanPham.Select(a => new
 			{
 				a.Id,
@@ -28,9 +30,24 @@ namespace Aram.Controllers
 				a.TrangThai,
 				a.Gia
 			}); 
+			ViewBag.LoaiSanPham = LoaiSanPham;
 			ViewBag.ThongTinSanPham = TongTinSanPham;
 			return View();
 		}
+		// lọc sản phẩm 
+		public IActionResult LocSanPham (int id)
+		{
+			var LoaiSanPham = _context.LoaiSP.ToList();
+
+			var SanPham = _context.SanPham.Where(a => a.LoaiSPId == id).ToList();
+
+			ViewBag.LoaiSanPham = LoaiSanPham;
+
+			ViewBag.ThongTinSanPham = SanPham;
+
+			return View("Index");
+		}
+
 
 		public IActionResult MainHome() // trang chủ
 		{
