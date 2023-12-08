@@ -15,6 +15,7 @@ namespace Aram.Controllers
         private readonly AramContext _context;
         private readonly IConfiguration _config;
 		private static string LuuTenTK;
+        private static string LuuMK;
 		private static string LuuHoTen;
 		private static string LuuSDT;
         private static string LuuEmail;
@@ -27,6 +28,10 @@ namespace Aram.Controllers
         }
         public IActionResult Index()
         {
+            if (LuuTenTK == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
             ViewBag.TenTK = LuuTenTK;
             ViewBag.HoTen = LuuHoTen;
 			ViewBag.SDT = LuuSDT;
@@ -50,6 +55,11 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("TenTK", "Tên đăng nhập đã tồn tại!");
             }
+            else if (Regex.IsMatch(taiKhoan.TenTK, @"\s") || Regex.IsMatch(taiKhoan.TenTK, @"[^a-zA-Z0-9]"))
+            {
+                ModelState.AddModelError("TenTK", "Tên đăng nhập không được chứa ký tự đặc biệt!");
+            }
+            //Thiếu khoảng trắng, ký tự đặc biệt
 
             // Kiểm tra email đúng định dạng
             if (taiKhoan.Email == null || taiKhoan.Email.Trim() == "")
@@ -68,7 +78,7 @@ namespace Aram.Controllers
             // Kiểm tra mật khẩu
             if (taiKhoan.MatKhau == null || taiKhoan.MatKhau.Trim() == "")
             {
-                ModelState.AddModelError("MatKhau", "Mật khẩu không được để trống.");
+                ModelState.AddModelError("MatKhau", "Mật khẩu không được để trống!");
             }
             else if (taiKhoan.MatKhau.Length < 8)
             {
@@ -78,35 +88,86 @@ namespace Aram.Controllers
             // Kiểm tra xác thực mật khẩu
             if (XacNhanMatKhau == null || XacNhanMatKhau.Trim() == "")
             {
-                ModelState.AddModelError("XacNhanMatKhau", "Xác nhận mật khẩu không được để trống.");
+                ViewBag.LoiMK = "Xác nhận mật khẩu không được để trống!";
             }
             else if (taiKhoan.MatKhau != XacNhanMatKhau)
             {
-                ModelState.AddModelError("XacNhanMatKhau", "Xác nhận mật khẩu không trùng khớp với mật khẩu!");
+                ViewBag.LoiMK = "Xác nhận mật khẩu không trùng khớp mật khẩu!";
             }
 
             // Mọi điều kiện hợp lệ, tiến hành thêm tài khoản vào cơ sở dữ liệu
             if (ModelState.IsValid)
             {
-                // Mọi điều kiện hợp lệ, tiến hành thêm tài khoản vào cơ sở dữ liệu
-                taiKhoan.NgayTao = DateTime.Now;
-                taiKhoan.SoDT = null;
-                taiKhoan.LoaiTK = true;
-                taiKhoan.TrangThai = true;
-                _context.Add(taiKhoan);
-                _context.SaveChangesAsync();
-				return RedirectToAction("DangNhap", "TaiKhoan");
+                LuuTenTK = taiKhoan.TenTK;
+                LuuEmail = taiKhoan.Email;
+                LuuMK = taiKhoan.MatKhau;
+                string maOTP = GenerateOTP();
+                SendEmail(LuuEmail, maOTP);
+                currentOTP = maOTP;
+                // Đặt hẹn giờ reset OTP sau 2 phút
+                otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
+                otpResetTimer.Elapsed += (sender, e) => ResetOTP();
+                otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
+                otpResetTimer.Start();
+                return RedirectToAction("XacNhanDangKy", "TaiKhoan");
             }
             else
             {
                 return View(taiKhoan);
             }
         }
+        public IActionResult XacNhanDangKy(string otp)
+        {
+            string storeOTP = currentOTP;
+
+            ViewBag.ShowError = false; // Biến để xác định xem có hiển thị thông báo lỗi hay không
+
+            if (string.IsNullOrEmpty(otp))
+            {
+                ViewBag.ShowError = true;
+                ViewBag.LoiNhapOTP = "Mã OTP không được để trống!";
+            }
+            else if (otp.Length != 6)
+            {
+                ViewBag.ShowError = true;
+                ViewBag.LoiNhapOTP = "Mã OTP phải có đúng 6 số!";
+            }
+            else if (otp != storeOTP)
+            {
+                ViewBag.ShowError = true;
+                ViewBag.LoiNhapOTP = "Mã xác thực OTP không trùng khớp!";
+            }
+            else
+            {
+                ViewBag.LoiNhapOTP = null;
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (otp == storeOTP)
+                {
+                    TaiKhoan taiKhoan = new TaiKhoan()
+                    {
+                        TenTK = LuuTenTK,
+                        MatKhau = LuuMK,
+                        Email = LuuEmail
+                    };
+                    taiKhoan.NgayTao = DateTime.Now;
+                    taiKhoan.SoDT = null;
+                    taiKhoan.LoaiTK = true;
+                    taiKhoan.TrangThai = true;
+                    _context.Add(taiKhoan);
+                    _context.SaveChangesAsync();
+                    return RedirectToAction("DangNhap", "TaiKhoan");
+                }
+            }
+            return View();
+        }
         public IActionResult DangNhap([Bind("TenTK,MatKhau,HoTen,GioiTinh,Email,SoDT,NgayTao,LoaiTK,TrangThai")] TaiKhoan taiKhoan)
         {
             if (taiKhoan.TenTK == null)
 			{
-                ModelState.AddModelError("Name", "Tên đăng nhập không được để trống!");
+                ViewBag.LoiTK = "Tên đăng nhập không được để trống!";
             }
             else if(taiKhoan.TenTK.Length < 8 || taiKhoan.TenTK.Length > 15)
             {
@@ -176,29 +237,43 @@ namespace Aram.Controllers
 		{
 			// Tạo mã OTP mới
 			string newOTP = GenerateOTP();
-
-			// Lưu mã OTP mới vào session
-			/*HttpContext.Session.SetString("OTP", newOTP);*/
 			currentOTP = newOTP;
 		}
 		//Phương thức gửi lại mã OTP
 		public IActionResult SendOTP()
 		{
-			string email = HttpContext.Session.GetString("Email");
+			string email = LuuEmail;
 			string maOTP = GenerateOTP();
 			currentOTP = maOTP;
 			SendEmail(email, maOTP);
-			return RedirectToAction("NhapMaOTP", "DangNhap");
+			return RedirectToAction("NhapOTP", "TaiKhoan");
 		}
 		private System.Timers.Timer otpResetTimer;
 		public IActionResult QuenMatKhau(string TenDangNhap, string email)
         {
-            TaiKhoan taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == TenDangNhap && x.Email == email);
+            if(TenDangNhap == null)
+            {
+                ViewBag.LoiTK = "Tên đăng nhập không được để trống!";
+            }
+            else if (TenDangNhap.Length < 8 || TenDangNhap.Length > 15)
+            {
+                ViewBag.LoiTK = "Tên đăng nhập phải từ 8 kí tự trở lên!";
+            }
+            else if (email == null)
+            {
+                ViewBag.LoiEmail = "Email không được để trống!";
+            }
+            else if (!email.EndsWith("@gmail.com"))
+            {
+                ViewBag.LoiEmail = "Email không đúng định dạng @gmail.com!";
+            }
+                TaiKhoan taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == TenDangNhap && x.Email == email);
 			if (taiKhoan != null)
             {
                 string maOTP = GenerateOTP();
                 SendEmail(email, maOTP);
                 LuuTenTK = TenDangNhap;
+                LuuEmail = email;
 				currentOTP = maOTP;
 				// Đặt hẹn giờ reset OTP sau 2 phút
 				otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
@@ -211,8 +286,6 @@ namespace Aram.Controllers
 		}
         public IActionResult NhapOTP(string otp)
         {
-			// Lấy OTP từ session 
-			/*string storeOTP = HttpContext.Session.GetString("OTP");*/
 			string storeOTP = currentOTP;
 
 			ViewBag.ShowError = false; // Biến để xác định xem có hiển thị thông báo lỗi hay không
@@ -262,5 +335,10 @@ namespace Aram.Controllers
 			}
 			return View();
         }
+        public IActionResult DangXuat()
+        {
+            return RedirectToAction("DangNhap", "TaiKhoan");
+		}
+        
     }
 }

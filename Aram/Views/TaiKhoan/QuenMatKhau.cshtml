@@ -22,6 +22,7 @@
             <img src="/img/points4.png" alt="" class="shape s4">
             <div class="container__form--main">
                 <div class="form__login--main">
+                    <div class="btn_quaylai"><a asp-action="DangNhap" asp-controller="TaiKhoan"><i class="fa-solid fa-arrow-left-long"></i></a></div>
                     <div class="lbl__login--big">
                         <strong>QUÊN MẬT KHẨU</strong> <br>
                         <span class="lbl__login--small">
@@ -32,13 +33,12 @@
                         <div class="ipt__login">
                             <label for="" class="lbl__login">Tên đăng nhập</label><br>
                             <input type="text" name="TenDangNhap" id="" class="txt__login"><br>
-                            <span class="erro__login"></span>
+                            <span class="erro__login">@ViewBag.LoiTK</span>
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Email</label><br>
                             <input type="email" name="email" id="email" class="txt__login"><br>
-                            <span class="erro__login"></span><br>
-                            <a class="forget__password" >Quay lại</a>
+                            <span class="erro__login">@ViewBag.LoiEmail</span><br>
                         </div>
                         <button class="btn__login" >Gửi mã OTP</button>
                     </form>
@@ -55,7 +55,7 @@
                     <div class="lop__phu"></div>
                     <div class="cut">
                         <div class="close">
-                            <a  class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                            <a asp-action="MainHome" asp-controller="Home" class="btn__close"><i class="fa-solid fa-xmark"></i></a>
                         </div>
                     </div>
                 </div>

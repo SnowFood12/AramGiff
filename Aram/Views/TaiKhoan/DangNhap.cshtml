@@ -31,7 +31,7 @@
                         <div class="ipt__login">
                             <label for="" class="lbl__login item_login">Tên đăng nhập</label><br>
                             <input type="text" asp-for="TenTK" id="" class="txt__login" placeholder=" "><br>
-                            <span class="erro__login"></span>
+                            <span class="erro__login">@ViewBag.LoiTK</span>
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Mật khẩu</label><br>
@@ -52,7 +52,7 @@
                     <div class="lop__phu"></div>
                     <div class="cut">
                         <div class="close">
-                            <a  class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                            <a asp-action="MainHome" asp-controller="Home" class="btn__close"><i class="fa-solid fa-xmark"></i></a>
                         </div>
                     </div>
                 </div>
@@ -60,4 +60,20 @@
         </div>
     </div>
 </body>
+<script>
+    var show = document.getElementById('show__password')
+    var slash = document.getElementById('slash__password')
+    var password = document.getElementById('password')
+
+    slash.addEventListener('click', function () {
+        password.type = 'text';
+        slash.style.visibility = 'hidden'
+        show.style.visibility = 'visible'
+    })
+    show.addEventListener('click', function () {
+        password.type = 'password';
+        show.style.visibility = 'hidden'
+        slash.style.visibility = 'visible'
+    })
+</script>
 </html>

@@ -84,6 +84,8 @@
     cursor: pointer;
     top: 42px;
     right: 70px;
+    border:none;
+    background:none;
 }
 
 #show {
@@ -99,7 +101,7 @@
     margin-bottom: 60px;
     width: calc(100% - 100px);
     margin-left: 50px;
-    margin-top: 40px;
+    margin-top: 15px;
     font-size: 16px;
     font-weight: 500;
     border-radius: 5px;
@@ -210,4 +212,5 @@
 .countDown {
     padding-left: 130px;
     color: #6CB1C8;
+    padding-top:15px;
 }

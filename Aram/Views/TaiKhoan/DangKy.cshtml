@@ -48,12 +48,13 @@
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Xác nhận mật khẩu</label><br>
                             <input type="password" name="XacNhanMatKhau" id="password" class="txt__login"><br>
-                            <span class="erro__login">@Html.ValidationMessage("XacNhanMatKhau")</span><br>
-                            <span>Bạn đã có tài khoản?</span><a class="forget__password" asp-action="DangNhap" asp-controller="TaiKhoan">   Đăng nhập</a>
+                            <span class="erro__login">@ViewBag.LoiMK</span><br>
+                           
                             <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
                             <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
                         </div>
                         <button class="btn__login" type="submit" asp-action="DangKy" asp-controller="TaiKhoan">Đăng ký</button>
+                        <div class="lbl_dangky"><span>Bạn đã có tài khoản?</span><a class="forget__password" asp-action="DangNhap" asp-controller="TaiKhoan">   Đăng nhập</a></div>
                    </form>
 
                 </div>
@@ -63,7 +64,7 @@
                     <div class="lop__phu"></div>
                     <div class="cut">
                         <div class="close">
-                            <a  class="btn__close"><i class="fa-solid fa-xmark"></i></a>
+                            <a asp-action="MainHome" asp-controller="Home" class="btn__close"><i class="fa-solid fa-xmark"></i></a>
                         </div>
                     </div>
                 </div>
@@ -71,4 +72,20 @@
         </div>
     </div>
 </body>
+<script>
+    var show = document.getElementById('show__password')
+    var slash = document.getElementById('slash__password')
+    var password = document.getElementById('password')
+
+    slash.addEventListener('click', function () {
+        password.type = 'text';
+        slash.style.visibility = 'hidden'
+        show.style.visibility = 'visible'
+    })
+    show.addEventListener('click', function () {
+        password.type = 'password';
+        show.style.visibility = 'hidden'
+        slash.style.visibility = 'visible'
+    })
+</script>
 </html>

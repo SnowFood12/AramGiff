@@ -31,7 +31,10 @@
     color: #344767;
     padding: 20px 50px;
     margin-bottom: 2rem;
-    margin-top: 4rem;
+    margin-top: 1rem;
+}
+a {
+    text-decoration: none;
 }
 
 .img__login--main {
@@ -205,4 +208,10 @@
 .item {
     background-color: white;
     border: 1px solid #b26c3daa;
+}
+.btn_quaylai {
+    padding-left: 50px;
+    padding-top: 40px;
+    font-size: 25px;
+    color: #344767;
 }
