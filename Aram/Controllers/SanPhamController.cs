@@ -126,15 +126,16 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SanPham sanPham, IFormFile imageSP)
+        public async Task<IActionResult> Edit(int id, SanPham sanPham, IFormFile? imageSP)
         {
             SanPham sp = _context.SanPham.FirstOrDefault(x => x.Id == id);
-            sanPham.PicData = sp.PicData;
+            sp.Ten = sanPham.Ten;
+            sp.Gia = sanPham.Gia;
+            sp.LoaiSPId = sanPham.LoaiSPId;
             if (id != sanPham.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
@@ -147,7 +148,8 @@ namespace Aram.Controllers
                             sanPham.PicData = memoryStream.ToArray();
                         }
                     }
-                    _context.Update(sanPham);
+                    
+                    _context.Update(sp);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

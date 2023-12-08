@@ -73,7 +73,7 @@
                                                                                 padding:5px 10px;
                                                                                 background: white ;">Thêm hình ảnh</label>
 
-                <input type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
+                <input value="@ViewBag.image" type="file" class="form-control" name="imageSP" id="img" style="display: none;" onchange="displayImage(this)" />
                 <div class="form-control" style="height: 200px !important;">
                     <img src="@Url.Action("GetImage", "SanPham", new { id = Model.Id })" id="myImage" style="width: 100%; height: 100%; object-fit: cover;" /> @* --> truyền link hình vào đây *@
                 </div>
