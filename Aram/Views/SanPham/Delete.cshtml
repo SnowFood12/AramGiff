@@ -56,7 +56,7 @@
 
 <div class="row_aram">
     <div class="col-md-4">
-        <span style="font-size: 20px;color: #dc6363;">Bạn có muốn xoá sản phẩm này không?</span>
+        <span style="font-size: 20px;color: #dc6363;">Bạn có muốn chuyển trạng thái sản phẩm này không?</span>
         <form asp-action="Delete" asp-route-chID="@ViewBag.chID" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -86,7 +86,7 @@
             </div>
 
             <div class="form-group--btn">
-                <input type="submit" value="Xoá" class="btn__them" />
+                <input type="submit" value="Đổi trạng thái" class="btn__them" />
                 <div>
                     <a asp-action="Index" asp-route-id="@ViewBag.chID" type="button" class="btn__them">Quay lại</a>
                 </div>
