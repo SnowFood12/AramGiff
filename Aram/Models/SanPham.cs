@@ -15,8 +15,8 @@ namespace Aram.Models
         public byte[]? PicData { get; set; }
         public int CuaHangId { get; set; }
         public int LoaiSPId { get; set; }
-        [DefaultValue("default")]
-        public string? TrangThai { get; set; }
+        [DefaultValue(true)]
+        public bool TrangThai { get; set; }
         public CuaHang? CuaHang { get; set; }
         public LoaiSP? LoaiSP { get; set; }
     }
