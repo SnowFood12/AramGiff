@@ -39,10 +39,13 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-5 text-center">
 				<ul class="product-category">
-					<li><a href="#" class="active">Vải thổ cẩm</a></li>
-					<li><a href="#">cà phê</a></li>
-					<li><a href="#">Rượu cần</a></li>
-					<li><a href="#">Mật ong hoa cà phê</a></li>
+					<li><a asp-action="Index" asp-controller="Home" class="active">Tất cả</a></li>
+					@{
+						foreach (var item in ViewBag.LoaiSanPham)
+						{
+							<li><a asp-action="LocSanPham" asp-controller="Home" asp-route-id="@item.Id">@item.Ten</a></li>
+						}
+					}
 				</ul>
 			</div>
 		</div>
@@ -71,7 +74,7 @@
 				{
 					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
 						<div class="product">
-							<a href="#" class="img-prod">
+							<a class="img-prod" style="height: 240px; object-fit: cover">
 								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = @item.Id})" alt="Colorlib Template">
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
@@ -89,7 +92,7 @@
 								
 								<div class="d-flex">
 									<div class="pricing">
-										<p class="price"><span class="price-sale">@item.Gia</span></p>
+										<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
 									</div>
 								</div>
 								<div class="bottom-area d-flex px-3">
