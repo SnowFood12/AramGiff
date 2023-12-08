@@ -9,6 +9,7 @@ using Aram.Data;
 using Aram.Models;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Net.WebSockets;
+using System.Text.RegularExpressions;
 
 namespace Aram.Controllers
 {
@@ -78,8 +79,32 @@ namespace Aram.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SanPham sanPham, IFormFile imageSP)
+        public async Task<IActionResult> Create(SanPham sanPham, IFormFile? imageSP)
         {
+            sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
+            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
+            //kiểm lỗi ten san pham
+            if (sanPham.Ten == null)
+            {
+                ModelState.AddModelError("Ten", "Tên sản phẩm không được để trống");
+            }
+            else if (sanPham.Ten.Length > 50)
+            {
+                ModelState.AddModelError("Ten", "Tên sản phẩm không được dài quá 50 kí tự");
+            }
+            else if (!kuTuDacBiet.IsMatch(sanPham.Ten))
+            {
+                ModelState.AddModelError("Ten", "Tên sản phẩm không được chứa ký tự đặc biệt hoặc số");
+            }
+            //kiểm lỗi ten gia
+            if(sanPham.Gia == null)
+            {
+                ModelState.AddModelError("Gia", "Giá không được để trống");
+            } else if (sanPham.Gia < 10)
+            {
+                ModelState.AddModelError("Gia", "Giá phải lớn hơn 10.000đ");
+            }
+
             if (ModelState.IsValid)
             {
                 if(imageSP != null)
