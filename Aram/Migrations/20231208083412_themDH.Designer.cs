@@ -4,6 +4,7 @@ using Aram.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aram.Migrations
 {
     [DbContext(typeof(AramContext))]
-    partial class AramContextModelSnapshot : ModelSnapshot
+    [Migration("20231208083412_themDH")]
+    partial class themDH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +62,7 @@ namespace Aram.Migrations
 
                     b.HasIndex("TaiKhoanTenTK");
 
-                    b.ToTable("CUA_HANG", (string)null);
+                    b.ToTable("CUA_HANG");
                 });
 
             modelBuilder.Entity("Aram.Models.LoaiSP", b =>
@@ -78,7 +81,7 @@ namespace Aram.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LOAI_SP", (string)null);
+                    b.ToTable("LOAI_SP");
                 });
 
             modelBuilder.Entity("Aram.Models.SanPham", b =>
@@ -113,7 +116,7 @@ namespace Aram.Migrations
 
                     b.HasIndex("LoaiSPId");
 
-                    b.ToTable("SAN_PHAM", (string)null);
+                    b.ToTable("SAN_PHAM");
                 });
 
             modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
@@ -151,7 +154,7 @@ namespace Aram.Migrations
 
                     b.HasKey("TenTK");
 
-                    b.ToTable("TAI_KHOAN", (string)null);
+                    b.ToTable("TAI_KHOAN");
                 });
 
             modelBuilder.Entity("Aram.Models.CuaHang", b =>

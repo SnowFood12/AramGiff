@@ -81,7 +81,10 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SanPham sanPham, IFormFile? imageSP)
         {
-            sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
+            if(sanPham != null)
+            {
+                sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
+            }
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
             //kiểm lỗi ten san pham
             if (sanPham.Ten == null)
