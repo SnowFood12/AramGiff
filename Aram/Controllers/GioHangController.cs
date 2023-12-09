@@ -13,24 +13,38 @@ namespace Aram.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+		
+		public IActionResult Index()
         {
-			var gioHang = _context.GioHang.Where(p => p.TenTK == "admin").FirstOrDefault();
-            var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+			var tenTK = HttpContext.Session.GetString("Name");
+			if(tenTK == null)
+			{
+				return RedirectToAction("DangNhap", "TaiKhoan");
+			}
+				var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
+			if (gioHang == null)
+			{
+				return NotFound();
+			}
+
+				var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+
             return View(gioHang_ChiTiet);
         }
         public IActionResult AddToGioHang(int Id)
         {
-            int soLuong = 1;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == "admin").FirstOrDefault();
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id &&  p.SanPhamId == Id).FirstOrDefault();
+			var tenTK = HttpContext.Session.GetString("Name");
+			int soLuong = 1;
+			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
 			if (gioHang == null)
-            {
-                var tenTK = HttpContext.Session.GetString("Name");
+			{
+
 				gioHang = new GioHang { TenTK = tenTK };
-                _context.GioHang.Add(gioHang);
+				_context.GioHang.Add(gioHang);
 				_context.SaveChanges();
 			}
+			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id &&  p.SanPhamId == Id).FirstOrDefault();
+			
 			//
 			if (gioHang_ChiTiet == null)
             {
