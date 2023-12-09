@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "GioHangDangChoDuyet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="/css/CuaHang/Create.css">
+
+<div class="hero-wrap hero-bread" style="background-image: url('/img/zyro-image\ \(11\).png');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span>Dự án</span></p>
+                <h1 class="mb-0 bread">Thành phố xanh</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10 text-center" style="margin-top: 30px">
+        <ul class="product-category">
+            <li><a asp-action="Index" asp-controller="GioHang">Giỏ hàng</a></li>
+            <li><a asp-action="GioHangDangChoDuyet" asp-controller="GioHang" class="active">Đơn hàng đang chờ duyệt</a></li>
+            <li><a asp-action="DonHangDangGiao" asp-controller="GioHang" >Đơn hàng đang giao</a></li>
+            <li><a asp-action="DonHangDaNhan" asp-controller="GioHang">Đơn hàng đã nhận</a></li>
+        </ul>
+    </div>
+</div>
+
+<div style="width: 90%;
+            margin: 2rem auto;
+            padding: 20px 0px;
+            background: #fff;">
+    <div class="main__tieude">
+        <p class="tieu__de">Danh sách đơn hàng đang chờ duyệt</p>
+    </div>
+
+    <table class="table">
+        <thead style="background-color: #188D3E; color: white;">
+            <tr>
+                <th>
+                    Tên cửa hàng
+                </th>
+                <th>
+                    Số điện thoại
+                    cửa hàng
+                </th>
+                <th>
+                    Địa chỉ giao hàng
+                </th>
+                <th>
+                    Ghi chú
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="color: black;">
+                <td>
+                    Lưu niệm Holo
+                </td>
+                <td>
+                    1234567890
+                </td>
+                <td>
+                    12 Phan chu trinh, TP Buôn Ma thuật
+                </td>
+                <td>
+                    Giao trước 10h cho em nha!
+                </td>
+                <td>
+                    140.000 đ
+                </td>
+                <td>
+                    <a asp-action="ChiTietGioHangDangChoDuyet" asp-controller="GioHang"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

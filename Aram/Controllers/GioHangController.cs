@@ -17,17 +17,17 @@ namespace Aram.Controllers
 		public IActionResult Index()
         {
 			var tenTK = HttpContext.Session.GetString("Name");
-			if(tenTK == null)
+			if (tenTK == null)
 			{
 				return RedirectToAction("DangNhap", "TaiKhoan");
 			}
-				var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
+			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
 			if (gioHang == null)
 			{
 				return NotFound();
 			}
 
-				var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
 
             return View(gioHang_ChiTiet);
         }
@@ -59,5 +59,44 @@ namespace Aram.Controllers
 			_context.SaveChanges();
 			return RedirectToAction(nameof(Index));
 		}
+
+		//=======================================================
+		// đơn hàng đang chờ admin duyệt
+		public IActionResult GioHangDangChoDuyet()
+		{
+			return View();
+		}
+
+		// chi tiết đơn hàng đang chở duyệt
+
+		public IActionResult ChiTietGioHangDangChoDuyet()
+		{
+			return View();
+		}
+
+		// đơn hàng đang giao
+		public IActionResult DonHangDangGiao()
+		{
+			return View();
+		}
+        // Chi tiết đơn hàng đang giao
+        public IActionResult ChiTietDonHangDangGiao()
+        {
+            return View();
+        }
+
+
+        // đơn hàng đã nhận 
+        public IActionResult DonHangDaNhan()
+        {
+            return View();
+        }
+
+        // Chi tiết đơn hàng đã nhận
+        public IActionResult ChiTietDonHangDaNhan()
+        {
+            return View();
+        }
+
     }
 }

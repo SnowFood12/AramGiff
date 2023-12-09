@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <div class="hero-wrap hero-bread" style="background-image: url('/img/zyro-image\ \(11\).png');">
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -15,6 +17,16 @@
 	</div>
 </div>
 
+<div class="row justify-content-center">
+	<div class="col-md-10 text-center" style="margin-top: 30px">
+		<ul class="product-category">
+			<li><a asp-action="Index" asp-controller="Home" class="active">Giỏ hàng</a></li>
+			<li><a asp-action="GioHangDangChoDuyet" asp-controller="GioHang">Đơn hàng đang chờ duyệt</a></li>
+			<li><a asp-action="DonHangDangGiao" asp-controller="GioHang">Đơn hàng đang giao</a></li>
+			<li><a asp-action="DonHangDaNhan" asp-controller="GioHang">Đơn hàng đã nhận</a></li>
+		</ul>
+	</div>
+</div>
 
 <section class="ftco-section ftco-cart" style="
     padding: 0px;
@@ -27,7 +39,7 @@
 							background: #fff;
 							box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 						<thead class="thead-primary">
-							<tr class="text-center" style="background-color: #dd781a !important; ">
+							<tr class="text-center" style="background-color: #1C65A1 !important; ">
 								<th>&nbsp;</th>
 								<th>Hình ảnh</th>
 								<th>Tên</th>
@@ -41,15 +53,13 @@
 							{
 								<tr class="text-center">
 									<td class="product-remove">
-										<button type="button" class="btn" style="padding: 16px 10px;">
-											<i class="fa-solid fa-xmark" style="color : black; font-size:20px;"></i>
-										</button>
+										<a style="border:none; cursor:pointer;" >
+											<i class="fa-solid fa-xmark" style="color: brown; font-size:20px;"></i>
+										</a>
 
 									</td>
-
 									<td class="image-prod">
-										<img src="/SanPham/GetImage/@item.SanPhamId" class="img" style="background-image: url('/img/zyro-image (10).png');">
-										</img>
+										<img src="/SanPham/GetImage/@item.SanPhamId" class="img" style="background-image: url('/img/zyro-image (10).png');"/>
 									</td>
 
 									<td class="product-name">
@@ -90,8 +100,7 @@
 					<h3>Ghi chú</h3>
 					<p>Nhập ghi chú vào trường thông tin</p>
 					<div class="form-group">
-						<label for="">Ghi chú</label>
-						<input type="text" class="form-control text-left px-3" placeholder="">
+						<textarea type="text" class="form-control text-left px-3" placeholder="" style="height:13rem !important; padding: 10px 0px; resize: none;"></textarea>
 					</div>
 				</div>
 			</div>
