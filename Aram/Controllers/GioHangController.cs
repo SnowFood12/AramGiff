@@ -42,7 +42,7 @@ namespace Aram.Controllers
 				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
 			}
 			_context.SaveChanges();
-			return View("Index");
+			return RedirectToAction(nameof(Index));
 		}
     }
 }
