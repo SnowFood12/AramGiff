@@ -26,7 +26,8 @@ namespace Aram.Controllers
 			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id &&  p.SanPhamId == Id).FirstOrDefault();
 			if (gioHang == null)
             {
-                gioHang = new GioHang { TenTK = "admin" };
+                var tenTK = HttpContext.Session.GetString("Name");
+				gioHang = new GioHang { TenTK = tenTK };
                 _context.GioHang.Add(gioHang);
 				_context.SaveChanges();
 			}
@@ -42,7 +43,7 @@ namespace Aram.Controllers
 				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
 			}
 			_context.SaveChanges();
-			return View("Index");
+			return RedirectToAction(nameof(Index));
 		}
     }
 }
