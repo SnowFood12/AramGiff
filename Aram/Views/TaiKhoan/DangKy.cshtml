@@ -47,11 +47,11 @@
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Xác nhận mật khẩu</label><br>
-                            <input type="password" name="XacNhanMatKhau" id="password" class="txt__login"><br>
+                            <input type="password" name="XacNhanMatKhau" id="xnpassword" class="txt__login"><br>
                             <span class="erro__login">@ViewBag.LoiMK</span><br>
                            
-                            <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
-                            <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
+                            <a class="show__password" id="slash__xnpassword"><i class="fa-solid fa-eye-slash"></i></a>
+                            <a class="show__password" id="show__xnpassword"><i class="fa-regular fa-eye"></i></a>
                         </div>
                         <button class="btn__login" type="submit" asp-action="DangKy" asp-controller="TaiKhoan">Đăng ký</button>
                         <div class="lbl_dangky"><span>Bạn đã có tài khoản?</span><a class="forget__password" asp-action="DangNhap" asp-controller="TaiKhoan">   Đăng nhập</a></div>
@@ -76,7 +76,6 @@
     var show = document.getElementById('show__password')
     var slash = document.getElementById('slash__password')
     var password = document.getElementById('password')
-
     slash.addEventListener('click', function () {
         password.type = 'text';
         slash.style.visibility = 'hidden'
@@ -86,6 +85,20 @@
         password.type = 'password';
         show.style.visibility = 'hidden'
         slash.style.visibility = 'visible'
+    })
+
+    var showxn = document.getElementById('show__xnpassword')
+    var slashxn = document.getElementById('slash__xnpassword')
+    var xnpassword = document.getElementById('xnpassword')
+    slashxn.addEventListener('click', function () {
+        xnpassword.type = 'text';
+        slashxn.style.visibility = 'hidden'
+        showxn.style.visibility = 'visible'
+    })
+    showxn.addEventListener('click', function () {
+        xnpassword.type = 'password';
+        showxn.style.visibility = 'hidden'
+        slashxn.style.visibility = 'visible'
     })
 </script>
 </html>

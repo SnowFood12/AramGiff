@@ -1,4 +1,4 @@
-﻿
+﻿@model Aram.Models.TaiKhoan
 @{
     Layout = null;
 }
@@ -28,17 +28,16 @@
                             Điền mật khẩu mới cho tài khoản của bạn.
                         </span>
                     </div>
-                    <form action="">
+                    <form action="DoiMatKhauMoi" method="post">
                         <div class="ipt__login">
                             <label for="" class="lbl__login">Mật khẩu mới</label><br>
-                            <input type="text" name="MatKhauMoi" id="new__password" class="txt__login"><br>
-                            <span class="erro__login"></span>
+                            <input type="text" asp-for="MatKhau" id="new__password" class="txt__login"><br>
+                            <span class="erro__login" asp-validation-for="MatKhau"></span>
                         </div>
                         <div class="ipt__login" id="show">
                             <label for="" class="lbl__login">Xác nhận mật khẩu</label><br>
                             <input type="text" name="XacNhanMatKhauMoi" id="password" class="txt__login"><br>
-                            <span class="erro__login"></span><br>
-                            <a class="forget__password">Quay lại đăng nhập!</a>
+                            <span class="erro__login">@ViewBag.XNMKM</span><br>
                             <a class="show__password" id="slash__password"><i class="fa-solid fa-eye-slash"></i></a>
                             <a class="show__password" id="show__password"><i class="fa-regular fa-eye"></i></a>
                         </div>
