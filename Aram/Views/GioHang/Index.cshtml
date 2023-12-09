@@ -1,4 +1,5 @@
-﻿
+﻿@Model gioHang_ChiTiet
+
 @{
     ViewData["Title"] = "Invoice";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -37,35 +38,43 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td class="product-remove">
-									<button type="button" class="btn" style="padding: 16px 10px;">
-										<i class="fa-solid fa-xmark" style="color : black; font-size:20px;"></i>
-									</button>
-									
-								</td>
+							@foreach (var item in Model)
+							{
+								<tr class="text-center">
+									<td class="product-remove">
+										<button type="button" class="btn" style="padding: 16px 10px;">
+											<i class="fa-solid fa-xmark" style="color : black; font-size:20px;"></i>
+										</button>
 
-								<td class="image-prod">
-                                    <div class="img" style="background-image: url('/img/zyro-image (10).png');">
-									</div>
-								</td>
+									</td>
 
-								<td class="product-name">
-									<h3>Cà phê trung nguyên</h3>
-								</td>
+									<td class="image-prod">
+										<img src="/SanPham/GetImage/@item.SanPhamId" class="img" style="background-image: url('/img/zyro-image (10).png');">
+										</img>
+									</td>
 
-								<td class="price">120.000 đ</td>
+									<td class="product-name">
+										<h3>@item.SanPham.Ten</h3>
+									</td>
 
-								<td class="quantity">
-									<form action="">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity"
-												   class="quantity form-control input-number" value="1" min="1"
-												   max="100">
-										</div>
-									</form>
-								</td>
-								<td class="total">120.000 đ</td><!-- END TR-->
+									<td class="price">@item.SanPham.Gia</td>
+
+									<td class="quantity">
+										<form action="">
+											<div class="input-group mb-3">
+												<input type="text" name="quantity"
+													   class="quantity form-control input-number" value="1" min="1"
+													   max="100">
+											</div>
+										</form>
+									</td>
+									<td class="total">120.000 đ</td><!-- END TR-->
+								</tr>
+							}
+
+								
+						
+							
 						</tbody>
 					</table>
 			</div>

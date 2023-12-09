@@ -1,6 +1,7 @@
 ﻿using Aram.Data;
 using Aram.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aram.Controllers
 {
@@ -14,7 +15,9 @@ namespace Aram.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+			var gioHang = _context.GioHang.Where(p => p.TenTK == "admin").FirstOrDefault();
+            var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+            return View(gioHang_ChiTiet);
         }
         public IActionResult AddToGioHang(int Id)
         {
