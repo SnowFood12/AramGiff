@@ -27,6 +27,20 @@ namespace Aram.Controllers
             _context = context;
             _config = config;
         }
+
+        public IActionResult KiemTraDangNhap()
+        {
+            string Name = HttpContext.Session.GetString("Name"); 
+            if ( Name == null)
+            {
+				return RedirectToAction("DangNhap", "TaiKhoan");
+			}
+            else
+            {
+				return RedirectToAction("Index", "TaiKhoan");
+			}
+        }
+
         public IActionResult Index()
         {
             if (LuuTenTK == null)

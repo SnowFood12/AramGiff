@@ -4,32 +4,51 @@ namespace Aram.Controllers
 {
 	public class DonHangController : Controller
 	{
-		public IActionResult Index()
+        public void PhanQuyen()
+        {
+            string Name = HttpContext.Session.GetString("Name");
+            if (Name == "admin1234" && Name != null)
+            {
+                ViewBag.PhanQuyen = true;
+            }
+            else
+            {
+                ViewBag.PhanQuyen = false;
+            }
+        }
+        public IActionResult Index()
 		{
-			return View();
+			PhanQuyen();
+
+            return View();
 		}
 		public IActionResult Details()
 		{
-			return View();
+            PhanQuyen();
+            return View();
 		}
 
 		// đơn hàng đang giao
 		public IActionResult DonHangDangGiao()
 		{
-			return View();
+            PhanQuyen();
+            return View();
 		}
 		public IActionResult ChiTietDonHangDangGiao()
 		{
-			return View();
+            PhanQuyen();
+            return View();
 		}
 
 		// đơn hàng đã giao
 		public IActionResult DonHangDaGiao()
 		{
-			return View();
+            PhanQuyen();
+            return View();
 		}
 		public IActionResult ChiTietDonHangDaGiao()
 		{
+			PhanQuyen();
 			return View();
 		}
 	}
