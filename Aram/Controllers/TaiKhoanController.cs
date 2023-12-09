@@ -213,11 +213,16 @@ namespace Aram.Controllers
 					taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == taiKhoan.TenTK && x.MatKhau == taiKhoan.MatKhau);
 					if (taiKhoan != null)
                     {
-						LuuTenTK = taiKhoan.TenTK;
+                        LuuTenTK = taiKhoan.TenTK;
                         LuuHoTen = taiKhoan.HoTen;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
+
+
+                        HttpContext.Session.SetString("Name", taiKhoan.TenTK);
+
 						return RedirectToAction("MainHome", "Home");
+
                     }
                     else
                     {
@@ -403,7 +408,8 @@ namespace Aram.Controllers
         }
         public IActionResult DangXuat()
         {
-            return RedirectToAction("DangNhap", "TaiKhoan");
+            HttpContext.Session.Remove("Name");
+            return RedirectToAction("MainHome", "Home");
 		}
         
     }
