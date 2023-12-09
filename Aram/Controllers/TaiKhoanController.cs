@@ -217,6 +217,10 @@ namespace Aram.Controllers
                         LuuHoTen = taiKhoan.HoTen;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
+
+
+                        HttpContext.Session.SetString("Name", taiKhoan.TenTK);
+
 						return RedirectToAction("MainHome", "Home");
 
                     }
@@ -404,7 +408,8 @@ namespace Aram.Controllers
         }
         public IActionResult DangXuat()
         {
-            return RedirectToAction("DangNhap", "TaiKhoan");
+            HttpContext.Session.Remove("Name");
+            return RedirectToAction("MainHome", "Home");
 		}
         
     }

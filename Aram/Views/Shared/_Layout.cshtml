@@ -46,15 +46,30 @@
                             <a class="dropdown-item" asp-action="Invoice" asp-controller="Home"><i class="fa-solid fa-cart-shopping"></i>[0]</a>
                     </div>
                 </li>
-	        	<li class="nav-item active dropdown">
-              		<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý</a>
-              		<div class="dropdown-menu" aria-labelledby="dropdown04">
-              			<a class="dropdown-item" asp-action="Index" asp-controller="CuaHang">Cửa hàng</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="DonHang">Đơn hàng</a>
-              		</div>
-            	</li>
+                    @{
+                        if ( ViewBag.PhanQuyen == true)
+                        {
+                            <li class="nav-item active dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="CuaHang">Cửa hàng</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="DonHang">Đơn hàng</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active dropdown" style="display: none">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="CuaHang">Cửa hàng</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="DonHang">Đơn hàng</a>
+                                </div>
+                            </li>
+                        }
+                    }
                 <li class="nav-item"><a asp-action="Index" asp-controller="GioHang" class="nav-link"><i class="fa-solid fa-cart-shopping"></i>[0]</a></li>
-                    <li class="nav-item"><a asp-action="Index" asp-controller="TaiKhoan" class="nav-link"><i class="fa-solid fa-circle-user" style="font-size: 25px;"></i></i></a></li>
+                <li class="nav-item"><a asp-action="Index" asp-controller="TaiKhoan" class="nav-link"><i class="fa-solid fa-circle-user" style="font-size: 25px;"></i></i></a></li>
 	        </ul>
 	      </div>
 	    </div>

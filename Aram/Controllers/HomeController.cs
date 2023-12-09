@@ -19,6 +19,19 @@ namespace Aram.Controllers
             _context = context;
         }
 
+		public void PhanQuyen()
+		{
+            string Name = HttpContext.Session.GetString("Name");
+			if ( Name == "admin1234" && Name != null) 
+			{
+				ViewBag.PhanQuyen = true;
+			}
+            else
+            {
+				ViewBag.PhanQuyen = false;
+            }
+        }
+
 		public IActionResult Index()
 		{
 			var LoaiSanPham = _context.LoaiSP.ToList();
@@ -51,7 +64,8 @@ namespace Aram.Controllers
 
 		public IActionResult MainHome() // trang chủ
 		{
-			var ListProduct = _context.SanPham.Take(8).ToList();
+			PhanQuyen();
+            var ListProduct = _context.SanPham.Take(8).ToList();
 
 			var LastProduct = _context.SanPham.OrderBy( a => a.Id).Last(); 
 
