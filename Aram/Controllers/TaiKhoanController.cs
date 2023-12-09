@@ -75,6 +75,10 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("Email", "Email phải có định dạng đúng @gmail.com!");
             }
+            else if (taiKhoan.Email.Contains(" "))
+            {
+                ModelState.AddModelError("Email", "Email không được chứa khoảng trắng!");
+            }
             else if (ktEmail != null)
             {
                 ModelState.AddModelError("Email", "Email đã tồn tại!");
@@ -89,13 +93,17 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("MatKhau", "Mật khẩu phải từ 6 ký tự trở lên!");
             }
+            else if (taiKhoan.MatKhau.Contains(" "))
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu không được chứa khoảng trắng!");
+            }
 
             // Kiểm tra xác thực mật khẩu
             if (XacNhanMatKhau == null || XacNhanMatKhau.Trim() == "")
             {
                 ViewBag.LoiMK = "Xác nhận mật khẩu không được để trống!";
             }
-            else if (taiKhoan.MatKhau != XacNhanMatKhau)
+            else if (XacNhanMatKhau != taiKhoan.MatKhau )
             {
                 ViewBag.LoiMK = "Xác nhận mật khẩu không trùng khớp mật khẩu!";
             }
@@ -103,23 +111,23 @@ namespace Aram.Controllers
             // Mọi điều kiện hợp lệ, tiến hành thêm tài khoản vào cơ sở dữ liệu
             if (ModelState.IsValid)
             {
-                LuuTenTK = taiKhoan.TenTK;
-                LuuEmail = taiKhoan.Email;
-                LuuMK = taiKhoan.MatKhau;
-                string maOTP = GenerateOTP();
-                SendEmail(LuuEmail, maOTP);
-                currentOTP = maOTP;
-                // Đặt hẹn giờ reset OTP sau 2 phút
-                otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
-                otpResetTimer.Elapsed += (sender, e) => ResetOTP();
-                otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
-                otpResetTimer.Start();
-                return RedirectToAction("XacNhanDangKy", "TaiKhoan");
+                if (XacNhanMatKhau == taiKhoan.MatKhau)
+                {
+                    LuuTenTK = taiKhoan.TenTK;
+                    LuuEmail = taiKhoan.Email;
+                    LuuMK = taiKhoan.MatKhau;
+                    string maOTP = GenerateOTP();
+                    SendEmail(LuuEmail, maOTP);
+                    currentOTP = maOTP;
+                    // Đặt hẹn giờ reset OTP sau 2 phút
+                    otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
+                    otpResetTimer.Elapsed += (sender, e) => ResetOTP();
+                    otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
+                    otpResetTimer.Start();
+                    return RedirectToAction("XacNhanDangKy", "TaiKhoan");
+                }
             }
-            else
-            {
-                return View(taiKhoan);
-            }
+            return View(taiKhoan);
         }
         public IActionResult XacNhanDangKy(string otp)
         {
@@ -310,7 +318,11 @@ namespace Aram.Controllers
 				otpResetTimer.Start();
 				return RedirectToAction("NhapOTP", "TaiKhoan");
 			}
-				return View();
+            else
+            {
+                ModelState.AddModelError("Email", "Tên đăng nhập hoặc Email không tồn tại!");
+            }
+			return View();
 		}
         public IActionResult NhapOTP()
         {
@@ -343,20 +355,51 @@ namespace Aram.Controllers
 
 			return View();
         }
-        public IActionResult DoiMatKhauMoi(string MatKhauMoi)
+        public IActionResult DoiMatKhauMoi()
         {
-			string tenDangNhap = LuuTenTK;
-			TaiKhoan taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == tenDangNhap);
-            if (taiKhoan != null)
+            return View();
+        }
+        [HttpPost]
+        public IActionResult DoiMatKhauMoi(TaiKhoan taiKhoan, string XacNhanMatKhauMoi)
+        {
+            // Kiểm tra mật khẩu
+            if (taiKhoan.MatKhau == null || taiKhoan.MatKhau.Trim() == "")
             {
-                if (!string.IsNullOrEmpty(MatKhauMoi))
+                ModelState.AddModelError("MatKhau","Mật khẩu không được để trống!");
+            }
+            else if (taiKhoan.MatKhau.Length < 6)
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu phải từ 6 ký tự trở lên!"); 
+            }
+            else if (taiKhoan.MatKhau.Contains(" "))
+            {
+                ModelState.AddModelError("MatKhau", "Mật khẩu không được chứa khoảng trắng!");
+            }
+
+            // Kiểm tra xác thực mật khẩu
+            if (XacNhanMatKhauMoi == null || XacNhanMatKhauMoi.Trim() == "")
+            {
+                ViewBag.XNMKM = "Xác nhận mật khẩu không được để trống!";
+            }
+            if (XacNhanMatKhauMoi != taiKhoan.MatKhau)
+            {
+                ViewBag.XNMKM = "Xác nhận mật khẩu không trùng khớp mật khẩu!";
+            }
+            if (XacNhanMatKhauMoi == taiKhoan.MatKhau)
+            {
+                string tenDangNhap = LuuTenTK;
+                taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == tenDangNhap);
+                if (ModelState.IsValid)
                 {
-					taiKhoan.MatKhau = MatKhauMoi;
-					_context.SaveChanges();
-					return RedirectToAction("DangNhap", "TaiKhoan");
-				}
-			}
-			return View();
+                    if (taiKhoan != null)
+                    {
+                        taiKhoan.MatKhau = XacNhanMatKhauMoi;
+                        _context.SaveChanges();
+                        return RedirectToAction("DangNhap", "TaiKhoan");
+                    }
+                }
+            }
+            return View();
         }
         public IActionResult DangXuat()
         {
