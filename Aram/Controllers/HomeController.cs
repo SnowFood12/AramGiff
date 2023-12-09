@@ -58,7 +58,8 @@ namespace Aram.Controllers
 			ViewBag.LastProduct = LastProduct;
 
 			ViewBag.ListProduct = ListProduct;
-			return View();
+
+            return View();
 		}
 
 		public IActionResult Product( int id)

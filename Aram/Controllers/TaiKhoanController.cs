@@ -213,11 +213,12 @@ namespace Aram.Controllers
 					taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == taiKhoan.TenTK && x.MatKhau == taiKhoan.MatKhau);
 					if (taiKhoan != null)
                     {
-						LuuTenTK = taiKhoan.TenTK;
+                        LuuTenTK = taiKhoan.TenTK;
                         LuuHoTen = taiKhoan.HoTen;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
 						return RedirectToAction("MainHome", "Home");
+
                     }
                     else
                     {
