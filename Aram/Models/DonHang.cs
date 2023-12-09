@@ -9,12 +9,9 @@ namespace Aram.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateTime? ThoiGianTaoDon { get; set; }
-        [DefaultValue("1")]
-        public bool TrangThaiGioHang { get; set; }
-        public string? TrangThaiDonHang { get; set; }
-        [DefaultValue("1")]
-        public bool TrangThai { get; set; }
+        public DateTime? ThoiGianTaoDon { get; set; } = DateTime.Now;
+        public string? TrangThaiDH { get; set; } = "Chờ duyệt";
+        public bool TrangThai { get; set; } = true;
         public string? TenTK { get; set; }
         public TaiKhoan? TaiKhoan { get; set; }
         public virtual ThongTin_NhanHang? TT_NH { get; set; }
