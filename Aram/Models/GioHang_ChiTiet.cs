@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Humanizer;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Aram.Models
@@ -11,9 +12,17 @@ namespace Aram.Models
         [Required]
         public int GioHangId { get; set; }
         public GioHang? GioHang { get; set; }
-        [Required]
-        public int SanPhamId { get; set; }
+		[Required]
+		public int SanPhamId { get; set; }
         public SanPham? SanPham { get; set; }
         public int SoLuong { get; set; }
-    }
+        public int TongTien()
+        {
+			if (SanPham == null)
+            {
+				return 0;
+			}
+			return (int)SanPham.Gia * SoLuong;
+		}
+	}
 }

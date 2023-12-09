@@ -13,5 +13,14 @@ namespace Aram.Models
         [ForeignKey("TaiKhoan")]    
 		public string? TenTK { get; set; }
         public ICollection<GioHang_ChiTiet>? GioHang_ChiTiets { get; set; }
+
+		public int TamTinh()
+        {
+            if(GioHang_ChiTiets == null)
+            {
+				return 0;
+			}
+		    return (int)GioHang_ChiTiets.Sum(t => t.SanPham.Gia * t.SoLuong);
+        }
     }
 }
