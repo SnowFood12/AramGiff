@@ -34,7 +34,8 @@ namespace Aram.Controllers
 
 		public IActionResult Index()
 		{
-			var LoaiSanPham = _context.LoaiSP.ToList();
+            PhanQuyen();
+            var LoaiSanPham = _context.LoaiSP.ToList();
 			var TongTinSanPham = _context.SanPham.Select(a => new
 			{
 				a.Id,
@@ -50,7 +51,8 @@ namespace Aram.Controllers
 		// lọc sản phẩm 
 		public IActionResult LocSanPham (int id)
 		{
-			var LoaiSanPham = _context.LoaiSP.ToList();
+            PhanQuyen();
+            var LoaiSanPham = _context.LoaiSP.ToList();
 
 			var SanPham = _context.SanPham.Where(a => a.LoaiSPId == id).ToList();
 
@@ -78,7 +80,8 @@ namespace Aram.Controllers
 
 		public IActionResult Product( int id)
 		{
-			var ThongTinSanPhamId = _context.SanPham.FirstOrDefault( a => a.Id == id );
+            PhanQuyen();
+            var ThongTinSanPhamId = _context.SanPham.FirstOrDefault( a => a.Id == id );
 
 			var SanPhamInShop = _context.SanPham.Where(a => a.CuaHangId == ThongTinSanPhamId.CuaHangId);
 
