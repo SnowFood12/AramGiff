@@ -232,11 +232,23 @@ namespace Aram.Controllers
             var sanPham = await _context.SanPham.Include(x => x.LoaiSP).FirstOrDefaultAsync(m => m.Id == id); ;
             if (sanPham != null)
             {
+                if ( sanPham.TrangThai == true )
+                {
+                    sanPham.TrangThai = false;
+                    _context.SanPham.Update(sanPham);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    sanPham.TrangThai = true;
+                    _context.SanPham.Update(sanPham);
+                    _context.SaveChanges();
+                }
                 
-                _context.SanPham.Remove(sanPham);
+/*                _context.SanPham.Remove(sanPham);*/
             }
             
-            await _context.SaveChangesAsync();
+/*            await _context.SaveChangesAsync();*/
             return RedirectToAction(nameof(Index), new { id = chID });
         }
 
