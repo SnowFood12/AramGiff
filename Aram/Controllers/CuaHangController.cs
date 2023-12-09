@@ -20,9 +20,23 @@ namespace Aram.Controllers
             _context = context;
         }
 
+        public void PhanQuyen()
+        {
+            string Name = HttpContext.Session.GetString("Name");
+            if (Name == "admin1234" && Name != null)
+            {
+                ViewBag.PhanQuyen = true;
+            }
+            else
+            {
+                ViewBag.PhanQuyen = false;
+            }
+        }
+
         // GET: CuaHangs
         public async Task<IActionResult> Index()
         {
+            PhanQuyen();
               return _context.CuaHang != null ? 
                           View(await _context.CuaHang.Where(x => x.TrangThai == true).ToListAsync()) :
                           Problem("Entity set 'AramContext.CuaHang'  is null.");
@@ -31,6 +45,7 @@ namespace Aram.Controllers
         // GET: CuaHangs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            PhanQuyen();
             if (id == null || _context.CuaHang == null)
             {
                 return NotFound();
@@ -49,6 +64,7 @@ namespace Aram.Controllers
         // GET: CuaHangs/Create
         public IActionResult Create()
         {
+            PhanQuyen();
             return View();
         }
 
@@ -59,6 +75,7 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CuaHang cuaHang)
         {
+            PhanQuyen();
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
 
             if (cuaHang.Ten != null)
@@ -124,6 +141,7 @@ namespace Aram.Controllers
         // GET: CuaHangs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            PhanQuyen();
             if (id == null || _context.CuaHang == null)
             {
                 return NotFound();
@@ -144,6 +162,7 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CuaHang cuaHang)
         {
+            PhanQuyen();
             if (id != cuaHang.Id)
             {
                 return NotFound();
@@ -231,6 +250,7 @@ namespace Aram.Controllers
         // GET: CuaHangs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            PhanQuyen();
             if (id == null || _context.CuaHang == null)
             {
                 return NotFound();
@@ -251,6 +271,7 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            PhanQuyen();
             if (_context.CuaHang == null)
             {
                 return Problem("Entity set 'AramContext.CuaHang'  is null.");
@@ -267,7 +288,8 @@ namespace Aram.Controllers
 
         private bool CuaHangExists(int id)
         {
-          return (_context.CuaHang?.Any(e => e.Id == id)).GetValueOrDefault();
+            PhanQuyen();
+            return (_context.CuaHang?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

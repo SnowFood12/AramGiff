@@ -21,9 +21,22 @@ namespace Aram.Controllers
         {
             _context = context;
         }
+        public void PhanQuyen()
+        {
+            string Name = HttpContext.Session.GetString("Name");
+            if (Name == "admin1234" && Name != null)
+            {
+                ViewBag.PhanQuyen = true;
+            }
+            else
+            {
+                ViewBag.PhanQuyen = false;
+            }
+        }
         // GET: SanPhams
         public async Task<IActionResult> Index(int id)
         {
+            PhanQuyen();
             var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
             
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
@@ -33,6 +46,7 @@ namespace Aram.Controllers
 
         public IActionResult GetImage(int id)
         {
+            PhanQuyen();
             SanPham image = _context.SanPham.Find(id);
             if (image.PicData != null)
             {
@@ -47,6 +61,7 @@ namespace Aram.Controllers
         // GET: SanPhams/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            PhanQuyen();
             if (id == null || _context.SanPham == null)
             {
                 return NotFound();
@@ -67,6 +82,7 @@ namespace Aram.Controllers
         // GET: SanPhams/Create
         public IActionResult Create(int chID)
         {
+            PhanQuyen();
             ViewBag.chID = chID;
            /* ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", chID);*/
             var loaisps = new SelectList(_context.LoaiSP, "Id", "Ten");
@@ -81,7 +97,8 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SanPham sanPham, IFormFile? imageSP)
         {
-            if(sanPham.Ten != null)
+            PhanQuyen();
+            if (sanPham.Ten != null)
             {
                 sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
             }
@@ -132,6 +149,7 @@ namespace Aram.Controllers
         // GET: SanPhams/Edit/5
         public async Task<IActionResult> Edit(int? id, int chID)
         {
+            PhanQuyen();
             if (id == null || _context.SanPham == null)
             {
                 return NotFound();
@@ -156,6 +174,7 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, SanPham sanPham, IFormFile? imageSP)
         {
+            PhanQuyen();
             SanPham sp = _context.SanPham.FirstOrDefault(x => x.Id == id);
             sp.Ten = sanPham.Ten;
             sp.Gia = sanPham.Gia;
@@ -203,6 +222,7 @@ namespace Aram.Controllers
         // GET: SanPhams/Delete/5
         public async Task<IActionResult> Delete(int? id, int chID)
         {
+            PhanQuyen();
             if (id == null || _context.SanPham == null)
             {
                 return NotFound();
@@ -225,6 +245,7 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, int chID)
         {
+            PhanQuyen();
             if (_context.SanPham == null)
             {
                 return Problem("Entity set 'AramContext.SanPham'  is null.");
