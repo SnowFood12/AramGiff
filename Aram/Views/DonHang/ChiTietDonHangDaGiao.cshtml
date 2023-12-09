@@ -1,15 +1,15 @@
 ﻿
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "ChiTietDonHangDaGiao";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row justify-content-center" style="margin-top: 7rem;">
 	<div class="col-md-10 text-center" style="margin-top: 30px">
 		<ul class="product-category">
-			<li><a asp-action="Index" asp-controller="DonHang" class="active">Đơn hàng đang chờ duyệt</a></li>
+			<li><a asp-action="Index" asp-controller="DonHang" >Đơn hàng đang chờ duyệt</a></li>
 			<li><a asp-action="DonHangDangGiao" asp-controller="DonHang">Đơn hàng đang giao</a></li>
-			<li><a asp-action="DonHangDaGiao" asp-controller="DonHang">Lịch sử giao hàng</a></li>
+			<li><a asp-action="DonHangDaGiao" asp-controller="DonHang" class="active">Lịch sử giao hàng</a></li>
 		</ul>
 	</div>
 </div>
@@ -106,29 +106,6 @@
 						</p>
 					</div>
 					<p>
-
-						<button style="color: white !important;
-										background-color: #c25f11 !important;
-										border-radius: 2px !important;
-										font-size:18px;
-										width: 100%;
-										padding: 5px 0;
-										cursor: pointer;">
-							Duyệt đơn hàng
-						</button>
-
-						<button style="color: #da1b1b !important;
-										background-color: white !important;
-										border-radius: 2px !important;
-										font-size:18px;
-										width: 100%;
-										border: 1px solid #da1b1b  !important;
-										padding: 5px 0;
-										cursor: pointer;
-										margin-top:20px;">
-							Huỷ đơn hàng
-						</button>
-
 					</p>
 				</div>
 			</div>

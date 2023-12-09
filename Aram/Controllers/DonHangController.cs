@@ -12,5 +12,25 @@ namespace Aram.Controllers
 		{
 			return View();
 		}
+
+		// đơn hàng đang giao
+		public IActionResult DonHangDangGiao()
+		{
+			return View();
+		}
+		public IActionResult ChiTietDonHangDangGiao()
+		{
+			return View();
+		}
+
+		// đơn hàng đã giao
+		public IActionResult DonHangDaGiao()
+		{
+			return View();
+		}
+		public IActionResult ChiTietDonHangDaGiao()
+		{
+			return View();
+		}
 	}
 }

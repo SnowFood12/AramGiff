@@ -1,18 +1,16 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "DonHangDaGiao";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="/css/CuaHang/Create.css">
-
-
 <div class="row justify-content-center" style="margin-top: 7rem;">
     <div class="col-md-10 text-center" style="margin-top: 30px">
         <ul class="product-category">
-            <li><a asp-action="Index" asp-controller="DonHang" class="active">Đơn hàng đang chờ duyệt</a></li>
+            <li><a asp-action="Index" asp-controller="DonHang">Đơn hàng đang chờ duyệt</a></li>
             <li><a asp-action="DonHangDangGiao" asp-controller="DonHang">Đơn hàng đang giao</a></li>
-            <li><a asp-action="DonHangDaGiao" asp-controller="DonHang">Lịch sử giao hàng</a></li>
+            <li><a asp-action="DonHangDaGiao" asp-controller="DonHang" class="active">Lịch sử giao hàng</a></li>
         </ul>
     </div>
 </div>
@@ -21,7 +19,7 @@
             padding: 20px 0px;
             background: #fff;">
     <div class="main__tieude">
-        <p class="tieu__de">Danh sách đơn hàng chờ duyệt</p>
+        <p class="tieu__de">Danh sách đơn hàng đã giao</p>
         <div class="main__tim--kiem">
             <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
             <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -40,7 +38,7 @@
                 </th>
                 <th>
                     Địa chỉ giao hàng
-                </th>                
+                </th>
                 <th>
                     Số điện thoại khách hàng
                 </th>
@@ -65,7 +63,7 @@
                 </td>
                 <td>
                     12 Phan chu trinh, TP Buôn Ma thuật
-                </td>                
+                </td>
                 <td>
                     1234567890
                 </td>
@@ -76,11 +74,11 @@
                     140.000 đ
                 </td>
                 <td>
-                    <a asp-action="Details" asp-controller="DonHang"><i class="fa-solid fa-check" style="color: #188D3E !important; font-size:20px; margin-left: 10px"></i></a>
-                    <a asp-action="Details" asp-controller="DonHang"><i class="fa-solid fa-xmark" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
-                    <a asp-action="Details" asp-controller="DonHang"><i class="fa-solid fa-list" style="color: #1C65A1 !important; font-size:20px; margin-left: 10px"></i></a>
+                    <a asp-action="ChiTietDonHangDaGiao" asp-controller="DonHang"><i class="fa-solid fa-list" style="color: #1C65A1 !important; font-size:20px; margin-left: 10px"></i></a>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+

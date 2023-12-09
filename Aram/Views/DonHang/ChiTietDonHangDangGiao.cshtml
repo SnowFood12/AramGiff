@@ -1,14 +1,14 @@
 ﻿
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "ChiTietDonHangDangGiao";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row justify-content-center" style="margin-top: 7rem;">
 	<div class="col-md-10 text-center" style="margin-top: 30px">
 		<ul class="product-category">
-			<li><a asp-action="Index" asp-controller="DonHang" class="active">Đơn hàng đang chờ duyệt</a></li>
-			<li><a asp-action="DonHangDangGiao" asp-controller="DonHang">Đơn hàng đang giao</a></li>
+			<li><a asp-action="Index" asp-controller="DonHang">Đơn hàng đang chờ duyệt</a></li>
+			<li><a asp-action="DonHangDangGiao" asp-controller="DonHang" class="active">Đơn hàng đang giao</a></li>
 			<li><a asp-action="DonHangDaGiao" asp-controller="DonHang">Lịch sử giao hàng</a></li>
 		</ul>
 	</div>
@@ -114,7 +114,7 @@
 										width: 100%;
 										padding: 5px 0;
 										cursor: pointer;">
-							Duyệt đơn hàng
+							Đã giao
 						</button>
 
 						<button style="color: #da1b1b !important;
