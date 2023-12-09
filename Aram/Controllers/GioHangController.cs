@@ -13,10 +13,23 @@ namespace Aram.Controllers
         {
             _context = context;
         }
-		
-		public IActionResult Index()
+        public void PhanQuyen()
         {
-			var tenTK = HttpContext.Session.GetString("Name");
+            string Name = HttpContext.Session.GetString("Name");
+            if (Name == "admin1234" && Name != null)
+            {
+                ViewBag.PhanQuyen = true;
+            }
+            else
+            {
+                ViewBag.PhanQuyen = false;
+            }
+        }
+        public IActionResult Index()
+        {
+            PhanQuyen();
+
+            var tenTK = HttpContext.Session.GetString("Name");
 			if (tenTK == null)
 			{
 				return RedirectToAction("DangNhap", "TaiKhoan");
@@ -29,11 +42,15 @@ namespace Aram.Controllers
 
 			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
 
+            ViewBag.SoLuong = gioHang_ChiTiet.Count();
+
             return View(gioHang_ChiTiet);
         }
         public IActionResult AddToGioHang(int Id)
         {
-			var tenTK = HttpContext.Session.GetString("Name");
+            PhanQuyen();
+
+            var tenTK = HttpContext.Session.GetString("Name");
 			int soLuong = 1;
 			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
 			if (gioHang == null)
@@ -64,24 +81,32 @@ namespace Aram.Controllers
 		// đơn hàng đang chờ admin duyệt
 		public IActionResult GioHangDangChoDuyet()
 		{
-			return View();
+            PhanQuyen();
+
+            return View();
 		}
 
 		// chi tiết đơn hàng đang chở duyệt
 
 		public IActionResult ChiTietGioHangDangChoDuyet()
 		{
-			return View();
+            PhanQuyen();
+
+            return View();
 		}
 
 		// đơn hàng đang giao
 		public IActionResult DonHangDangGiao()
 		{
-			return View();
+            PhanQuyen();
+
+            return View();
 		}
         // Chi tiết đơn hàng đang giao
         public IActionResult ChiTietDonHangDangGiao()
         {
+            PhanQuyen();
+
             return View();
         }
 
@@ -89,12 +114,16 @@ namespace Aram.Controllers
         // đơn hàng đã nhận 
         public IActionResult DonHangDaNhan()
         {
+            PhanQuyen();
+
             return View();
         }
 
         // Chi tiết đơn hàng đã nhận
         public IActionResult ChiTietDonHangDaNhan()
         {
+            PhanQuyen();
+
             return View();
         }
 
