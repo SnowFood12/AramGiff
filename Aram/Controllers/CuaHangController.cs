@@ -194,7 +194,7 @@ namespace Aram.Controllers
             }
             //kiểm lỗi số điện thoại
             Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
-            var ktDT = _context.CuaHang.FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
+            var ktDT = _context.CuaHang.Where(x => x.Id != cuaHang.Id).FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
             if (cuaHang.SoDT == null)
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại không được để trống");
