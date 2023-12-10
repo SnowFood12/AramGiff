@@ -48,24 +48,18 @@
 							box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 						<thead class="thead-primary">
 							<tr class="text-center" style="background-color: #1C65A1 !important; ">
-								<th>&nbsp;</th>
 								<th>Hình ảnh</th>
 								<th>Tên</th>
 								<th>Đơn giá</th>
 								<th>Số lượng</th>
 								<th>Tổng tiền</th>
+								<th>&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach (var item in Model?.GioHang_ChiTiets)
 							{
 								<tr class="text-center">
-									<td class="product-remove">
-										<a style="border:none; cursor:pointer;" >
-											<i class="fa-solid fa-xmark" style="color: brown; font-size:20px;"></i>
-										</a>
-
-									</td>
 									<td class="image-prod">
 										<img src="/SanPham/GetImage/@item.SanPhamId" class="img" style="background-image: url('/img/zyro-image (10).png');"/>
 									</td>
@@ -78,24 +72,29 @@
 
 									<td class="quantity">
 										<div class="d-flex justify-content-center" style="gap:10px;">
-											<button class="btn__them" style="height: 30px !important;">
+											<lable class="btn__them giam" style="height: 30px !important;" data-id="@item.Id">
 												<i class="fa-solid fa-minus" style="color: brown !important;"></i>
-											</button>
+											</lable>
 											<input type="text" name="quantity"
 												   class="txt__soluong" value="@item.SoLuong" min="1"
-												   max="100">
-											<button class="btn__them" style="height: 30px !important;">
+												   max="100" data-id="@item.Id" id="@item.Id">
+											<lable class="btn__them tang" style="height: 30px !important;" data-id="@item.Id" for="@item.Id">
 												<i class="fa-solid fa-plus" style="color: #188D3E !important;"></i>
-											</button>
+											</lable>
 										</div>
 									</td>
-									<td class="total">@((item.SanPham.Gia * item.SoLuong)?.ToString("C3"))</td><!-- END TR-->
+									<td class="total" id="t @item.Id">@((item.SanPham.Gia * item.SoLuong)?.ToString("C3"))</td>
+
+									<td class="product-remove">
+										<a style="border:none; cursor:pointer;">
+											<i class="fa-solid fa-xmark" style="color: brown; font-size:20px;"></i>
+										</a>
+
+									</td>
+									
+									<!-- END TR-->
 								</tr>
 							}
-
-								
-						
-							
 						</tbody>
 					</table>
 			</div>
@@ -138,7 +137,7 @@
 					<h3>Tổng tiền</h3>
 					<p class="d-flex">
 						<span>Tạm tính</span>
-							<span>@(Model?.TamTinh().ToString("C3")) </span>
+							<span id="TamTinh">@(Model?.TamTinh().ToString("C3")) </span>
 					</p>
 					<p class="d-flex">
 						<span>Phí Ship</span>
@@ -146,8 +145,8 @@
 					</p>
 					<hr>
 					<p class="d-flex total-price">
-						<span>Tổng</span>
-							<span>
+							<span>Tổng</span>
+							<span id="TongTien">
 								@if (Model.TamTinh() != 0)
 								{
 									@((Model?.TamTinh() + 20)?.ToString("C3"))
@@ -174,3 +173,5 @@
 		</div>
 	</form>
 </section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/GioHang/GioHang.js"></script>

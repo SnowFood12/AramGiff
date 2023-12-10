@@ -2,6 +2,8 @@
 using Aram.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
+using System.Text.Json.Nodes;
 
 namespace Aram.Controllers
 {
@@ -88,8 +90,79 @@ namespace Aram.Controllers
 			return (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
         }
         //=======================================================
-        // đơn hàng đang chờ admin duyệt
-        public IActionResult GioHangDangChoDuyet()
+
+        // ===> tăng số lượng 
+        [HttpGet]
+        public JsonResult TangSoLuong(int id)
+        {
+            var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
+
+            int soluong = DonHang.SoLuong;
+
+            var SanPham = _context.SanPham.FirstOrDefault(a => a.Id == DonHang.SanPhamId);
+
+            int TongTien = (soluong + 1) * (int)SanPham.Gia;
+
+            DonHang.SoLuong = soluong + 1;
+            _context.GioHang_ChiTiet.Update(DonHang);
+            _context.SaveChanges();
+
+            // tính tổng tiền giỏ hàng
+			var tenTK = HttpContext.Session.GetString("Name");
+			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
+			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+            // tạm tính
+			int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
+
+
+			var json = new
+			{
+				TongTien = TongTien,
+				TamTinh = TamTinh
+			};
+
+			return Json(json);
+            
+        }
+
+        // giảm số lượng
+		[HttpGet]
+		public JsonResult GiamSoLuong(int id)
+		{
+			var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
+			int soluong = DonHang.SoLuong;
+
+			var SanPham = _context.SanPham.FirstOrDefault(a => a.Id == DonHang.SanPhamId);
+
+			int TongTien = (soluong - 1) * (int)SanPham.Gia;
+
+			DonHang.SoLuong = soluong - 1;
+			_context.GioHang_ChiTiet.Update(DonHang);
+			_context.SaveChanges();
+
+			// tính tổng tiền giỏ hàng
+			var tenTK = HttpContext.Session.GetString("Name");
+			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
+			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+			// tạm tính
+			int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
+
+
+			var json = new
+			{
+				TongTien = TongTien,
+				TamTinh = TamTinh
+			};
+
+			return Json(json);
+
+		}
+
+
+
+
+		// đơn hàng đang chờ admin duyệt
+		public IActionResult GioHangDangChoDuyet()
 		{
             PhanQuyen();
 
