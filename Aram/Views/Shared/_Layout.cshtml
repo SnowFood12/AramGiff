@@ -69,7 +69,8 @@
                         }
                     }
                     <li class="nav-item active dropdown">
-                        <a asp-action="Index" asp-controller="GioHang" class="nav-link"><i class="fa-solid fa-cart-shopping"></i>[0]</a>
+                        @await Component.InvokeAsync("GiohangWidget")
+                        
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" asp-action="GioHangDangChoDuyet" asp-controller="GioHang">Đơn hàng</a>
                         </div>
