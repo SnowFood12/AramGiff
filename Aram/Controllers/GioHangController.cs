@@ -37,14 +37,17 @@ namespace Aram.Controllers
 			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
 			if (gioHang == null)
 			{
-				return NotFound();
-			}
+                gioHang = new GioHang { TenTK = tenTK };
+                _context.GioHang.Add(gioHang);
+                _context.SaveChanges();
+            }
 
-			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
-
-            ViewBag.SoLuong = gioHang_ChiTiet.Count();
-
-            return View(gioHang_ChiTiet);
+			GioHang gioHangs = _context.GioHang.Include(p => p.GioHang_ChiTiets)
+				.ThenInclude(p => p.SanPham)
+				.Where(p => p.TenTK == tenTK)
+				.FirstOrDefault();
+            /*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
+            return View(gioHangs);
         }
         public IActionResult AddToGioHang(int Id)
         {
@@ -77,9 +80,16 @@ namespace Aram.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		//=======================================================
-		// đơn hàng đang chờ admin duyệt
-		public IActionResult GioHangDangChoDuyet()
+		public int TongTien()
+		{
+			var tenTK = HttpContext.Session.GetString("Name");
+            var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
+            var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+			return (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
+        }
+        //=======================================================
+        // đơn hàng đang chờ admin duyệt
+        public IActionResult GioHangDangChoDuyet()
 		{
             PhanQuyen();
 

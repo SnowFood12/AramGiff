@@ -59,7 +59,9 @@ namespace Aram.Controllers
             {
                 return RedirectToAction("DangNhap", "TaiKhoan");
             }
-            ViewBag.TenTK = LuuTenTK;
+			var tenTK = HttpContext.Session.GetString("Name");
+
+			ViewBag.TenTK = tenTK;
             ViewBag.HoTen = LuuHoTen;
 			ViewBag.SDT = LuuSDT;
             ViewBag.Email = LuuEmail;
