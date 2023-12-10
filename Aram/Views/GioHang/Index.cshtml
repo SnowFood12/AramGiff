@@ -3,7 +3,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+	.txt__soluong{
+		width:40px;
+		padding: 0px 5px;
+		border: 1px solid rgb(208 206 206) !important;
+		text-align: center;
+	}
 
+	.txt__soluong:focus{
+		outline: none
+	}
+
+	.btn__them{
+		padding: 0px 10px !important;
+		cursor: pointer;
+		font-size: 19px;
+		background: white !important; 
+		height: 20px !important;
+	}
+</style>
 
 <div class="hero-wrap hero-bread" style="background-image: url('/img/zyro-image\ \(11\).png');">
 	<div class="container">
@@ -13,17 +32,6 @@
 				<h1 class="mb-0 bread">Thành phố xanh</h1>
 			</div>
 		</div>
-	</div>
-</div>
-
-<div class="row justify-content-center">
-	<div class="col-md-10 text-center" style="margin-top: 30px">
-		<ul class="product-category">
-			<li><a asp-action="Index" asp-controller="Home" class="active">Giỏ hàng [@ViewBag.SoLuong]</a></li>
-			<li><a asp-action="GioHangDangChoDuyet" asp-controller="GioHang">Đơn hàng đang chờ duyệt</a></li>
-			<li><a asp-action="DonHangDangGiao" asp-controller="GioHang">Đơn hàng đang giao</a></li>
-			<li><a asp-action="DonHangDaNhan" asp-controller="GioHang">Đơn hàng đã nhận</a></li>
-		</ul>
 	</div>
 </div>
 
@@ -68,14 +76,17 @@
 									<td class="price">@item.SanPham.Gia.ToString("C3")</td>
 
 									<td class="quantity">
-										<form action="">
-                                            <div class="input-group mb-3">
-                                                
-												<input type="text" name="quantity"
-													   class="quantity form-control input-number" value="@item.SoLuong" min="1"
-													   max="100">
-											</div>
-										</form>
+										<div class="d-flex justify-content-center" style="gap:10px;">
+											<button class="btn__them" style="height: 30px !important;">
+												<i class="fa-solid fa-minus" style="color: brown !important;"></i>
+											</button>
+											<input type="text" name="quantity"
+												   class="txt__soluong" value="@item.SoLuong" min="1"
+												   max="100">
+											<button class="btn__them" style="height: 30px !important;">
+												<i class="fa-solid fa-plus" style="color: #188D3E !important;"></i>
+											</button>
+										</div>
 									</td>
 									<td class="total">120.000 đ</td><!-- END TR-->
 								</tr>
