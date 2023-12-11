@@ -272,8 +272,8 @@ namespace Aram.Controllers
                         LuuGioiTinh = taiKhoan.GioiTinh;
 
                         HttpContext.Session.SetString("Name", taiKhoan.TenTK);
-                        TempData["Message"] = "Đăng nhập tài khoản thành công";
-                        TempData["MessageType"] = "success";
+/*                        TempData["Message"] = "Đăng nhập tài khoản thành công";
+                        TempData["MessageType"] = "success";*/
                         return RedirectToAction("MainHome", "Home");
 
                     }
