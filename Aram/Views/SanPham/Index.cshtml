@@ -44,7 +44,7 @@
         }
 
         .toggle input[type="checkbox"]:checked + .slider {
-            background-color: #dd781a;
+            background-color: #1C65A1 !important;
         }
 
             .toggle input[type="checkbox"]:checked + .slider:before {
@@ -54,10 +54,13 @@
 <link rel="stylesheet" href="/css/CuaHang/Create.css">
 @if (TempData["Message"] != null)
 {
-    <div class="alert__thongbao">
+    <div class="alert__thongbao" style="display: block;">
         @TempData["Message"]
     </div>
 }
+<div class="alert__thongbao1">
+
+</div>
 <div style="width: 90%;
             margin: 7rem auto;
             padding: 20px 0px;
@@ -126,20 +129,13 @@
                             <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
                         </td>
                         <td>
-                            @{
-                                if (item.TrangThai == true)
-                                {
-                                    <p>Còn hàng</p>
-                                }
-                                else
-                                {
-                                    <p>Hết hàng</p>
-                                }
-                            }
+                            <label class="toggle" for="@item.Id">
+                                <input type="checkbox" id="@item.Id" name="TrangThai" class="check" data-id="@item.Id" >
+                                <div class="slider" onclick="DoiTrangThai(@item.Id)"></div>
+                            </label>
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-rotate" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a>
                         </td>
                     </tr>
                 }
@@ -148,10 +144,4 @@
     </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    setTimeout(function () {
-        var alertMessage = document.querySelector('.alert__thongbao');
-        alertMessage.style.display = 'none';
-        alertMessage.style.transform = 'translateX(100%)';
-    }, 4000);
-</script>
+<script src="~/js/SanPham/SanPham.js"></script>

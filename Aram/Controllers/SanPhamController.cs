@@ -337,13 +337,44 @@ namespace Aram.Controllers
         }
 
         [HttpGet]
-        public JsonResult Check( int id)
+        public JsonResult Check()
         {
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
             var TrangThai = _context.SanPham.Where( a => a.CuaHangId == id).Select(a => new
             {
-                a.TrangThai
+                a.TrangThai,
+                a.Id
             });
             return Json(TrangThai); 
+        }
+        [HttpGet]
+        public JsonResult CapNhatTrangThai(int id)
+        {
+            var sanPham = _context.SanPham.FirstOrDefault( s => s.Id == id);
+            if (sanPham.TrangThai == true)
+            {
+                sanPham.TrangThai = false;
+                _context.SanPham.Update(sanPham);
+                _context.SaveChanges();
+                var TrangThai = _context.SanPham.Where(a => a.CuaHangId == id).Select(a => new
+                {
+                    a.TrangThai,
+                    a.Id
+                });
+                return Json(TrangThai);
+            }
+            else
+            {
+                sanPham.TrangThai = true;
+                _context.SanPham.Update(sanPham);
+                _context.SaveChanges();
+                var TrangThai = _context.SanPham.Where(a => a.CuaHangId == id).Select(a => new
+                {
+                    a.TrangThai,
+                    a.Id
+                });
+                return Json(TrangThai);
+            }
         }
     }
 }
