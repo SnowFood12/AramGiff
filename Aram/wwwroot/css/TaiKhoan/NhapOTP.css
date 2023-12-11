@@ -214,3 +214,23 @@
     color: #6CB1C8;
     padding-top:15px;
 }
+.alert__thongbao {
+    background: #188d3ee6;
+    position: absolute;
+    z-index: 20;
+    color: white;
+    right: 0px;
+    padding: 15px 30px;
+    font-size: 15px;
+    top: 6rem;
+    transform: translateX(100%);
+    visibility: hidden;
+    animation: ThongBao 0.15s 1 linear forwards;
+}
+
+@keyframes ThongBao {
+    to {
+        transform: translateX(0);
+        visibility: visible;
+    }
+}

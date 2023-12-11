@@ -3,7 +3,7 @@
     ViewData["Title"] = "MainHome";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" href="/css/Home/MainHome.css">
 <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
         <div class="slider-item" style="background-image: url('/img/zyro-image\ \(9\).png');">
@@ -104,7 +104,13 @@
         </div>
     </div>
 </section>
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert__thongbao">
+        <i class="fa-regular fa-circle-check" style="color: #ffffff;"></i>
+        @TempData["Message"]
+    </div>
+}
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
@@ -257,6 +263,13 @@
         </div>
     </div>
 </section>
+<script>
+    setTimeout(function () {
+        var alertMessage = document.querySelector('.alert__thongbao');
+        alertMessage.style.display = 'none';
+        alertMessage.style.transform = 'translateX(100%)';
+    }, 4000);
+</script>
 
 
 
