@@ -48,6 +48,40 @@ namespace Aram.Controllers
 			ViewBag.ThongTinSanPham = TongTinSanPham;
 			return View();
 		}
+
+		// gợi ý tìm kiếm
+		public JsonResult Search( string search)
+		{
+			var ListProduct = _context.SanPham.Where( a => a.Ten.Contains(search)).ToList();
+
+			return Json(ListProduct);
+		}
+
+		// tìm kiếm sản phẩm theo tên
+		public IActionResult SearchName(string search)
+		{
+			PhanQuyen();
+			if ( search == null)
+			{
+				Index();
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				var LoaiSanPham = _context.LoaiSP.ToList();
+
+				var ListProduct = _context.SanPham.Where(a => a.Ten.Contains(search)).ToList();
+
+				ViewBag.LoaiSanPham = LoaiSanPham;
+
+				ViewBag.ThongTinSanPham = ListProduct;
+
+				ViewBag.Txt = search;
+
+				return View("Index");
+			}
+		}
+
 		// lọc sản phẩm 
 		public IActionResult LocSanPham (int id)
 		{

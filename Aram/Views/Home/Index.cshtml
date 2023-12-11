@@ -88,19 +88,14 @@
 				<div class="row d-flex justify-content-center py-5">
 					<div class="col-md-6">
 						<h2 style="font-size: 22px;" class="mb-0">Tìm kiếm sản phẩm</h2>
-						<span>Nhập tên sản phẩm, địa chỉ, tên cửa hàng mà bạn biết</span>
+						<span>Nhập tên sản phẩm mà bạn biết</span>
 					</div>
 					<div class="col-md-6 d-flex align-items-center">
-						<form action="#" class="subscribe-form">
+						<form asp-action="SearchName" asp-controller="Home" class="subscribe-form">
 							<div class="form-group d-flex" style="position:relative;">
-								<input type="text" class="form-control" placeholder="Tìm kiếm">
+								<input type="text" class="form-control" placeholder="Tìm kiếm" id="timkiem" autocomplete="off" name="search" value="@ViewBag.Txt">
 								<button type="submit" class="submit px-3"><i class="fa-solid fa-magnifying-glass"></i></button>
 								<div class="goi__y">
-									<li class="goi__item">Vải thổ cẩm</li>
-									<li class="goi__item">Vải thổ cẩm</li>
-									<li class="goi__item">Vải thổ cẩm</li>
-									<li class="goi__item">Vải thổ cẩm</li>
-									<li class="goi__item">Vải thổ cẩm</li>
 									<li class="goi__item">Vải thổ cẩm</li>
 								</div>
 							</div>
@@ -164,41 +159,5 @@
 	</div>
 </section>
 
-<script>
-	let thispage = 1;
-	let limit = 20;
-	let list = document.querySelectorAll('.contaner__content--trangchu')
-
-	function loadItem() {
-		let beginGet = limit * (thispage - 1);
-		let endGet = limit * thispage - 1;
-		list.forEach((item, key) => {
-			if (key >= beginGet && key <= endGet) {
-				item.style.display = 'block';
-			}
-			else {
-				item.style.display = 'none'
-			}
-		})
-		listpage();
-	}
-	loadItem()
-
-	function listpage() {
-		let count = Math.ceil(list.length / limit)
-		document.querySelector('.PhanTrang').innerHTML = '';
-		for (let i = 1; i <= count; i++) {
-			let newpage = document.createElement('li');
-			newpage.innerText = i;
-			if (i == thispage) {
-				newpage.classList.add('active__phan--trang');
-			}
-			newpage.setAttribute('onclick', `changePage(${i})`)
-			document.querySelector('.PhanTrang').appendChild(newpage);
-		}
-	}
-	function changePage(i) {
-		thispage = i;
-		loadItem();
-	}
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Home/CuaHang.js"></script>

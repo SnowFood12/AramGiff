@@ -39,12 +39,11 @@ a.btn__them:hover {
 .main__tim--kiem{
     display:flex; 
     justify-content: right;
-    width: 80% ;
-    margin-bottom: 30px;
+    width: 40% ;
 }
 .ipt__tim--kiem{
     padding: 5px 10px;
-    width: 50%;
+    width: 100%;
     border: 1px solid black;
     border-radius: 2px 0 0 2px;
 }

@@ -37,12 +37,66 @@ namespace Aram.Controllers
         public async Task<IActionResult> Index(int id)
         {
             PhanQuyen();
+            HttpContext.Session.SetInt32("id", id); // => lưu vào sesion để làm tìm kiếm
+
             var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
             
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
             return View(await aramContext.ToListAsync());
         }
+
+        // tìm kiếm thông tin sản phẩm
+        public async Task<IActionResult> Search(string search)
+        {
+            PhanQuyen();
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+
+            ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
+            ViewBag.chID = id;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var ListProduct = _context.SanPham.Where(a => a.Ten.Contains(search) && a.CuaHangId == id);
+
+                return View("Index", await ListProduct.ToListAsync());
+            }
+            else
+            {
+                var ListProduct = _context.SanPham.Where( a => a.CuaHangId == id);
+
+                return View("Index", await ListProduct.ToListAsync());
+            }
+        }
+        // =================================================
+
+        // lọc sản phẩm 
+        // => còn hàng 
+        public async Task<IActionResult> ConHang()
+        {
+            PhanQuyen();
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+
+            var aramContext = _context.SanPham.Where(a => a.TrangThai == true && a.CuaHangId == id); 
+
+            ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
+            ViewBag.chID = id;
+            return View("Index", await aramContext.ToListAsync());
+        }
+        // => hết hàng 
+        public async Task<IActionResult> HetHang()
+        {
+            PhanQuyen();
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+
+            var aramContext = _context.SanPham.Where(a => a.TrangThai == false && a.CuaHangId == id);
+
+            ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
+            ViewBag.chID = id;
+            return View("Index", await aramContext.ToListAsync());
+        }
+
+        // =================================================
 
         public IActionResult GetImage(int id)
         {

@@ -57,13 +57,26 @@
             margin: 7rem auto;
             padding: 20px 0px;
             background: #fff;">
-    <div class="main__tieude">
-        <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten" <a class="Thoat" asp-action="Index" asp-controller="CuaHang"><i class="fa-solid fa-right-from-bracket"></i></a></p>
-        <div class="main__tim--kiem">
-            <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
-            <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <form asp-action="Search" asp-controller="SanPham">
+        <div class="main__tieude">
+            <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten" <a class="Thoat" asp-action="Index" asp-controller="CuaHang"><i class="fa-solid fa-right-from-bracket"></i></a></p>
+            
+            <div class="row justify-content-center" style="width:37%; ">
+                <div class="col-md-10 text-center" style="margin-top: 20px">
+                    <ul class="product-category">
+                        <li><a asp-action="Index" asp-controller="SanPham" asp-route-id="@ViewBag.chID" class="active">Tất cả</a></li>
+                        <li><a asp-action="ConHang" asp-controller="SanPham">Còn hàng</a></li>
+                        <li><a asp-action="HetHang" asp-controller="SanPham">Hết hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main__tim--kiem">
+                <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" name="search"/>
+                <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
         </div>
-    </div>
+    </form>
 
     <table class="table">
         <thead style="background-color: #dad9d9; color: black;">

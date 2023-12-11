@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Aram.Data;
 using Aram.Models;
 using System.Text.RegularExpressions;
-
+using System.Collections;
 namespace Aram.Controllers
 {
     public class CuaHangController : Controller
@@ -40,6 +40,28 @@ namespace Aram.Controllers
               return _context.CuaHang != null ? 
                           View(await _context.CuaHang.Where(x => x.TrangThai == true).ToListAsync()) :
                           Problem("Entity set 'AramContext.CuaHang'  is null.");
+        }
+
+        // tìm kiếm thông tin cửa hàng
+        public async Task<IActionResult> SearchShop(string search)
+        {
+            PhanQuyen();
+            if (!string.IsNullOrEmpty(search))
+            {
+                return _context.CuaHang != null ?
+                       View("Index", await _context.CuaHang
+                       .Where(a => a.Ten.Contains(search) 
+                       && a.TrangThai == true 
+                       || a.SoDT.Contains(search))
+                       .ToListAsync()): 
+                       Problem("Entity set 'AramContext.CuaHang'  is null.");
+            }
+            else
+            {
+                var Shop = _context.CuaHang.Where(a => a.TrangThai == true);
+                return View("Index", await Shop.ToListAsync());
+            }
+
         }
 
         // GET: CuaHangs/Details/5
