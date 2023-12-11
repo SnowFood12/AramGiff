@@ -5,7 +5,12 @@
 }
 
 <link rel="stylesheet" href="/css/CuaHang/Create.css">
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert__thongbao">
+        @TempData["Message"]
+    </div>
+}
 <div style="width: 90%; 
             margin: 7rem auto; 
             padding: 20px 0px;
@@ -60,3 +65,10 @@
         </tbody>
     </table>
 </div>
+<script> 
+    setTimeout(function () {
+        var alertMessage = document.querySelector('.alert__thongbao');
+        alertMessage.style.display = 'none';
+        alertMessage.style.transform = 'translateX(100%)';
+    }, 4000);
+</script>

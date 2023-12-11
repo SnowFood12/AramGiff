@@ -52,14 +52,19 @@
             }
 </style>
 <link rel="stylesheet" href="/css/CuaHang/Create.css">
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert__thongbao">
+        @TempData["Message"]
+    </div>
+}
 <div style="width: 90%;
             margin: 7rem auto;
             padding: 20px 0px;
             background: #fff;">
     <form asp-action="Search" asp-controller="SanPham">
         <div class="main__tieude">
-            <p class="tieu__de">Danh sản phẩm <br /> của "@ViewBag.chName.Ten" <a class="Thoat" asp-action="Index" asp-controller="CuaHang"><i class="fa-solid fa-right-from-bracket"></i></a></p>
+            <p class="tieu__de">Danh sản phẩm của<br />"@ViewBag.chName.Ten" <a class="Thoat" asp-action="Index" asp-controller="CuaHang"><i class="fa-solid fa-right-from-bracket"></i></a></p>
             
             <div class="row justify-content-center" style="width:37%; ">
                 <div class="col-md-10 text-center" style="margin-top: 20px">
@@ -144,5 +149,9 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-   
+    setTimeout(function () {
+        var alertMessage = document.querySelector('.alert__thongbao');
+        alertMessage.style.display = 'none';
+        alertMessage.style.transform = 'translateX(100%)';
+    }, 4000);
 </script>

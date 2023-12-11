@@ -155,6 +155,7 @@ namespace Aram.Controllers
                 cuaHang.TenTK = "admin";
                 _context.Add(cuaHang);
                 await _context.SaveChangesAsync();
+                TempData["Message"] = "Thêm thông tin cửa hàng thành công";
                 return RedirectToAction(nameof(Index));
             }
             return View(cuaHang);
@@ -264,6 +265,7 @@ namespace Aram.Controllers
                         throw;
                     }
                 }
+                TempData["Message"] = "Cập nhật thông tin của hàng thành công";
                 return RedirectToAction(nameof(Index));
             }
             return View(cuaHang);
@@ -305,6 +307,7 @@ namespace Aram.Controllers
             }
             
             await _context.SaveChangesAsync();
+            TempData["Message"] = "Đổi trạng thái cửa hàng thành công";
             return RedirectToAction(nameof(Index));
         }
 

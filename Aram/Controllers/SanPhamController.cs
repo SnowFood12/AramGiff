@@ -191,6 +191,7 @@ namespace Aram.Controllers
                 }
                 _context.Add(sanPham);
                 await _context.SaveChangesAsync();
+                TempData["Message"] = "Thêm thông tin sản phẩm thành công";
                 return RedirectToAction(nameof(Index), new { id = sanPham.CuaHangId });
             }
             /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
@@ -264,6 +265,7 @@ namespace Aram.Controllers
                         throw;
                     }
                 }
+                TempData["Message"] = "Cập nhật thông tin sản phẩm thành công";
                 return RedirectToAction(nameof(Index) , new { id = sanPham.CuaHangId});
             }
             /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
@@ -322,8 +324,10 @@ namespace Aram.Controllers
                 
 /*                _context.SanPham.Remove(sanPham);*/
             }
-            
-/*            await _context.SaveChangesAsync();*/
+
+            /*            await _context.SaveChangesAsync();*/
+
+            TempData["Message"] = "Đổi trạng thái sản phẩm thành công";
             return RedirectToAction(nameof(Index), new { id = chID });
         }
 
