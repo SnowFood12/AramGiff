@@ -147,13 +147,13 @@ namespace Aram.Controllers
             {
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
             }
-            //hết kiểm lỗi
-
-             if (ModelState.IsValid)
+			//hết kiểm lỗi
+			var tenTK = HttpContext.Session.GetString("Name");
+			if (ModelState.IsValid)
             {
                 cuaHang.NgayTaoCuaHang = DateTime.Now;
                 cuaHang.TenTK = "admin";
-                _context.Add(cuaHang);
+                _context.Add(tenTK);
                 await _context.SaveChangesAsync();
                 TempData["Message"] = "Thêm thông tin cửa hàng thành công";
                 return RedirectToAction(nameof(Index));

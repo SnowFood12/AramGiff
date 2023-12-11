@@ -7,9 +7,10 @@ namespace Aram.Models
     [Table("TAI_KHOAN")]
     public class TaiKhoan
     {
-        [Key]
-        [StringLength(15)]
-        public string? TenTK  { get; set; }
+        	
+		[StringLength(15)]
+		[Key]
+		public string TenTK  { get; set; }
         [StringLength(15)]
         public string? MatKhau { get; set; }
         [StringLength(50)]
@@ -21,11 +22,9 @@ namespace Aram.Models
         public string? SoDT { get; set; }
         [Column(TypeName = "date")]
         public DateTime NgayTao { get; set; }
-        [DefaultValue(0)]
-        public bool LoaiTK { get; set; }
-        [DefaultValue(1)]
-        public bool TrangThai { get; set; }
-        public virtual ICollection<CuaHang>? CuaHangs { get; set; }
-        public virtual ICollection<DonHang>? DonHangs { get; set; }
+        public bool LoaiTK { get; set; } = true;
+        public bool TrangThai { get; set; } = true;
+        public ICollection<CuaHang>? CuaHangs { get; set; }
+        public ICollection<DonHang>? DonHangs { get; set; }
     }
 }

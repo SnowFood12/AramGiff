@@ -10,8 +10,9 @@ namespace Aram.Models
         [Key]
         public int Id { get; set; }
         [StringLength(15)]
-        [ForeignKey("TaiKhoan")]    
-		public string? TenTK { get; set; }
+        [ForeignKey("TaiKhoan")]
+        public string TenTK { get; set; }
+        public TaiKhoan TaiKhoan { get; set; }
         public ICollection<GioHang_ChiTiet>? GioHang_ChiTiets { get; set; }
 
 		public int TamTinh()

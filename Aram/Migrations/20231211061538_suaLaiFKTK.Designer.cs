@@ -4,6 +4,7 @@ using Aram.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aram.Migrations
 {
     [DbContext(typeof(AramContext))]
-    partial class AramContextModelSnapshot : ModelSnapshot
+    [Migration("20231211061538_suaLaiFKTK")]
+    partial class suaLaiFKTK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,21 +45,22 @@ namespace Aram.Migrations
                     b.Property<string>("SoDT")
                         .HasColumnType("char(10)");
 
+                    b.Property<string>("TaiKhoanTenTK")
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("Ten")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TenTK")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenTK");
+                    b.HasIndex("TaiKhoanTenTK");
 
                     b.ToTable("CUA_HANG");
                 });
@@ -69,8 +73,10 @@ namespace Aram.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("TaiKhoanTenTK")
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("TenTK")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -85,7 +91,7 @@ namespace Aram.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenTK");
+                    b.HasIndex("TaiKhoanTenTK");
 
                     b.ToTable("DON_HANG");
                 });
@@ -128,13 +134,10 @@ namespace Aram.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("TenTK")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TenTK");
 
                     b.ToTable("GIO_HANG");
                 });
@@ -293,22 +296,16 @@ namespace Aram.Migrations
                 {
                     b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
                         .WithMany("CuaHangs")
-                        .HasForeignKey("TenTK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TaiKhoanTenTK");
 
                     b.Navigation("TaiKhoan");
                 });
 
             modelBuilder.Entity("Aram.Models.DonHang", b =>
                 {
-                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
+                    b.HasOne("Aram.Models.TaiKhoan", null)
                         .WithMany("DonHangs")
-                        .HasForeignKey("TenTK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaiKhoan");
+                        .HasForeignKey("TaiKhoanTenTK");
                 });
 
             modelBuilder.Entity("Aram.Models.DonHang_ChiTiet", b =>
@@ -328,17 +325,6 @@ namespace Aram.Migrations
                     b.Navigation("DonHang");
 
                     b.Navigation("SanPham");
-                });
-
-            modelBuilder.Entity("Aram.Models.GioHang", b =>
-                {
-                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
-                        .WithMany()
-                        .HasForeignKey("TenTK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaiKhoan");
                 });
 
             modelBuilder.Entity("Aram.Models.GioHang_ChiTiet", b =>

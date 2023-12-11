@@ -54,8 +54,11 @@ namespace Aram.Controllers
         public IActionResult AddToGioHang(int Id)
         {
             PhanQuyen();
-
             var tenTK = HttpContext.Session.GetString("Name");
+			if (tenTK == null)
+			{
+				return RedirectToAction("DangNhap", "TaiKhoan");
+			}
 			int soLuong = 1;
 			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
 			if (gioHang == null)
@@ -80,6 +83,43 @@ namespace Aram.Controllers
 			}
 			_context.SaveChanges();
 			return RedirectToAction(nameof(Index));
+		}
+
+		public IActionResult HomeAddGioHang(int Id)
+		{
+			PhanQuyen();
+
+			var tenTK = HttpContext.Session.GetString("Name");
+
+			if (tenTK == null)
+			{
+				return RedirectToAction("DangNhap", "TaiKhoan");
+			}
+
+			int soLuong = 1;
+			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
+			if (gioHang == null)
+			{
+
+				gioHang = new GioHang { TenTK = tenTK };
+				_context.GioHang.Add(gioHang);
+				_context.SaveChanges();
+			}
+			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id && p.SanPhamId == Id).FirstOrDefault();
+
+			//
+			if (gioHang_ChiTiet == null)
+			{
+				gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
+				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
+			}
+			else
+			{
+				gioHang_ChiTiet.SoLuong += soLuong;
+				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
+			}
+			_context.SaveChanges();
+			return RedirectToAction("Index", "Home");
 		}
 
 		public int TongTien()
@@ -157,12 +197,19 @@ namespace Aram.Controllers
 			return Json(json);
 
 		}
-
-
-
-
-		// đơn hàng đang chờ admin duyệt
-		public IActionResult GioHangDangChoDuyet()
+        public IActionResult XoaSPGioHang(int Id)
+        {
+            var DonHan_CT = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == Id);
+            if(DonHan_CT != null)
+            {
+                _context.GioHang_ChiTiet.Remove(DonHan_CT);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+		}
+            // đơn hàng đang chờ admin duyệt
+            public IActionResult GioHangDangChoDuyet()
 		{
             PhanQuyen();
 

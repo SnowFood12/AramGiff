@@ -12,8 +12,10 @@ namespace Aram.Models
         public DateTime? ThoiGianTaoDon { get; set; } = DateTime.Now;
         public string? TrangThaiDH { get; set; } = "Chờ duyệt";
         public bool TrangThai { get; set; } = true;
-        public string? TenTK { get; set; }
-        public TaiKhoan? TaiKhoan { get; set; }
+        [StringLength(15)]
+        [ForeignKey("TaiKhoan")]
+        public string TenTK { get; set; }
+        public TaiKhoan TaiKhoan { get; set; }
         public virtual ThongTin_NhanHang? TT_NH { get; set; }
         public virtual ICollection<DonHang_ChiTiet>? DonHang_ChiTiets { get; set; }
 

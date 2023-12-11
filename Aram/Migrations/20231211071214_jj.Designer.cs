@@ -4,6 +4,7 @@ using Aram.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aram.Migrations
 {
     [DbContext(typeof(AramContext))]
-    partial class AramContextModelSnapshot : ModelSnapshot
+    [Migration("20231211071214_jj")]
+    partial class jj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +59,6 @@ namespace Aram.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenTK");
-
                     b.ToTable("CUA_HANG");
                 });
 
@@ -68,6 +69,9 @@ namespace Aram.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TaiKhoanTenTK")
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("TenTK")
                         .IsRequired()
@@ -85,7 +89,7 @@ namespace Aram.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenTK");
+                    b.HasIndex("TaiKhoanTenTK");
 
                     b.ToTable("DON_HANG");
                 });
@@ -133,8 +137,6 @@ namespace Aram.Migrations
                         .HasColumnType("nvarchar(15)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TenTK");
 
                     b.ToTable("GIO_HANG");
                 });
@@ -289,26 +291,11 @@ namespace Aram.Migrations
                     b.ToTable("THONGTIN_NHANHANG");
                 });
 
-            modelBuilder.Entity("Aram.Models.CuaHang", b =>
-                {
-                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
-                        .WithMany("CuaHangs")
-                        .HasForeignKey("TenTK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaiKhoan");
-                });
-
             modelBuilder.Entity("Aram.Models.DonHang", b =>
                 {
-                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
+                    b.HasOne("Aram.Models.TaiKhoan", null)
                         .WithMany("DonHangs")
-                        .HasForeignKey("TenTK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaiKhoan");
+                        .HasForeignKey("TaiKhoanTenTK");
                 });
 
             modelBuilder.Entity("Aram.Models.DonHang_ChiTiet", b =>
@@ -328,17 +315,6 @@ namespace Aram.Migrations
                     b.Navigation("DonHang");
 
                     b.Navigation("SanPham");
-                });
-
-            modelBuilder.Entity("Aram.Models.GioHang", b =>
-                {
-                    b.HasOne("Aram.Models.TaiKhoan", "TaiKhoan")
-                        .WithMany()
-                        .HasForeignKey("TenTK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaiKhoan");
                 });
 
             modelBuilder.Entity("Aram.Models.GioHang_ChiTiet", b =>
@@ -414,8 +390,6 @@ namespace Aram.Migrations
 
             modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
                 {
-                    b.Navigation("CuaHangs");
-
                     b.Navigation("DonHangs");
                 });
 #pragma warning restore 612, 618
