@@ -1,4 +1,4 @@
-﻿
+﻿@model Aram.Controllers.GioHangController
 @{
     ViewData["Title"] = "Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -44,62 +44,67 @@
 						 class="img-fluid" alt="Colorlib Template" style="margin-top:3rem; height: 25rem; width: 100%; object-fit: cover;" />
 				</a>
 			</div>
-			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-				<h3 style="margin-top:6rem; color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
-				<!-- <div class="rating d-flex">
-						<p class="text-left mr-4">
-							<a href="#" class="mr-2">5.0</a>
-							<a href="#"><span class="ion-ios-star-outline"></span></a>
-							<a href="#"><span class="ion-ios-star-outline"></span></a>
-							<a href="#"><span class="ion-ios-star-outline"></span></a>
-							<a href="#"><span class="ion-ios-star-outline"></span></a>
-							<a href="#"><span class="ion-ios-star-outline"></span></a>
-						</p>
-						<p class="text-left mr-4">
-							<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-						</p>
-						<p class="text-left">
-							<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-						</p>
-					</div> -->
-				@{
-					if (ViewBag.ThongTinSanPhamId.TrangThai == true)
-					{
-						<p class="price"><span style="color: #a41a1a; font-size:16px;">Còn hàng</span></p>
+			<form method="post" asp-action="AddToGioHang" asp-controller="Giohang" asp-route-Id="@ViewBag.ThongTinSanPhamId.Id">
+
+				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+					<h3 style="margin-top:6rem; color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
+					<!-- <div class="rating d-flex">
+							<p class="text-left mr-4">
+								<a href="#" class="mr-2">5.0</a>
+								<a href="#"><span class="ion-ios-star-outline"></span></a>
+								<a href="#"><span class="ion-ios-star-outline"></span></a>
+								<a href="#"><span class="ion-ios-star-outline"></span></a>
+								<a href="#"><span class="ion-ios-star-outline"></span></a>
+								<a href="#"><span class="ion-ios-star-outline"></span></a>
+							</p>
+							<p class="text-left mr-4">
+								<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+							</p>
+							<p class="text-left">
+								<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+							</p>
+						</div> -->
+					@{
+						if (ViewBag.ThongTinSanPhamId.TrangThai == true)
+						{
+							<p class="price"><span style="color: #a41a1a; font-size:16px;">Còn hàng</span></p>
+						}
+						else
+						{
+							<p class="price"><span style="color: #a41a1a; font-size:16px;">Hết hàng</span></p>
+						}
 					}
-					else
-					{
-						<p class="price"><span style="color: #a41a1a; font-size:16px;">Hết hàng</span></p>
-					}
-				}
-				<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia.ToString("C3")</span></p>
-				<div class="row mt-4">
-					<div class="col-md-6">
-						<div class="form-group d-flex">
-							<div class="select-wrap">
+					<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia.ToString("C3")</span></p>
+					<div class="row mt-4">
+						<div class="col-md-6">
+							<div class="form-group d-flex">
+								<div class="select-wrap">
+								</div>
 							</div>
 						</div>
+						<div class="w-100"></div>
+						<div class="input-group col-md-6 d-flex mb-3">
+							<span class="input-group-btn mr-2">
+								<button type="button" class="quantity-left-minus btn" id="minus" data-field="">
+									<i class="fa-solid fa-minus"></i>
+								</button>
+							</span>
+							<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
+								   min="1" max="100">
+							<span class="input-group-btn ml-2">
+								<button type="button" class="quantity-right-plus btn" id="plus" data-field="">
+									<i class="fa-solid fa-plus"></i>
+								</button>
+							</span>
+						</div>
+						<div class="w-100"></div>
 					</div>
-					<div class="w-100"></div>
-					<div class="input-group col-md-6 d-flex mb-3">
-						<span class="input-group-btn mr-2">
-							<button type="button" class="quantity-left-minus btn" id="minus" data-field="">
-								<i class="fa-solid fa-minus"></i>
-							</button>
-						</span>
-						<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-							   min="1" max="100">
-						<span class="input-group-btn ml-2">
-							<button type="button" class="quantity-right-plus btn" id="plus" data-field="">
-								<i class="fa-solid fa-plus"></i>
-							</button>
-						</span>
-					</div>
-					<div class="w-100"></div>
+					<a asp-action="ProductAddGioHang" asp-controller="Giohang" asp-route-id="@ViewBag.ThongTinSanPhamId.Id" style="color: black; font-size: 18px; padding: 5px 10px;" type="button" class="btn btn-outline-dark">Thêm vào giỏ hàng</a>
+					<input type="submit" as asp style="color: #a11212 ; font-size: 18px; padding: 5px 10px;" type="button" class="btn btn-dark">Mua ngay</input>
 				</div>
-				<button style="color: black; font-size: 18px; padding: 5px 10px;" type="button" class="btn btn-outline-dark">Thêm vào giỏ hàng</button>
-				<button style="color: #a11212 ; font-size: 18px; padding: 5px 10px;" type="button" class="btn btn-dark">Mua ngay</button>
-			</div>
+
+
+			</form>
 		</div>
 	</div>
 </section>

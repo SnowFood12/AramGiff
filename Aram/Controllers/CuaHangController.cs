@@ -99,8 +99,7 @@ namespace Aram.Controllers
         {
             PhanQuyen();
             Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
-
-            if (cuaHang.Ten != null)
+			if (cuaHang.Ten != null)
             {
                 cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
 
@@ -148,12 +147,12 @@ namespace Aram.Controllers
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
             }
 			//hết kiểm lỗi
-			var tenTK = HttpContext.Session.GetString("Name");
+			string tenTK = HttpContext.Session.GetString("Name");
+			cuaHang.NgayTaoCuaHang = DateTime.Now;
+			cuaHang.TenTK = tenTK;
 			if (ModelState.IsValid)
             {
-                cuaHang.NgayTaoCuaHang = DateTime.Now;
-                cuaHang.TenTK = "admin";
-                _context.Add(tenTK);
+                _context.Add(cuaHang);
                 await _context.SaveChangesAsync();
                 TempData["Message"] = "Thêm thông tin cửa hàng thành công";
                 return RedirectToAction(nameof(Index));
@@ -208,7 +207,6 @@ namespace Aram.Controllers
             }
             else if (cuaHang.Ten.Length > 50)
             {
-
                 ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
             }
             else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
@@ -244,9 +242,8 @@ namespace Aram.Controllers
                 ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
             }
             //hết kiểm lỗi
-
-
-            if (ModelState.IsValid)
+            cuaHang.TenTK = HttpContext.Session.GetString("Name");
+			if (ModelState.IsValid)
             {
                 try
                 {
