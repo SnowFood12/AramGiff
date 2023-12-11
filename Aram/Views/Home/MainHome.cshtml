@@ -3,6 +3,7 @@
     ViewData["Title"] = "MainHome";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="/css/Home/MainHome.css">
 
 <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
@@ -10,7 +11,7 @@
             <div class="overlay"></div>
             <div class="container">
                 <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
+                    
                     <div class="col-md-12 ftco-animate text-center">
                         <h1 class="mb-2">Bảo tàng thế giới cà phê</h1>
                         <h2 class="subheading mb-4">Tp Buôn Ma Thuật</h2>
@@ -67,7 +68,13 @@
         </div>
     </div>
 </section>
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert__thongbao">
+        <i class="fa-regular fa-circle-check" style="color: #ffffff;"></i>
+        @TempData["Message"]
+    </div>
+}
 <section class="ftco-section ftco-category ftco-no-pt" style="margin-top: 0px;">
     <div class="container">
         <div class="row">
@@ -257,6 +264,13 @@
         </div>
     </div>
 </section>
+<script>
+    setTimeout(function () {
+        var alertMessage = document.querySelector('.alert__thongbao');
+        alertMessage.style.display = 'none';
+        alertMessage.style.transform = 'translateX(100%)';
+    }, 4000);
+</script>
 
 
 

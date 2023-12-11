@@ -13,9 +13,17 @@
           integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/TaiKhoan/NhapOTP.css">
+    <link rel="stylesheet" href="/css/Home/MainHome.css">
     <title>Document</title>
 </head>
 <body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert__thongbao">
+            <i class="fa-regular fa-circle-check" style="color: #ffffff;"></i>
+            @TempData["Message"]
+        </div>
+    }
     <div class="container-main">
         <div class="container">
             <img src="/img/points1.png" alt="" class="shape s1">
@@ -61,6 +69,13 @@
             </div>
         </div>
     </div>
+    <script>
+        setTimeout(function () {
+            var alertMessage = document.querySelector('.alert__thongbao');
+            alertMessage.style.display = 'none';
+            alertMessage.style.transform = 'translateX(100%)';
+        }, 4000);
+    </script>
 </body>
 <script>
     var countdownTime = 120000; // Thời gian 2 phút
