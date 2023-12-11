@@ -20,6 +20,7 @@ namespace Aram.Controllers
 		private static string LuuHoTen;
 		private static string LuuSDT;
         private static string LuuEmail;
+		private static bool LuuGioiTinh;
 		private static string currentOTP;
 
 		public TaiKhoanController (AramContext context, IConfiguration config)
@@ -65,8 +66,31 @@ namespace Aram.Controllers
             ViewBag.HoTen = LuuHoTen;
 			ViewBag.SDT = LuuSDT;
             ViewBag.Email = LuuEmail;
+            ViewBag.GioiTinh = LuuGioiTinh;
 			return View();
         }
+
+		public IActionResult CapNhatTT(string hoten, bool gioitinh, string sdt, string email)
+        {
+            string Name = HttpContext.Session.GetString("Name");
+            TaiKhoan tk = _context.TaiKhoan.FirstOrDefault(t => t.TenTK == Name);
+            tk.HoTen = hoten;
+            tk.GioiTinh = gioitinh;
+            tk.SoDT = sdt;
+            tk.Email = email;
+			_context.TaiKhoan.Update(tk);
+			_context.SaveChanges();
+			LuuHoTen = hoten;
+            ViewBag.HoTen = hoten;
+            LuuSDT = sdt;
+			ViewBag.SDT = sdt;
+            LuuEmail = email;
+			ViewBag.Email = email;
+            LuuGioiTinh = gioitinh;
+			ViewBag.GioiTinh = gioitinh;
+			return RedirectToAction("Index", "TaiKhoan");
+		}
+
         public IActionResult DangKy()
         {
             return View();
@@ -245,11 +269,12 @@ namespace Aram.Controllers
                         LuuHoTen = taiKhoan.HoTen;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
-
+                        LuuGioiTinh = taiKhoan.GioiTinh;
 
                         HttpContext.Session.SetString("Name", taiKhoan.TenTK);
-
-						return RedirectToAction("MainHome", "Home");
+                        TempData["Message"] = "Đăng nhập tài khoản thành công";
+                        TempData["MessageType"] = "success";
+                        return RedirectToAction("MainHome", "Home");
 
                     }
                     else

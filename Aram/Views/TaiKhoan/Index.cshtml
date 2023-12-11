@@ -8,13 +8,14 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-xl-7 ftco-animate fadeInUp ftco-animated">
-				<form action="#" class="billing-form">
+				<form action="" class="billing-form">
 					<h3 class="mb-4 billing-heading">Thông tin tài khoản</h3>
 					<div class="row align-items-end">
 						<div class="col-md-12">
 							<div class="form-group">
 								<label for="firstname">Họ Tên</label>
-								<input type="text" class="form-control" placeholder="@ViewBag.HoTen">
+								<input type="text" class="form-control" name="hoten" value="@ViewBag.HoTen">
+								<span></span>
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -23,9 +24,9 @@
 								<label for="country">Giới tính</label>
 								<div class="select-wrap">
 									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-									<select name="" id="" class="form-control">
-										<option value="">Nam</option>
-										<option value="">Nữ</option>
+									<select name="gioitinh" id="" class="form-control">
+										<option value="True" selected="@(ViewBag.GioiTinh == true ? "selected" : null)">Nam</option>
+										<option value="False" selected="@(ViewBag.GioiTinh == false ? "selected" : null)">Nữ</option>
 									</select>
 								</div>
 							</div>
@@ -33,28 +34,20 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="towncity">Số điện thoại</label>
-								<input type="text" class="form-control" placeholder="@ViewBag.SDT">
+								<input type="text" class="form-control" name="sdt" value="@ViewBag.SDT">
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
 								<label for="postcodezip">Email</label>
-								<input type="text" class="form-control" placeholder="@ViewBag.Email">
+								<input type="text" class="form-control" name="email" value="@ViewBag.Email">
 							</div>
 						</div>
 						<div class="w-100"></div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<label for="country">Địa chỉ</label>
-								<div class="select-wrap">
-									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-									<input name="" id="" class="form-control"/>
-								</div>
-							</div>
-						</div>
+						
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="submit" value="Lưu" style="padding: 5px 30px;
+								<input type="submit" value="Cập nhật" asp-action="CapNhatTT" asp-controller="TaiKhoan" style="padding: 5px 30px;
 																		background: green; 
 																		border-radius: 3px; 
 																		cursor: pointer; 
