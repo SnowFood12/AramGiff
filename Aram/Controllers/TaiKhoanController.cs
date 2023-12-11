@@ -88,7 +88,8 @@ namespace Aram.Controllers
 			ViewBag.Email = email;
             LuuGioiTinh = gioitinh;
 			ViewBag.GioiTinh = gioitinh;
-			return RedirectToAction("Index", "TaiKhoan");
+            TempData["Message"] = "Cập nhật thông tin tài khoản thành công!";
+            return RedirectToAction("Index", "TaiKhoan");
 		}
 
         public IActionResult DangKy()
@@ -176,11 +177,17 @@ namespace Aram.Controllers
                     otpResetTimer.Elapsed += (sender, e) => ResetOTP();
                     otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
                     otpResetTimer.Start();
+                    TempData["Message"] = "Mã OTP xác thực tài khoản đã được gửi đến Email của bạn!";
                     return RedirectToAction("XacNhanDangKy", "TaiKhoan");
                 }
             }
             return View(taiKhoan);
         }
+        public IActionResult XacNhanDangKy()
+        {
+            return View();
+        }
+        [HttpPost]
         public IActionResult XacNhanDangKy(string otp)
         {
             string storeOTP = currentOTP;
@@ -223,12 +230,20 @@ namespace Aram.Controllers
                     taiKhoan.TrangThai = true;
                     _context.Add(taiKhoan);
                     _context.SaveChangesAsync();
+                    TempData["Message"] = "Xác thực đăng ký tài khoản thành công!";
                     return RedirectToAction("DangNhap", "TaiKhoan");
                 }
             }
             return View();
         }
-        
+        public IActionResult GuiLaiMaOtp()
+        {
+            string email = LuuEmail;
+            string maOTP = GenerateOTP();
+            currentOTP = maOTP;
+            SendEmail(email, maOTP);
+            return RedirectToAction("XacNhanDangKy", "TaiKhoan");
+        }
         public IActionResult DangNhap()
         {
             return View();
@@ -272,8 +287,7 @@ namespace Aram.Controllers
                         LuuGioiTinh = taiKhoan.GioiTinh;
 
                         HttpContext.Session.SetString("Name", taiKhoan.TenTK);
-/*                        TempData["Message"] = "Đăng nhập tài khoản thành công";
-                        TempData["MessageType"] = "success";*/
+                        TempData["Message"] = "Đăng nhập tài khoản thành công!";
                         return RedirectToAction("MainHome", "Home");
 
                     }
@@ -374,7 +388,8 @@ namespace Aram.Controllers
 				otpResetTimer.Elapsed += (sender, e) => ResetOTP();
 				otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
 				otpResetTimer.Start();
-				return RedirectToAction("NhapOTP", "TaiKhoan");
+                TempData["Message"] = "Đã gửi mã OTP đến Email của bạn!";
+                return RedirectToAction("NhapOTP", "TaiKhoan");
 			}
             else
             {
@@ -447,14 +462,12 @@ namespace Aram.Controllers
             {
                 string tenDangNhap = LuuTenTK;
                 taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == tenDangNhap);
-                if (ModelState.IsValid)
+                if (taiKhoan != null)
                 {
-                    if (taiKhoan != null)
-                    {
-                        taiKhoan.MatKhau = XacNhanMatKhauMoi;
-                        _context.SaveChanges();
-                        return RedirectToAction("DangNhap", "TaiKhoan");
-                    }
+                    taiKhoan.MatKhau = XacNhanMatKhauMoi;
+                    _context.SaveChanges();
+                    TempData["Message"] = "Lấy lại mật khẩu thành công!";
+                    return RedirectToAction("DangNhap", "TaiKhoan");
                 }
             }
             return View();
