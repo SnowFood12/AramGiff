@@ -1,5 +1,7 @@
 ﻿using Aram.Data;
+using Aram.Infrastructure;
 using Aram.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
@@ -15,7 +17,9 @@ namespace Aram.Controllers
         {
             _context = context;
         }
-        public void PhanQuyen()
+		public GioHang? GioHang { get; set; }
+
+		public void PhanQuyen()
         {
             string Name = HttpContext.Session.GetString("Name");
             if (Name == "admin1234" && Name != null)
@@ -31,96 +35,83 @@ namespace Aram.Controllers
         {
             PhanQuyen();
 
-            
-            /*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
-            return View();
+			GioHang = HttpContext.Session.GetJson<GioHang>("giohang") ?? new GioHang();
+			/*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
+			return View(GioHang);
         }
-		
-        //=======================================================
-
- /*       // ===> tăng số lượng 
-        [HttpGet]
-        public JsonResult TangSoLuong(int id)
-        {
-           *//* var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
-
-            int soluong = DonHang.SoLuong;
-
-            var SanPham = _context.SanPham.FirstOrDefault(a => a.Id == DonHang.SanPhamId);
-
-            int TongTien = (soluong + 1) * (int)SanPham.Gia;
-
-            DonHang.SoLuong = soluong + 1;
-            _context.GioHang_ChiTiet.Update(DonHang);
-            _context.SaveChanges();
-
-            // tính tổng tiền giỏ hàng
-			var tenTK = HttpContext.Session.GetString("Name");
-			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
-            // tạm tính
-			int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
-
-
-			var json = new
-			{
-				TongTien = TongTien,
-				TamTinh = TamTinh
-			};*//*
-
-			return Json(json);
-            
-        }
-
-        // giảm số lượng
-		[HttpGet]
-		public JsonResult GiamSoLuong(int id)
+		public IActionResult AddToGioHang(int sanPhamId)
 		{
-			var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
-			int soluong = DonHang.SoLuong;
+			SanPham? sanPham = _context.SanPham.FirstOrDefault(s => s.Id == sanPhamId);
+			if (sanPham != null)
+			{
+				GioHang = HttpContext.Session.GetJson<GioHang>("giohang") ?? new GioHang();
+				GioHang.AddItem(sanPham, 1);
+				HttpContext.Session.SetJson("giohang", GioHang);
+			}
+			return View("Index", GioHang);
+		}
+		//=======================================================
 
-			var SanPham = _context.SanPham.FirstOrDefault(a => a.Id == DonHang.SanPhamId);
-
-			int TongTien = (soluong - 1) * (int)SanPham.Gia;
-
-			DonHang.SoLuong = soluong - 1;
-			_context.GioHang_ChiTiet.Update(DonHang);
-			_context.SaveChanges();
+		// ===> tăng số lượng 
+		[HttpGet]
+		public JsonResult TangSoLuong(int id)
+		{
+			var GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
+			GioHang_line.SoLuong++;
+			HttpContext.Session.SetJson("giohang", GioHang);
 
 			// tính tổng tiền giỏ hàng
-			var tenTK = HttpContext.Session.GetString("Name");
+	/*		var tenTK = HttpContext.Session.GetString("Name");
 			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
+			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();*/
 			// tạm tính
-			int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
+			/*int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);*/
 
 
 			var json = new
 			{
-				TongTien = TongTien,
-				TamTinh = TamTinh
+				/*TongTien = GioHang.TongTien(),*/
+				TongTien = GioHang.TongTien()
 			};
 
 			return Json(json);
 
 		}
-        public IActionResult XoaSPGioHang(int Id)
-        {
-            var DonHan_CT = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == Id);
-            if(DonHan_CT != null)
-            {
-                _context.GioHang_ChiTiet.Remove(DonHan_CT);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return RedirectToAction(nameof(Index));
-		}
-            // đơn hàng đang chờ admin duyệt
-            public IActionResult GioHangDangChoDuyet()
-		{
-            PhanQuyen();
 
-            return View();
+		// giảm số lượng
+		[HttpGet]
+		public JsonResult GiamSoLuong(int id)
+		{
+			var GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
+			GioHang_line.SoLuong--;
+			HttpContext.Session.SetJson("giohang", GioHang);
+			var json = new
+			{
+				TongTien = GioHang.TongTien()
+			};
+
+			return Json(json);
+
+		}
+		/*public IActionResult XoaSPGioHang(int Id)
+		{
+			var DonHan_CT = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == Id);
+			if (DonHan_CT != null)
+			{
+				_context.GioHang_ChiTiet.Remove(DonHan_CT);
+				_context.SaveChanges();
+				return RedirectToAction(nameof(Index));
+			}
+			return RedirectToAction(nameof(Index));
+		}
+		// đơn hàng đang chờ admin duyệt
+		public IActionResult GioHangDangChoDuyet()
+		{
+			PhanQuyen();
+
+			return View();
 		}*/
 
 		// chi tiết đơn hàng đang chở duyệt

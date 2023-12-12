@@ -1,4 +1,4 @@
-﻿
+﻿@model GioHang
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -57,36 +57,36 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (var item in Model?.GioHang_ChiTiets)
+							@foreach (var item in Model?.Lines)
 							{
 								<tr class="text-center">
 									<td class="image-prod">
-										<img src="/SanPham/GetImage/@item.SanPhamId" class="img"/>
+										<img src="@Url.Action("GetImage", "SanPham", new { id = @item.SanPham.Id})" class="img" />
 									</td>
 
 									<td class="product-name">
 										<h3>@item.SanPham.Ten</h3>
 									</td>
 
-									<td class="price">@item.SanPham.Gia?.ToString("C3")</td>
+									<td class="price">@item.SanPham.Gia</td>
 
 									<td class="quantity">
 										<div class="d-flex justify-content-center" style="gap:10px;">
-											<lable class="btn__them giam" style="height: 30px !important;" data-id="@item.Id">
+											<lable class="btn__them giam" style="height: 30px !important;" data-id="@item.SanPham.Id">
 												<i class="fa-solid fa-minus" style="color: brown !important;"></i>
 											</lable>
-											<input type="text" name="quantity"
+											<input type="text" name="quantity" value="@item.SoLuong"
 												   class="txt__soluong" value="@item.SoLuong" min="1"
-												   max="100" data-id="@item.Id" id="@item.Id">
-											<lable class="btn__them tang" style="height: 30px !important;" data-id="@item.Id" for="@item.Id">
+												   max="100" data-id="@item.SanPham.Id" * id="@item.SanPham.Id">
+											<lable class="btn__them tang" style="height: 30px !important;" data-id="@item.SanPham.Id" for="@item.SanPham.Id">
 												<i class="fa-solid fa-plus" style="color: #188D3E !important;"></i>
 											</lable>
 										</div>
 									</td>
-									<td class="total" id="t @item.Id">@((item.SanPham.Gia * item.SoLuong)?.ToString("C3"))</td>
+									<td class="total" id="t @item.SanPham.Id">@((item.SanPham.Gia * item.SoLuong)?.ToString("C3"))></td>
 
 									<td class="product-remove">
-										<a href="/GioHang/XoaSPGioHang?Id=@item.Id" style="border:none; cursor:pointer;">
+										<a @* href="/GioHang/XoaSPGioHang?Id=@item.Id" *@ style="border:none; cursor:pointer;">
 											<i class="fa-solid fa-xmark" style="color: brown; font-size:20px;"></i>
 										</a>
 
@@ -94,6 +94,7 @@
 									
 									<!-- END TR-->
 								</tr>
+
 							}
 						</tbody>
 					</table>
@@ -137,7 +138,7 @@
 					<h3>Tổng tiền</h3>
 					<p class="d-flex">
 						<span>Tạm tính</span>
-							<span id="TamTinh">@(Model?.TamTinh().ToString("C3")) </span>
+							<span @* id="TamTinh">@(Model?.TamTinh().ToString("C3")) *@ </span>
 					</p>
 					<p class="d-flex">
 						<span>Phí Ship</span>
@@ -147,14 +148,14 @@
 					<p class="d-flex total-price">
 							<span>Tổng</span>
 							<span id="TongTien">
-								@if (Model.TamTinh() != 0)
+								@* @if (Model.TamTinh() != 0)
 								{
 									@((Model?.TamTinh() + 20)?.ToString("C3"))
 													}
 								else
 								{
 									@((Model?.TamTinh().ToString("C3")))
-								}
+								} *@
 								</span>
 						</p>
 				</div>
