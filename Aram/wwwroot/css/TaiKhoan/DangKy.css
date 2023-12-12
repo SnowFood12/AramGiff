@@ -57,12 +57,12 @@
     width: 20rem;
     border-radius: 5px;
     font-size: 16px;
-    border: 1px solid #808289;
+    border: 2px solid #808289;
 }
 
     .txt__login:focus {
         outline: none;
-        border: 1px solid #CE3452;
+        border: 2px solid #b26c3d;
     }
 
 .lbl__login {
