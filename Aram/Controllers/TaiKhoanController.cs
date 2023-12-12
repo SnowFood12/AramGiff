@@ -281,10 +281,10 @@ namespace Aram.Controllers
 					if (taiKhoan != null)
                     {
                         LuuTenTK = taiKhoan.TenTK;
-                        LuuHoTen = taiKhoan.HoTen;
+/*                        LuuHoTen = taiKhoan.HoTen;
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
-                        LuuGioiTinh = taiKhoan.GioiTinh;
+                        LuuGioiTinh = taiKhoan.GioiTinh;*/
 
                         HttpContext.Session.SetString("Name", taiKhoan.TenTK);
                         TempData["Message"] = "Đăng nhập tài khoản thành công!";

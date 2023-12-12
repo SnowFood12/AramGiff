@@ -9,13 +9,13 @@ namespace Aram.Models
     {
         [Key]
         public int Id { get; set; }
-        public int SoLuong { get; set; }
+		public int SoLuong { get; set; }
         [DefaultValue(1)]
         public bool TrangThai { get; set; }
         public int DonHangId { get; set; }
-        public DonHang DonHang { get; set; }
         public int SanPhamId { get; set; }
-        public SanPham SanPham { get; set; }
+        public virtual SanPham? SanPham { get; set; }
+		public virtual DonHang? DonHang { get; set; }
 
-    }
+	}
 }

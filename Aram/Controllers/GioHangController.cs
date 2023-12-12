@@ -31,183 +31,18 @@ namespace Aram.Controllers
         {
             PhanQuyen();
 
-            var tenTK = HttpContext.Session.GetString("Name");
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-                gioHang = new GioHang { TenTK = tenTK };
-                _context.GioHang.Add(gioHang);
-                _context.SaveChanges();
-            }
-
-			GioHang gioHangs = _context.GioHang.Include(p => p.GioHang_ChiTiets)
-				.ThenInclude(p => p.SanPham)
-				.Where(p => p.TenTK == tenTK)
-				.FirstOrDefault();
+            
             /*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
-            return View(gioHangs);
+            return View();
         }
-		[HttpPost]
-		public IActionResult AddToGioHang(int Id, int quantity)
-		{
-			PhanQuyen();
-			var tenTK = HttpContext.Session.GetString("Name");
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-			int soLuong = quantity;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-
-				gioHang = new GioHang { TenTK = tenTK };
-				_context.GioHang.Add(gioHang);
-				_context.SaveChanges();
-			}
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id && p.SanPhamId == Id).FirstOrDefault();
-
-			//
-			if (gioHang_ChiTiet == null)
-			{
-				gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
-				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
-			}
-			else
-			{
-				gioHang_ChiTiet.SoLuong += soLuong;
-				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
-			}
-			_context.SaveChanges();
-			return RedirectToAction("Index");
-		}
-
-		public IActionResult ProductAddGioHang(int Id)
-        {
-            PhanQuyen();
-            var tenTK = HttpContext.Session.GetString("Name");
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-			int soLuong = 1;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-
-				gioHang = new GioHang { TenTK = tenTK };
-				_context.GioHang.Add(gioHang);
-				_context.SaveChanges();
-			}
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id &&  p.SanPhamId == Id).FirstOrDefault();
-			
-			//
-			if (gioHang_ChiTiet == null)
-            {
-                gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
-				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
-			}
-            else
-            {
-                gioHang_ChiTiet.SoLuong += soLuong;
-				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
-			}
-			_context.SaveChanges();
-			return RedirectToAction("Product", "Home", new {id = Id});
-		}
-
-		public IActionResult HomeAddGioHang(int Id)
-		{
-			PhanQuyen();
-
-			var tenTK = HttpContext.Session.GetString("Name");
-
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-
-			int soLuong = 1;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-
-				gioHang = new GioHang { TenTK = tenTK };
-				_context.GioHang.Add(gioHang);
-				_context.SaveChanges();
-			}
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id && p.SanPhamId == Id).FirstOrDefault();
-
-			//
-			if (gioHang_ChiTiet == null)
-			{
-				gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
-				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
-			}
-			else
-			{
-				gioHang_ChiTiet.SoLuong += soLuong;
-				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
-			}
-			_context.SaveChanges();
-			return RedirectToAction("MainHome", "Home");
-		}
-
-		public IActionResult CuaHangAddGioHang(int Id)
-		{
-			PhanQuyen();
-
-			var tenTK = HttpContext.Session.GetString("Name");
-
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-
-			int soLuong = 1;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-
-				gioHang = new GioHang { TenTK = tenTK };
-				_context.GioHang.Add(gioHang);
-				_context.SaveChanges();
-			}
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id && p.SanPhamId == Id).FirstOrDefault();
-
-			//
-			if (gioHang_ChiTiet == null)
-			{
-				gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
-				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
-			}
-			else
-			{
-				gioHang_ChiTiet.SoLuong += soLuong;
-				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
-			}
-			_context.SaveChanges();
-			return RedirectToAction("Index", "Home");
-		}
-
-		public int TongTien()
-		{
-			var tenTK = HttpContext.Session.GetString("Name");
-            var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-            var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
-			return (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
-        }
+		
         //=======================================================
 
-        // ===> tăng số lượng 
+ /*       // ===> tăng số lượng 
         [HttpGet]
         public JsonResult TangSoLuong(int id)
         {
-            var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
+           *//* var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
 
             int soluong = DonHang.SoLuong;
 
@@ -231,7 +66,7 @@ namespace Aram.Controllers
 			{
 				TongTien = TongTien,
 				TamTinh = TamTinh
-			};
+			};*//*
 
 			return Json(json);
             
@@ -286,7 +121,7 @@ namespace Aram.Controllers
             PhanQuyen();
 
             return View();
-		}
+		}*/
 
 		// chi tiết đơn hàng đang chở duyệt
 
