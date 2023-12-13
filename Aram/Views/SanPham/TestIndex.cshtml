@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "TestIndex";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -35,7 +34,7 @@
 
     </nav>
 </form>
-<h4 class="fw-bold py-3 mb-4"><a href="" class="text-muted fw-light">Cửa hàng  <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Danh sách sản phẩm của "Cửa hàng lưu niệm Tây Nguyên"</h4>
+<h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="CuaHang" class="text-muted fw-light">Cửa hàng  <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Danh sách sản phẩm của "@ViewBag.chName.Ten"</h4>
 <!-- Basic Bootstrap Table -->
 <div class="alert alert-success alert-dismissible" id="alert" role="alert" style="position:absolute; top: 7rem ; right: 0px; z-index: 9; display: none;">
     This is a success dismissible alert — check it out!
@@ -47,12 +46,12 @@
             <thead class="table-dark">
                 <tr>
                     <th style="color:white !important;">Số thứ tự</th>
-                    <th style="color:white !important;">Tên sản phẩm</th>
                     <th style="color:white !important;">Hình ảnh</th>
+                    <th style="color:white !important;">Tên sản phẩm</th>
                     <th style="color:white !important;">Đơn giá</th>
                     <th style="color:white !important;">Trạng thái</th>
                     <th style="color:white !important;">
-                        <a href="">
+                        <a asp-action="Create" asp-controller="SanPham" asp-route-chID="@ViewBag.chID">
                             <i class="fa-solid fa-circle-plus" style="font-size:20px;"></i>
                         </a>
                     </th>
@@ -69,13 +68,13 @@
                                 @dem
                             </td>
                             <td>
+                                <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
+                            </td>
+                            <td>
                                 @item.Ten
                             </td>
                             <td>
                                 @item.Gia
-                            </td>
-                            <td>
-                                <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
                             </td>
                             <td>
                                 <label class="form-check form-switch toggle" onclick="DoiTrangThai(@item.Id)" for="@item.Id">

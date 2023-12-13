@@ -34,16 +34,17 @@ namespace Aram.Controllers
             }
         }
         // GET: SanPhams
-        public async Task<IActionResult> Index(int id)
+        public IActionResult Index(int id)
         {
-            PhanQuyen();
             HttpContext.Session.SetInt32("id", id); // => lưu vào sesion để làm tìm kiếm
 
             var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
-            
+
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
-            return View(await aramContext.ToListAsync());
+
+            ViewBag.ListProduct = aramContext;
+            return View();
         }
 
         // tìm kiếm thông tin sản phẩm
@@ -72,7 +73,7 @@ namespace Aram.Controllers
 
         // lọc sản phẩm 
         // => còn hàng 
-        public async Task<IActionResult> ConHang()
+        public IActionResult ConHang()
         {
             PhanQuyen();
             int id = HttpContext.Session.GetInt32("id") ?? 0;
@@ -81,10 +82,12 @@ namespace Aram.Controllers
 
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
-            return View("Index", await aramContext.ToListAsync());
+
+            ViewBag.ListProduct = aramContext;
+            return View("Index");
         }
         // => hết hàng 
-        public async Task<IActionResult> HetHang()
+        public IActionResult HetHang()
         {
             PhanQuyen();
             int id = HttpContext.Session.GetInt32("id") ?? 0;
@@ -93,7 +96,8 @@ namespace Aram.Controllers
 
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
-            return View("Index", await aramContext.ToListAsync());
+            ViewBag.ListProduct = aramContext;
+            return View("Index");
         }
 
         // =================================================
@@ -376,18 +380,16 @@ namespace Aram.Controllers
                 return Json(TrangThai);
             }
         }
-
-        public IActionResult TestIndex( int id)
+        public  IActionResult TestIndex(int id)
         {
             HttpContext.Session.SetInt32("id", id); // => lưu vào sesion để làm tìm kiếm
 
-            var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP).ToList();
+            var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP);
 
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
 
             ViewBag.ListProduct = aramContext;
-
             return View();
         }
 

@@ -285,10 +285,21 @@ namespace Aram.Controllers
 						LuuSDT = taiKhoan.SoDT;
                         LuuEmail = taiKhoan.Email;
                         LuuGioiTinh = taiKhoan.GioiTinh;*/
+                        if ( taiKhoan.LoaiTK == false)
+                        {
+                            HttpContext.Session.SetString("Name", taiKhoan.TenTK);
+                            TempData["Message"] = "Đăng nhập tài khoản thành công!";
 
-                        HttpContext.Session.SetString("Name", taiKhoan.TenTK);
-                        TempData["Message"] = "Đăng nhập tài khoản thành công!";
-                        return RedirectToAction("MainHome", "Home");
+                            return RedirectToAction("Index", "CuaHang");
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetString("Name", taiKhoan.TenTK);
+                            TempData["Message"] = "Đăng nhập tài khoản thành công!";
+
+                            return RedirectToAction("MainHome", "Home");
+                        }
+
 
                     }
                     else
