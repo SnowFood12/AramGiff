@@ -12,8 +12,7 @@ namespace Aram.Models
         public DateTime ThoiGianTaoDon { get; set; } = DateTime.Now;
         [Column(TypeName = "nvarchar(20)")]
 		public string TrangThaiDH { get; set; } = "Chờ duyệt";
-        [DefaultValue(true)]
-        public bool TrangThai { get; set; }
+        public bool TrangThai { get; set; } = true;
 		[ForeignKey("TaiKhoan")]
         public string? TenTK { get; set; }
         public TaiKhoan? TaiKhoan { get; set; }
