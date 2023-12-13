@@ -17,7 +17,15 @@ namespace Aram.Data
         public DbSet<Aram.Models.CuaHang> CuaHang { get; set; } = default!;
 
         public DbSet<Aram.Models.SanPham> SanPham { get; set; } = default!;
+
         public DbSet<Aram.Models.TaiKhoan> TaiKhoan { get; set; } = default!;
+
         public DbSet<Aram.Models.LoaiSP> LoaiSP { get; set; } = default!;
+
+        public DbSet<Aram.Models.DonHang> DonHang { get; set; } = default!;
+
+        public DbSet<Aram.Models.DonHang_ChiTiet> DonHang_ChiTiet { get; set; } = default!;
+
+        public DbSet<Aram.Models.ThongTin_NhanHang> ThongTin_NhanHang { get; set; } = default!;
     }
 }

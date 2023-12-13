@@ -20,14 +20,20 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-                <tr>
-                    <td><img src="~/img/381399368_3570980826507620_7770188578307080914_n.jpg" style=" object-fit: cover; width:60px; height: 60px;" /></td>
-                    <td>Móc khoá</td>
-                    <td>Cửa hàng lưu niệm tây nguyên</td>
-                    <td>50.000 đ</td>
-                    <td>1</td>
-                    <td>50.000 đ</td>
-                </tr>
+                @{
+                    @foreach (var item in ViewBag.ListProduct)
+                    {
+                        <tr>
+                            <td><img src="~/img/381399368_3570980826507620_7770188578307080914_n.jpg" style=" object-fit: cover; width:60px; height: 60px;" /></td>
+                            <td>@item.SanPham.Ten</td>
+                            <td>@item.SanPham.CuaHang.Ten</td>
+                            <td>50.000 đ</td>
+                            <td>1</td>
+                            <td>50.000 đ</td>
+                        </tr>
+                    }
+                }
+
             </tbody>
         </table>
     </div>

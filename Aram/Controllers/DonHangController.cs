@@ -2,6 +2,8 @@
 using Aram.Infrastructure;
 using Aram.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Aram.Controllers
 {
@@ -10,26 +12,43 @@ namespace Aram.Controllers
 		public GioHang? GioHang { get; set; }
 		private readonly AramContext _context;
 
-		public DonHangController(AramContext context)
+		public DonHangController( AramContext context)
 		{
 			_context = context;
 		}
-		public void PhanQuyen()
-        {
-            string Name = HttpContext.Session.GetString("Name");
-            if (Name == "admin1234" && Name != null)
-            {
-                ViewBag.PhanQuyen = true;
-            }
-            else
-            {
-                ViewBag.PhanQuyen = false;
-            }
-        }
-        public IActionResult Index() 
+		public IActionResult Index()
 		{
+			var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+
+			var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+
+			var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+
+			ViewBag.ChoDuyet = ListDonHang; 
+
+			ViewBag.DangGiao = DangGiao; 
+
+			ViewBag.DaGiao = DaGiao;
+
+			ViewBag.DemChoDuyet = ListDonHang.Count();
+			ViewBag.DemDangGiao = DangGiao.Count();
+			ViewBag.DemDaGiao = DaGiao.Count();
 
             return View();
+		}
+
+		// duyệt đơn
+		public IActionResult DuyetDon(int id)
+		{
+            var DonHang = _context.DonHang.FirstOrDefault(a => a.Id == id);
+
+            DonHang.TrangThaiDH = "Đang giao";
+
+            _context.DonHang.Update(DonHang);
+            _context.SaveChanges();
+
+            Index();
+            return RedirectToAction("Index", "DonHang");
 		}
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -69,8 +88,12 @@ namespace Aram.Controllers
 		{
             return View();
 		}
-		public IActionResult ChiTietDonHangDangGiao()
+		public IActionResult ChiTietDonHangDangGiao(int id)
 		{
+			var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude( a => a.CuaHang).ToList();
+
+			ViewBag.ListProduct = DonHangChiTiet;
+
             return View();
 		}
 

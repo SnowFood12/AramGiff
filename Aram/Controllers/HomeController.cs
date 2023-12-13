@@ -1,5 +1,6 @@
 ﻿using Aram.Data;
 using Aram.Models;
+using Humanizer.Localisation.TimeToClockNotation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -18,23 +19,8 @@ namespace Aram.Controllers
 			_logger = logger;
             _context = context;
         }
-
-		public void PhanQuyen()
-		{
-            string Name = HttpContext.Session.GetString("Name");
-			if ( Name == "admin1234" && Name != null) 
-			{
-				ViewBag.PhanQuyen = true;
-			}
-            else
-            {
-				ViewBag.PhanQuyen = false;
-            }
-        }
-
 		public IActionResult Index()
 		{
-            PhanQuyen();
             var LoaiSanPham = _context.LoaiSP.ToList();
 
 			var TongTinSanPham = _context.SanPham.Where( a => a.TrangThai == true).Include(a => a.CuaHang).OrderByDescending(a => a.Id).ToList();
@@ -53,34 +39,62 @@ namespace Aram.Controllers
 		}
 
 		// tìm kiếm sản phẩm theo tên
-		public IActionResult SearchName(string search)
+		public IActionResult SearchName(string search , string LocTheoGia)
 		{
-			PhanQuyen();
-			if ( search == null)
+			if ( LocTheoGia == "1")
 			{
-				Index();
-				return RedirectToAction("Index", "Home");
+				if (search == null)
+				{
+					Index();
+					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					var LoaiSanPham = _context.LoaiSP.ToList();
+
+					var ListProduct = _context.SanPham.OrderByDescending(a => a.Gia).Where(a => a.Ten.Contains(search) && a.TrangThai == true).Include(a => a.CuaHang).ToList();
+
+					ViewBag.LoaiSanPham = LoaiSanPham;
+
+					ViewBag.ThongTinSanPham = ListProduct;
+
+					ViewBag.Txt = search;
+
+					return View("Index");
+				}
+			}
+			else if ( LocTheoGia != "1" )
+			{
+				if (search == null)
+				{
+					Index();
+					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					var LoaiSanPham = _context.LoaiSP.ToList();
+
+					var ListProduct = _context.SanPham.OrderBy(a => a.Gia).Where(a => a.Ten.Contains(search) && a.TrangThai == true).Include(a => a.CuaHang).ToList();
+
+					ViewBag.LoaiSanPham = LoaiSanPham;
+
+					ViewBag.ThongTinSanPham = ListProduct;
+
+					ViewBag.Txt = search;
+
+					return View("Index");
+				}
 			}
 			else
 			{
-				var LoaiSanPham = _context.LoaiSP.ToList();
-
-				var ListProduct = _context.SanPham.Where(a => a.Ten.Contains(search) && a.TrangThai == true).Include( a => a.CuaHang).ToList();
-
-				ViewBag.LoaiSanPham = LoaiSanPham;
-
-				ViewBag.ThongTinSanPham = ListProduct;
-
-				ViewBag.Txt = search;
-
-				return View("Index");
+				return RedirectToAction("Index", "Home");
 			}
+
 		}
 
-		// lọc sản phẩm 
+		// lọc sản phẩm theo loại sản phẩm
 		public IActionResult LocSanPham (int id)
 		{
-            PhanQuyen();
             var LoaiSanPham = _context.LoaiSP.ToList();
 
 			var SanPham = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == id).Include(a => a.CuaHang).OrderByDescending(a => a.Id).ToList();
@@ -92,10 +106,14 @@ namespace Aram.Controllers
 			return View("Index");
 		}
 
+        // lọc sản phẩm theo giá
+        public IActionResult LocSanPhamTheoGia(int id)
+        {
+            return View("Index");
+        }
 
-		public IActionResult MainHome() // trang chủ
+        public IActionResult MainHome() // trang chủ
 		{
-			PhanQuyen();
 
             var ListProduct = _context.SanPham.Where(a => a.TrangThai == true).Include(a => a.CuaHang).OrderByDescending(a => a.Id).Take(8).ToList();
 
@@ -111,7 +129,6 @@ namespace Aram.Controllers
 
 		public IActionResult Product( int id)
 		{
-            PhanQuyen();
 
             var ThongTinSanPhamId = _context.SanPham.Where( a => a.Id == id).Include( a => a.CuaHang).FirstOrDefault() ;
 

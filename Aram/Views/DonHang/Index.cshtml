@@ -11,19 +11,19 @@
         <li class="nav-item">
             <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-home" aria-controls="navs-justified-home" aria-selected="true">
                  Đang chờ duyệt
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">3</span>
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">@ViewBag.DemChoDuyet</span>
             </button>
         </li>
         <li class="nav-item">
             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-profile" aria-controls="navs-justified-profile" aria-selected="false">
                 Đang giao
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">5</span>
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">@ViewBag.DemDangGiao</span>
             </button>
         </li>
         <li class="nav-item">
             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-messages" aria-controls="navs-justified-messages" aria-selected="false">
                 Lịch sử đơn hàng
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">5</span>
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">@ViewBag.DemDaGiao</span>
             </button>
         </li>
     </ul>
@@ -42,20 +42,28 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    <tr>
-                        <td>1</td>
-                        <td>1234567890</td>
-                        <td>Giao trước 10h cho em nha</td>
-                        <td>10 Hà Huy Tập Tân An Tp Buôn Ma Thuột</td>
-                        <td>
-                            120.000 đ
-                        </td>
-                        <td style="display: flex; align-items:center; gap:20px;">
-                            <a href=""><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>
-                            <a asp-action="Details" asp-controller="DonHang"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
-                            <a href=""><i class="fa-solid fa-xmark" style="font-size:18px; color: #d11515 !important;"></i></a>
-                        </td>
-                    </tr>
+                    @{
+                        int dem = 0; 
+                        @foreach (var item in ViewBag.ChoDuyet)
+                        {
+                            dem++;
+                            <tr>
+                                <td>@dem</td>
+                                <td>@item.ThongTin_NhanHangs.SoDT</td>
+                                <td>@item.ThongTin_NhanHangs.GhiChu</td>
+                                <td>@item.ThongTin_NhanHangs.DiaChi</td>
+                                <td>
+                                    200.000đ
+                                </td>
+                                <td style="display: flex; align-items:center; gap:20px;">
+                                    <a asp-route-id="@item.Id" asp-action="DuyetDon" asp-controller="DonHang"><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>
+                                    <a asp-action="Details" asp-controller="DonHang" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
+                                    <a asp-route-id="@item.Id"><i class="fa-solid fa-xmark" style="font-size:18px; color: #d11515 !important;"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
                 </tbody>
             </table>
         </div>
@@ -75,20 +83,27 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    <tr>
-                        <td>1</td>
-                        <td>1234567890</td>
-                        <td>Giao trước 10h cho em nha</td>
-                        <td>10 Hà Huy Tập Tân An Tp Buôn Ma Thuột</td>
-                        <td>
-                            120.000 đ
-                        </td>
-                        <td style="display: flex; align-items:center; gap:20px;">
-                            <a href=""><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>
-                            <a asp-action="ChiTietDonHangDangGiao" asp-controller="DonHang"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
-                            <a href=""><i class="fa-solid fa-xmark" style="font-size:18px; color: #d11515 !important;"></i></a>
-                        </td>
-                    </tr>
+                    @{
+                        int dem1 = 0;
+                        @foreach (var item in ViewBag.DangGiao)
+                        {
+                            dem1++;
+                            <tr>
+                                <td>@dem1</td>
+                                <td>@item.ThongTin_NhanHangs.SoDT</td>
+                                <td>@item.ThongTin_NhanHangs.GhiChu</td>
+                                <td>@item.ThongTin_NhanHangs.DiaChi</td>
+                                <td>
+                                    200.000đ
+                                </td>
+                                <td style="display: flex; align-items:center; gap:20px;">
+                                    <a asp-route-id="@item.Id"><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>
+                                    <a asp-action="ChiTietDonHangDangGiao" asp-controller="DonHang" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
+                                    <a asp-route-id="@item.Id"><i class="fa-solid fa-xmark" style="font-size:18px; color: #d11515 !important;"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
@@ -108,18 +123,27 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    <tr>
-                        <td>1</td>
-                        <td>1234567890</td>
-                        <td>Giao trước 10h cho em nha</td>
-                        <td>10 Hà Huy Tập Tân An Tp Buôn Ma Thuột</td>
-                        <td>
-                            120.000 đ
-                        </td>
-                        <td style="display: flex; align-items:center; gap:20px;">
-                            <a asp-action="ChiTietDonHangDaGiao" asp-controller="DonHang"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
-                        </td>
-                    </tr>
+                    @{
+                        int dem2 = 0;
+                        @foreach (var item in ViewBag.DaGiao)
+                        {
+                            dem2++;
+                            <tr>
+                                <td>@dem2</td>
+                                <td>@item.ThongTin_NhanHangs.SoDT</td>
+                                <td>@item.ThongTin_NhanHangs.GhiChu</td>
+                                <td>@item.ThongTin_NhanHangs.DiaChi</td>
+                                <td>
+                                    200.000đ
+                                </td>
+                                <td style="display: flex; align-items:center; gap:20px;">
+                                    <a asp-route-id="@item.Id"><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>
+                                    <a asp-action="Details" asp-controller="DonHang" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
+                                    <a asp-route-id="@item.Id"><i class="fa-solid fa-xmark" style="font-size:18px; color: #d11515 !important;"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>

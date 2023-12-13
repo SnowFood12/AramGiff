@@ -1,4 +1,6 @@
-﻿namespace Aram.Models
+﻿using Humanizer.Localisation.TimeToClockNotation;
+
+namespace Aram.Models
 {
 	public class GioHang
 	{
@@ -18,7 +20,8 @@
 			}
 		}
 		public void RemoveSanPham(int Id) => Lines.Remove(Lines.Where(p => p.SanPham.Id == Id).FirstOrDefault());
-		public int TongTien() => (int)Lines.Sum(p => p.SanPham.Gia * p.SoLuong);
+		public int TamTinh() => (int)Lines.Sum(p => p.SanPham.Gia * p.SoLuong);
+		public int TongTien() => (int)(TamTinh() + 20);
 		public void Clear() => Lines.Clear();
 
 	}
@@ -27,5 +30,9 @@
 		public int Giohang_Line_Id { get; set; }
 		public SanPham SanPham { get; set; } = new();
 		public int SoLuong { get; set; }
+
+		public int TongTienSp() => (int)(SoLuong * SanPham.Gia);
 	}
+
+
 }
