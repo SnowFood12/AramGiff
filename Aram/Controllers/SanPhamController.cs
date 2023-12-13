@@ -351,6 +351,7 @@ namespace Aram.Controllers
             });
             return Json(TrangThai); 
         }
+
         [HttpGet]
         public JsonResult CapNhatTrangThai(int id)
         {
