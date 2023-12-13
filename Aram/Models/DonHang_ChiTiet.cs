@@ -15,5 +15,6 @@ namespace Aram.Models
         public int SanPhamId { get; set; }
         public virtual SanPham? SanPham { get; set; }
 		public virtual DonHang? DonHang { get; set; }
-    }
+        public int Tong() => SoLuong * SanPham?.Gia ?? 0;
+	}
 }
