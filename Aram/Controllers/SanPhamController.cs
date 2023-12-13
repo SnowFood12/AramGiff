@@ -230,7 +230,7 @@ namespace Aram.Controllers
             /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
             ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Ten", sanPham.LoaiSPId);
             ViewBag.spID = id;
-            ViewBag.chID = chID;
+            ViewBag.chID = chID;    
             return View(sanPham);
         }
 
@@ -241,7 +241,6 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, SanPham sanPham, IFormFile? imageSP)
         {
-            PhanQuyen();
             SanPham sp = _context.SanPham.FirstOrDefault(x => x.Id == id);
             sp.Ten = sanPham.Ten;
             sp.Gia = sanPham.Gia;
@@ -278,7 +277,7 @@ namespace Aram.Controllers
                     }
                 }
                 TempData["Message"] = "Cập nhật thông tin sản phẩm thành công";
-                return RedirectToAction(nameof(Index) , new { id = sanPham.CuaHangId});
+                return RedirectToAction(nameof(Index) , new { id = sp.CuaHangId});
             }
             /*ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", sanPham.CuaHangId);*/
             ViewData["LoaiSPId"] = new SelectList(_context.Set<LoaiSP>(), "Id", "Ten", sanPham.LoaiSPId);

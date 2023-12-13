@@ -35,7 +35,7 @@
 <script src="~/LayoutAdmin/assets/js/config.js"></script>
 <div class="card mb-4 p-5">
     <h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="SanPham" asp-route-id="@ViewBag.chID" class="text-muted fw-light">Danh sách sản phẩm của "Cửa hàng lưu niệm Tây Nguyên" <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Thêm thông tin sản phẩm</h4>
-    <form class="row g-3" asp-action="Create" asp-controller="SanPham" asp-route-cuahangid="@ViewBag.chID" enctype="multipart/form-data" method="post">
+    <form class="row g-3" asp-action="Edit" asp-controller="SanPham" asp-route-id="@ViewBag.spID" enctype="multipart/form-data" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-md-6">
             <label for="validationServer03" class="form-label">Tên sản phẩm</label>
@@ -50,11 +50,11 @@
         <div class="col-md-6">
             <label asp-for="PicData" for="validationServer05" class="form-label">Thêm hình ảnh</label>
             <input asp-for="PicData" type="file" class="form-control" name="imageSP">
-            <span asp-validation-for="Ten" style="color: #da1616;"></span>
+            <span asp-validation-for="PicData" style="color: #da1616;"></span>
         </div>
         <div class="col-md-6">
             <label asp-for="LoaiSPId" class="form-label">Loại sản phẩm</label>
-            <select asp-for="LoaiSPId" class="form-control" asp-items="ViewBag.LoaiSP"></select>
+            <select asp-for="LoaiSPId" class="form-control" asp-items="@ViewBag.LoaiSPId"></select>
             <div style="color: #da1616;">
             </div>
         </div>

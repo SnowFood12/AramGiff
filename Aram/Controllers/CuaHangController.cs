@@ -97,56 +97,22 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CuaHang cuaHang)
         {
-            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
 			if (cuaHang.Ten != null)
             {
                 cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
-
             }
-            //kiểm lỗi cửa hàng
-            if (cuaHang.Ten == null)
-            {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
-            }
-            else if (cuaHang.Ten.Length > 50)
-            {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
-            } else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
-            {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt");
-            }
-            //kiểm lỗi số điện thoại
-            Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
-            var ktDT = _context.CuaHang.FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
-            if (cuaHang.SoDT == null)
-            {
-                ModelState.AddModelError("SoDT", "Số điện thoại không được để trống");
-            } else if (!KTsoDT.IsMatch(cuaHang.SoDT))
-            {
-                ModelState.AddModelError("SoDT", "Số điện thoại không hợp lệ");
-            } else if(ktDT != null)
+			if (cuaHang.DiaChi != null)
+			{
+				cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
+			}
+			var ktDT = _context.CuaHang.FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
+            if (ktDT != null)
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại đã được sử dụng");
             }
-            if(cuaHang.DiaChi != null)
-            {
-
-                cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
-            }
-                //kiểm lỗi địa chỉ
-            if (cuaHang.DiaChi == null)
-            {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được để trống");
-            }
-            else if (cuaHang.DiaChi.Length > 200)
-            {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được quá 200 ký tự");
-            } else if(!kuTuDacBiet.IsMatch(cuaHang.DiaChi))
-            {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
-            }
-			//hết kiểm lỗi
-			string tenTK = HttpContext.Session.GetString("Name");
+            
+            //hết kiểm lỗi
+            string tenTK = HttpContext.Session.GetString("Name");
 			cuaHang.NgayTaoCuaHang = DateTime.Now;
 			cuaHang.TenTK = tenTK;
 			if (ModelState.IsValid)
@@ -183,65 +149,28 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CuaHang cuaHang)
         {
-            PhanQuyen();
-            if (id != cuaHang.Id)
-            {
-                return NotFound();
-            }
+            
 
             //kiểm lỗi cửa hàng
-            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
-            if(cuaHang.Ten != null)
+/*            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
+*/           if(cuaHang.Ten != null)
             {
                 cuaHang.Ten = Regex.Replace(cuaHang.Ten.Trim(), @"\s+", " ");
             }
-            if (cuaHang.DiaChi != null)
-            {
-                cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
-            }
-            
-            if (cuaHang.Ten == null)
-            {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được để trống");
-            }
-            else if (cuaHang.Ten.Length > 50)
-            {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được dài quá 50 kí tự");
-            }
-            else if (!kuTuDacBiet.IsMatch(cuaHang.Ten))
-            {
-                ModelState.AddModelError("Ten", "Tên cửa hàng không được chứa ký tự đặc biệt");
-            }
-            //kiểm lỗi số điện thoại
-            Regex KTsoDT = new Regex(@"^0[0-9]{9}$");
-            var ktDT = _context.CuaHang.Where(x => x.Id != cuaHang.Id).FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
-            if (cuaHang.SoDT == null)
-            {
-                ModelState.AddModelError("SoDT", "Số điện thoại không được để trống");
-            }
-            else if (!KTsoDT.IsMatch(cuaHang.SoDT))
-            {
-                ModelState.AddModelError("SoDT", "Số điện thoại không hợp lệ");
-            }
-            else if (ktDT != null)
+			if (cuaHang.DiaChi != null)
+			{
+
+				cuaHang.DiaChi = Regex.Replace(cuaHang.DiaChi.Trim(), @"\s+", " ");
+			}
+			var ktDT = _context.CuaHang.Where(x => x.Id != cuaHang.Id).FirstOrDefault(x => x.SoDT == cuaHang.SoDT);
+            if (ktDT != null)
             {
                 ModelState.AddModelError("SoDT", "Số điện thoại đã được sử dụng");
             }
-            //kiểm lỗi địa chỉ
-            if (cuaHang.DiaChi == null)
-            {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được để trống");
-            }
-            else if (cuaHang.DiaChi.Length > 200)
-            {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được quá 200 ký tự");
-            }
-            else if (!kuTuDacBiet.IsMatch(cuaHang.DiaChi))
-            {
-                ModelState.AddModelError("DiaChi", "Địa Chỉ không được chứa ký tự đặc biệt");
-            }
-            //hết kiểm lỗi
-            cuaHang.TenTK = HttpContext.Session.GetString("Name");
+			//kiểm lỗi địa chỉ
+			
+			//hết kiểm lỗi
+			cuaHang.TenTK = HttpContext.Session.GetString("Name");
 			if (ModelState.IsValid)
             {
                 try
