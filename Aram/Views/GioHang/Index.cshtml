@@ -101,8 +101,8 @@
 			</div>
 		</div>
 	</div>
-
-	<form action="">
+ 	  <form method="post" asp-action="Create" asp-controller="DonHang">
+		  
 			<div class="row justify-content-end" style="background: #fff;
 														border-radius: 5px;
 														box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
@@ -111,7 +111,7 @@
 					<h3>Ghi chú</h3>
 					<p>Nhập ghi chú vào trường thông tin</p>
 					<div class="form-group">
-						<textarea type="text" class="form-control text-left px-3" placeholder="" style="height:13rem !important; padding: 10px 0px; resize: none;"></textarea>
+						<textarea type="text" class="form-control text-left px-3" placeholder="" style="height:13rem !important; padding: 10px 0px; resize: none;" name="GhiChu"></textarea>
 					</div>
 				</div>
 			</div>
@@ -120,16 +120,16 @@
 					<h3>Thông tin giao hàng</h3>
 					<p>Nhập thông tin nhận hàng của bạn</p>
 					<div class="form-group">
-						<label for="">Họ tên</label>
-						<input type="text" class="form-control text-left px-3" placeholder="">
+						<label >Họ tên</label>
+						<input type="text" class="form-control text-left px-3" placeholder="" name="HoTen">
 					</div>
 					<div class="form-group">
-						<label for="country">Số điện thoại</label>
-						<input type="text" class="form-control text-left px-3" placeholder="">
+							<label for="SoDT">Số điện thoại</label>
+						<input type="text" class="form-control text-left px-3" placeholder="" name="SoDT">
 					</div>
 					<div class="form-group">
-						<label for="country">Đia chỉ</label>
-						<input type="text" class="form-control text-left px-3" placeholder="">
+							<label for="DiaChi">Đia chỉ</label>
+						<input type="text" class="form-control text-left px-3" placeholder="" name="DiaChi">
 					</div>
 				</div>
 			</div>
@@ -148,14 +148,7 @@
 					<p class="d-flex total-price">
 							<span>Tổng</span>
 							<span id="TongTien">
-								@* @if (Model.TamTinh() != 0)
-								{
-									@((Model?.TamTinh() + 20)?.ToString("C3"))
-													}
-								else
-								{
-									@((Model?.TamTinh().ToString("C3")))
-								} *@
+								99999
 								</span>
 						</p>
 				</div>
@@ -172,7 +165,7 @@
 					</p>
 			</div>
 		</div>
-	</form>
+	</form>  
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/GioHang/GioHang.js"></script>
