@@ -156,7 +156,7 @@ namespace Aram.Controllers
             {
                 sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
             }
-            Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
+            /*Regex kuTuDacBiet = new Regex("^[A-Za-zÀ-ỹĐđĂăÂâÁáÀàẢảẠạẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẾếỀềỂểỄễỆệÊêÍíÌìỈỉỊịỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợÚúÙùỦủỤụỨứỪừỬửỮữỰựỶỷỴỵÝý\\s0-9]+$");
             //kiểm lỗi ten san pham
             if (sanPham.Ten == null)
             {
@@ -169,15 +169,15 @@ namespace Aram.Controllers
             else if (!kuTuDacBiet.IsMatch(sanPham.Ten))
             {
                 ModelState.AddModelError("Ten", "Tên sản phẩm không được chứa ký tự đặc biệt hoặc số");
-            }
+            }*/
             //kiểm lỗi ten gia
-            if(sanPham.Gia == null)
+            /*if(sanPham.Gia == null)
             {
                 ModelState.AddModelError("Gia", "Giá không được để trống");
             } else if (sanPham.Gia < 10)
             {
                 ModelState.AddModelError("Gia", "Giá phải lớn hơn 10.000đ");
-            }
+            }*/
 
             if (ModelState.IsValid)
             {

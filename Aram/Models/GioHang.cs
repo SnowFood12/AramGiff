@@ -1,27 +1,31 @@
-﻿using Microsoft.Identity.Client;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Aram.Models
+﻿namespace Aram.Models
 {
-    [Table("GIO_HANG")]
-    public class GioHang
-    {
-        [Key]
-        public int Id { get; set; }
-        [StringLength(15)]
-        [ForeignKey("TaiKhoan")]
-        public string TenTK { get; set; }
-        public TaiKhoan TaiKhoan { get; set; }
-        public ICollection<GioHang_ChiTiet>? GioHang_ChiTiets { get; set; }
-
-		public int TamTinh()
-        {
-            if(GioHang_ChiTiets == null)
-            {
-				return 0;
+	public class GioHang
+	{
+		public List<Giohang_Line>? Lines { get; set; } = new List<Giohang_Line>();
+		public void AddItem(SanPham sanpham, int soluong)
+		{
+			Giohang_Line? line = Lines
+				.Where(x => x.SanPham.Id == sanpham.Id)
+				.FirstOrDefault();
+			if (line == null)
+			{
+				Lines.Add(new Giohang_Line { SanPham = sanpham, SoLuong = soluong });
 			}
-		    return (int)GioHang_ChiTiets.Sum(t => t.SanPham.Gia * t.SoLuong);
-        }
-    }
+			else
+			{
+				line.SoLuong += soluong;
+			}
+		}
+		public void RemoveSanPham(SanPham sanPham) => Lines.Remove(Lines.Where(p => p.SanPham.Id == sanPham.Id).FirstOrDefault());
+		public int TongTien() => (int)Lines.Sum(p => p.SanPham.Gia * p.SoLuong);
+		public void Clear() => Lines.Clear();
+
+	}
+	public class Giohang_Line
+	{
+		public int Giohang_Line_Id { get; set; }
+		public SanPham SanPham { get; set; } = new();
+		public int SoLuong { get; set; }
+	}
 }

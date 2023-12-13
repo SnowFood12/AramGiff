@@ -56,12 +56,12 @@
     width: 20rem;
     border-radius: 5px;
     font-size: 16px;
-    border: 1px solid #808289;
+    border: 2px solid #808289;
 }
 
     .txt__login:focus {
         outline: none;
-        border: 1px solid #CE3452;
+        border: 2px solid #b26c3d;
     }
 
 .lbl__login {
@@ -213,4 +213,24 @@
     padding-left: 130px;
     color: #6CB1C8;
     padding-top:15px;
+}
+.alert__thongbao {
+    background: #188d3ee6;
+    position: absolute;
+    z-index: 20;
+    color: white;
+    right: 0px;
+    padding: 15px 30px;
+    font-size: 15px;
+    top: 6rem;
+    transform: translateX(100%);
+    visibility: hidden;
+    animation: ThongBao 0.15s 1 linear forwards;
+}
+
+@keyframes ThongBao {
+    to {
+        transform: translateX(0);
+        visibility: visible;
+    }
 }

@@ -14,6 +14,13 @@
     <title>Document</title>
 </head>
 <body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert__thongbao">
+            <i class="fa-regular fa-circle-check" style="color: #ffffff;"></i>
+            @TempData["Message"]
+        </div>
+    }
     <div class="container-main">
         <div class="container">
             <img src="/img/points1.png" alt="" class="shape s1">
@@ -59,6 +66,13 @@
             </div>
         </div>
     </div>
+    <script>
+        setTimeout(function () {
+            var alertMessage = document.querySelector('.alert__thongbao');
+            alertMessage.style.display = 'none';
+            alertMessage.style.transform = 'translateX(100%)';
+        }, 4000);
+    </script>
 </body>
 <script>
     var show = document.getElementById('show__password')

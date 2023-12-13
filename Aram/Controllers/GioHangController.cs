@@ -1,5 +1,7 @@
 ﻿using Aram.Data;
+using Aram.Infrastructure;
 using Aram.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
@@ -15,7 +17,9 @@ namespace Aram.Controllers
         {
             _context = context;
         }
-        public void PhanQuyen()
+		public GioHang? GioHang { get; set; }
+
+		public void PhanQuyen()
         {
             string Name = HttpContext.Session.GetString("Name");
             if (Name == "admin1234" && Name != null)
@@ -31,190 +35,84 @@ namespace Aram.Controllers
         {
             PhanQuyen();
 
-            var tenTK = HttpContext.Session.GetString("Name");
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-                gioHang = new GioHang { TenTK = tenTK };
-                _context.GioHang.Add(gioHang);
-                _context.SaveChanges();
-            }
-
-			GioHang gioHangs = _context.GioHang.Include(p => p.GioHang_ChiTiets)
-				.ThenInclude(p => p.SanPham)
-				.Where(p => p.TenTK == tenTK)
-				.FirstOrDefault();
-            /*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
-            return View(gioHangs);
+			GioHang = HttpContext.Session.GetJson<GioHang>("giohang") ?? new GioHang();
+			/*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
+			return View(GioHang);
         }
-        public IActionResult AddToGioHang(int Id)
-        {
-            PhanQuyen();
-            var tenTK = HttpContext.Session.GetString("Name");
-			if (tenTK == null)
-			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
-			}
-			int soLuong = 1;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-
-				gioHang = new GioHang { TenTK = tenTK };
-				_context.GioHang.Add(gioHang);
-				_context.SaveChanges();
-			}
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id &&  p.SanPhamId == Id).FirstOrDefault();
-			
-			//
-			if (gioHang_ChiTiet == null)
-            {
-                gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
-				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
-			}
-            else
-            {
-                gioHang_ChiTiet.SoLuong += soLuong;
-				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
-			}
-			_context.SaveChanges();
-			return RedirectToAction(nameof(Index));
-		}
-
-		public IActionResult HomeAddGioHang(int Id)
+		public IActionResult AddToGioHang(int sanPhamId)
 		{
-			PhanQuyen();
-
-			var tenTK = HttpContext.Session.GetString("Name");
-
-			if (tenTK == null)
+			SanPham? sanPham = _context.SanPham.FirstOrDefault(s => s.Id == sanPhamId);
+			if (sanPham != null)
 			{
-				return RedirectToAction("DangNhap", "TaiKhoan");
+				GioHang = HttpContext.Session.GetJson<GioHang>("giohang") ?? new GioHang();
+				GioHang.AddItem(sanPham, 1);
+				HttpContext.Session.SetJson("giohang", GioHang);
 			}
-
-			int soLuong = 1;
-			GioHang gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			if (gioHang == null)
-			{
-
-				gioHang = new GioHang { TenTK = tenTK };
-				_context.GioHang.Add(gioHang);
-				_context.SaveChanges();
-			}
-			GioHang_ChiTiet gioHang_ChiTiet = _context.GioHang_ChiTiet.Where(p => p.GioHangId == gioHang.Id && p.SanPhamId == Id).FirstOrDefault();
-
-			//
-			if (gioHang_ChiTiet == null)
-			{
-				gioHang_ChiTiet = new GioHang_ChiTiet { GioHangId = gioHang.Id, SanPhamId = Id, SoLuong = soLuong };
-				_context.GioHang_ChiTiet.Add(gioHang_ChiTiet);
-			}
-			else
-			{
-				gioHang_ChiTiet.SoLuong += soLuong;
-				_context.GioHang_ChiTiet.Update(gioHang_ChiTiet);
-			}
-			_context.SaveChanges();
-			return RedirectToAction("Index", "Home");
+			return View("Index", GioHang);
 		}
+		//=======================================================
 
-		public int TongTien()
+		// ===> tăng số lượng 
+		[HttpGet]
+		public JsonResult TangSoLuong(int id)
 		{
-			var tenTK = HttpContext.Session.GetString("Name");
-            var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-            var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
-			return (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
-        }
-        //=======================================================
+			var GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
+			GioHang_line.SoLuong++;
+			HttpContext.Session.SetJson("giohang", GioHang);
 
-        // ===> tăng số lượng 
-        [HttpGet]
-        public JsonResult TangSoLuong(int id)
-        {
-            var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
-
-            int soluong = DonHang.SoLuong;
-
-            var SanPham = _context.SanPham.FirstOrDefault(a => a.Id == DonHang.SanPhamId);
-
-            int TongTien = (soluong + 1) * (int)SanPham.Gia;
-
-            DonHang.SoLuong = soluong + 1;
-            _context.GioHang_ChiTiet.Update(DonHang);
-            _context.SaveChanges();
-
-            // tính tổng tiền giỏ hàng
-			var tenTK = HttpContext.Session.GetString("Name");
+			// tính tổng tiền giỏ hàng
+	/*		var tenTK = HttpContext.Session.GetString("Name");
 			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
-            // tạm tính
-			int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
+			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();*/
+			// tạm tính
+			/*int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);*/
 
 
 			var json = new
 			{
-				TongTien = TongTien,
-				TamTinh = TamTinh
+				/*TongTien = GioHang.TongTien(),*/
+				TongTien = GioHang.TongTien()
 			};
 
 			return Json(json);
-            
-        }
 
-        // giảm số lượng
+		}
+
+		// giảm số lượng
 		[HttpGet]
 		public JsonResult GiamSoLuong(int id)
 		{
-			var DonHang = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == id);
-			int soluong = DonHang.SoLuong;
-
-			var SanPham = _context.SanPham.FirstOrDefault(a => a.Id == DonHang.SanPhamId);
-
-			int TongTien = (soluong - 1) * (int)SanPham.Gia;
-
-			DonHang.SoLuong = soluong - 1;
-			_context.GioHang_ChiTiet.Update(DonHang);
-			_context.SaveChanges();
-
-			// tính tổng tiền giỏ hàng
-			var tenTK = HttpContext.Session.GetString("Name");
-			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();
-			// tạm tính
-			int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);
-
-
+			var GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
+			GioHang_line.SoLuong--;
+			HttpContext.Session.SetJson("giohang", GioHang);
 			var json = new
 			{
-				TongTien = TongTien,
-				TamTinh = TamTinh
+				TongTien = GioHang.TongTien()
 			};
 
 			return Json(json);
 
 		}
-        public IActionResult XoaSPGioHang(int Id)
-        {
-            var DonHan_CT = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == Id);
-            if(DonHan_CT != null)
-            {
-                _context.GioHang_ChiTiet.Remove(DonHan_CT);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return RedirectToAction(nameof(Index));
-		}
-            // đơn hàng đang chờ admin duyệt
-            public IActionResult GioHangDangChoDuyet()
+		/*public IActionResult XoaSPGioHang(int Id)
 		{
-            PhanQuyen();
-
-            return View();
+			var DonHan_CT = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == Id);
+			if (DonHan_CT != null)
+			{
+				_context.GioHang_ChiTiet.Remove(DonHan_CT);
+				_context.SaveChanges();
+				return RedirectToAction(nameof(Index));
+			}
+			return RedirectToAction(nameof(Index));
 		}
+		// đơn hàng đang chờ admin duyệt
+		public IActionResult GioHangDangChoDuyet()
+		{
+			PhanQuyen();
+
+			return View();
+		}*/
 
 		// chi tiết đơn hàng đang chở duyệt
 

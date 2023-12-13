@@ -10,10 +10,12 @@ namespace Aram.Models
     {
         [Key]
         public int Id { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Ten { get; set; }
+		[RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Tên không được chứa ký tự đặc biệt")]
+		[StringLength(50, ErrorMessage = "Tên không được dài quá 50 ký tự")]
+		[Required(ErrorMessage = "Tên không được để trống")]
+		public string? Ten { get; set; }
         [DefaultValue(true)]
         public bool TrangThai { get; set; }
-        public ICollection<SanPham>? SanPhams { get; set; }
+        public virtual ICollection<SanPham>? SanPhams { get; set; }
     }
 }

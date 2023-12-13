@@ -1,15 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Aram.Migrations
 {
     /// <inheritdoc />
-    public partial class ttnh : Migration
+    public partial class DH : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "DON_HANG",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ThoiGianTaoDon = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TrangThaiDH = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    TrangThai = table.Column<bool>(type: "bit", nullable: false),
+                    TenTK = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DON_HANG", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "DONHANG_CHITIET",
                 columns: table => new
@@ -54,6 +71,9 @@ namespace Aram.Migrations
         {
             migrationBuilder.DropTable(
                 name: "DONHANG_CHITIET");
+
+            migrationBuilder.DropTable(
+                name: "DON_HANG");
         }
     }
 }
