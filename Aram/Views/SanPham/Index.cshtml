@@ -3,35 +3,25 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<form>
+<form asp-action="Search" asp-controller="SanPham">
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
          id="layout-navbar">
         <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         </div>
-
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <!-- Search -->
             <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">
                     <input type="text"
                            class="form-control border-0 shadow-none"
-                           placeholder="Search..." />
+                           placeholder="Search..." name="search" value="@ViewBag.SearchShop" />
                 </div>
             </div>
-            <!-- /Search -->
-
             <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <!-- Place this tag where you want the button to render. -->
                 <li class="nav-item lh-1 me-3">
-                    <a href=""><i class="bx bx-search fs-4 lh-0"></i></a>
+                    <button class="btn btn-outline-warning" type="submit"><i class="bx bx-search fs-4 lh-0"></i></button>
                 </li>
-
-                <!-- User -->
-                <!--/ User -->
             </ul>
         </div>
-
-
     </nav>
 </form>
 <h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="CuaHang" class="text-muted fw-light">Cửa hàng  <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Danh sách sản phẩm của "@ViewBag.chName.Ten"</h4>

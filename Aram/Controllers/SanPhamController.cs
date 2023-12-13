@@ -60,13 +60,21 @@ namespace Aram.Controllers
             {
                 var ListProduct = _context.SanPham.Where(a => a.Ten.Contains(search) && a.CuaHangId == id);
 
-                return View("Index", await ListProduct.ToListAsync());
+                ViewBag.SearchShop = search;
+
+                ViewBag.ListProduct = ListProduct;
+
+                return View("Index");
             }
             else
             {
                 var ListProduct = _context.SanPham.Where( a => a.CuaHangId == id);
 
-                return View("Index", await ListProduct.ToListAsync());
+                ViewBag.SearchShop = search;
+
+                ViewBag.ListProduct = ListProduct;
+
+                return View("Index");
             }
         }
         // =================================================

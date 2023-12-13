@@ -45,9 +45,9 @@ namespace Aram.Controllers
         // tìm kiếm thông tin cửa hàng
         public async Task<IActionResult> SearchShop(string search)
         {
-            PhanQuyen();
             if (!string.IsNullOrEmpty(search))
             {
+                ViewBag.SearchShop = search;
                 return _context.CuaHang != null ?
                        View("Index", await _context.CuaHang
                        .Where(a => a.Ten.Contains(search) 
@@ -58,6 +58,7 @@ namespace Aram.Controllers
             }
             else
             {
+                ViewBag.SearchShop = search;
                 var Shop = _context.CuaHang.Where(a => a.TrangThai == true);
                 return View("Index", await Shop.ToListAsync());
             }
