@@ -85,43 +85,7 @@
 </section>
 </form>
 
-<section class="ftco-section" style="margin-top: 20px; background: white;">
-	<div class="container">
-		<div class="row justify-content-center mb-3 pb-3">
-			<div class="col-md-12 heading-section text-center ftco-animate">
-				<h2 class="mb-4">Cửa hàng</h2>
-				<p>Các cửa hàng có bán sản phẩm tương ứng</p>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row">
-			<table class="table">
-				<tbody>
-					@{
-						@foreach (var item in ViewBag.ListShop)
-						{
-							<tr style="color: black;">
-								<td>
-									@item.CuaHang.Ten
-								</td>
-								<td>
-									@item.CuaHang.SoDT
-								</td>
-								<td>
-									@item.CuaHang.DiaChi
-								</td>
-								<td>
-									<a asp-action="Shop" asp-controller="Home" asp-route-id="@item.CuaHang.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
-								</td>
-							</tr>
-						}
-					}
-				</tbody>
-			</table>
-		</div>
-	</div>
-</section>
+
 
 <section class="ftco-section" style="background: url(/img/z4948448986151_c1d081626f73786c95fd363e3d17c8fa.jpg) no-repeat fixed !important; margin-top: 20px;">
 	<div class="container">
@@ -180,19 +144,40 @@
 	</div>
 </section>
 
-<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-	<div class="container py-4">
-		<div class="row d-flex justify-content-center py-5">
-			<div class="col-md-6">
-				<h2 style="font-size: 22px; color:black !important;" class="mb-0">Thông tin cửa hàng</h2>
-				<span>@ViewBag.Shop.Ten</span> <br />
-				<span>@ViewBag.Shop.SoDT</span> <br />
-				<span>@ViewBag.Shop.DiaChi</span>
+<section class="ftco-section" style="margin-top: 20px; background: white;">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-center ftco-animate">
+				<h2 class="mb-4">Cửa hàng</h2>
+				<p>Các cửa hàng có bán sản phẩm tương ứng</p>
 			</div>
-			<div class="col-md-6 d-flex align-items-center">
-				<iframe src="@ViewBag.Shop.LinkMap"
-						width="600" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<table class="table">
+				<tbody>
+					@{
+						@foreach (var item in ViewBag.ListShop)
+						{
+							<tr style="color: black;">
+								<td>
+									@item.CuaHang.Ten
+								</td>
+								<td>
+									@item.CuaHang.SoDT
+								</td>
+								<td>
+									@item.CuaHang.DiaChi
+								</td>
+								<td>
+									<a asp-action="Shop" asp-controller="Home" asp-route-id="@item.CuaHang.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
 		</div>
 	</div>
 </section>

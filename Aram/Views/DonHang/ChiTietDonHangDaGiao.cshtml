@@ -24,16 +24,15 @@
                     @foreach (var item in ViewBag.ListProduct)
                     {
                         <tr>
-                            <td><img src="~/img/381399368_3570980826507620_7770188578307080914_n.jpg" style=" object-fit: cover; width:60px; height: 60px;" /></td>
+                            <td><img src="@Url.Action("GetImage", "SanPham", new { id = @item.SanPham.Id})" style=" object-fit: cover; width:60px; height: 60px;" /></td>
                             <td>@item.SanPham.Ten</td>
                             <td>@item.SanPham.CuaHang.Ten</td>
-                            <td>50.000 đ</td>
-                            <td>1</td>
-                            <td>50.000 đ</td>
+                            <td>@item.SanPham.Gia.ToString("C3")</td>
+                            <td>@item.SoLuong</td>
+                            <td>@((item.SoLuong * item.SanPham.Gia).ToString("C3"))</td>
                         </tr>
                     }
                 }
-
             </tbody>
         </table>
     </div>
@@ -46,19 +45,19 @@
             <div class="card-body">
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Họ tên khách hàng</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value="Lê Văn A" disabled>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="@ViewBag.ThongTinGiaoHang.HoTen" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Số điện thoại khách hàng</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value="1234567890" disabled>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="@ViewBag.ThongTinGiaoHang.SoDT" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value="10 Hà Huy Tập Tân An Tp Buôn Ma Thuột" disabled>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="@ViewBag.ThongTinGiaoHang.DiaChi" disabled>
                 </div>
                 <div>
                     <label for="exampleFormControlTextarea1" class="form-label">Ghi chú</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>Giao trước 10h cho em nha </textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>@ViewBag.ThongTinGiaoHang.GhiChu </textarea>
                 </div>
             </div>
         </div>
@@ -69,15 +68,19 @@
             <div class="card-body">
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tạm tính</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value="50.000đ" disabled>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="@ViewBag.TamTinh.ToString("C3")" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Phí ship</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value="30.000đ" disabled>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="20.000đ" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tổng tiền</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value="80.000đ" disabled>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="@((ViewBag.TamTinh + 20).ToString("C3"))" disabled>
+                </div>
+                <div class="mb-3 demo-inline-spacing">
+                    <a href="" class="btn btn-danger">Huỷ đơn hàng</a>
+                    <a href="" class="btn btn-outline-warning">Đã giao</a>
                 </div>
             </div>
         </div>
