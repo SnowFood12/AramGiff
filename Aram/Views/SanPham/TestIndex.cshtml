@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Aram.Models.SanPham>
+@{
+    ViewData["Title"] = "TestIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form>
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                    <input type="text"
+                           class="form-control border-0 shadow-none"
+                           placeholder="Search..." />
+                </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                <li class="nav-item lh-1 me-3">
+                    <a href=""><i class="bx bx-search fs-4 lh-0"></i></a>
+                </li>
+
+                <!-- User -->
+                <!--/ User -->
+            </ul>
+        </div>
+
+
+    </nav>
+</form>
+<h4 class="fw-bold py-3 mb-4"><a href="" class="text-muted fw-light">Cửa hàng  <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Danh sách sản phẩm của "Cửa hàng lưu niệm Tây Nguyên"</h4>
+<!-- Basic Bootstrap Table -->
+
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color:white !important;">Số thứ tự</th>
+                    <th style="color:white !important;">Tên sản phẩm</th>
+                    <th style="color:white !important;">Hình ảnh</th>
+                    <th style="color:white !important;">Đơn giá</th>
+                    <th style="color:white !important;">Trạng thái</th>
+                    <th style="color:white !important;">
+                        <a href="">
+                            <i class="fa-solid fa-circle-plus" style="font-size:20px;"></i>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @{
+                    int dem = 0;
+                    @foreach (var item in Model)
+                    {
+                        dem++;
+                        <tr>
+                            <td>
+                                @dem
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ten)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gia)
+                            </td>
+                            <td>
+                                <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
+                            </td>
+                            <td>
+                                <label class="form-check form-switch" for="@item.Id">
+                                    <input type="checkbox" id="@item.Id" name="TrangThai" class="form-check-input" data-id="@item.Id">
+                                    <div class="form-check-label" onclick="DoiTrangThai(@item.Id)"></div>
+                                </label>
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-chID="@item.CuaHangId"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="content-backdrop fade"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/SanPham/SanPham.js"></script>
+

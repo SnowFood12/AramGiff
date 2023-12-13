@@ -316,5 +316,17 @@ namespace Aram.Controllers
             PhanQuyen();
             return (_context.CuaHang?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        public async Task<IActionResult> Test()
+        {
+            PhanQuyen();
+            return _context.CuaHang != null ?
+                        View(await _context.CuaHang.Where(x => x.TrangThai == true).ToListAsync()) :
+                        Problem("Entity set 'AramContext.CuaHang'  is null.");
+        }
+        public IActionResult FormIndex()
+        {
+            return View();
+        }
     }
 }

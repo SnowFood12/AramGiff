@@ -24,31 +24,26 @@ namespace Aram.Controllers
 		}
 		public IActionResult Details()
 		{
-            PhanQuyen();
             return View();
 		}
 
 		// đơn hàng đang giao
 		public IActionResult DonHangDangGiao()
 		{
-            PhanQuyen();
             return View();
 		}
 		public IActionResult ChiTietDonHangDangGiao()
 		{
-            PhanQuyen();
             return View();
 		}
 
 		// đơn hàng đã giao
 		public IActionResult DonHangDaGiao()
 		{
-            PhanQuyen();
             return View();
 		}
 		public IActionResult ChiTietDonHangDaGiao()
 		{
-			PhanQuyen();
 			return View();
 		}
 	}

@@ -1,137 +1,84 @@
 ﻿
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="row justify-content-center" style="margin-top: 7rem;">
-	<div class="col-md-10 text-center" style="margin-top: 30px">
-		<ul class="product-category">
-			<li><a asp-action="Index" asp-controller="DonHang" class="active">Đơn hàng đang chờ duyệt</a></li>
-			<li><a asp-action="DonHangDangGiao" asp-controller="DonHang">Đơn hàng đang giao</a></li>
-			<li><a asp-action="DonHangDaGiao" asp-controller="DonHang">Lịch sử giao hàng</a></li>
-		</ul>
-	</div>
+
+<h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="DonHang" class="text-muted fw-light">Đơn hàng <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Đang chờ duyệt</h4>
+
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Tên cửa hàng</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                <tr>
+                    <td><img src="~/img/381399368_3570980826507620_7770188578307080914_n.jpg"  style=" object-fit: cover; width:60px; height: 60px;"/></td>
+                    <td>Móc khoá</td>
+                    <td>Cửa hàng lưu niệm tây nguyên</td>
+                    <td>50.000 đ</td>
+                    <td>1</td>
+                    <td>50.000 đ</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<section class="ftco-section ftco-cart" style="
-    padding: 0px;
-    margin: 20px 0px;">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 ftco-animate">
-				<div class="cart-list">
-					<table class="table" style="
-							background: #fff;
-							box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-						<thead class="thead-primary">
-							<tr class="text-center" style="background-color: #c25f11 !important; ">
-								<th>&nbsp;</th>
-								<th>Hình ảnh</th>
-								<th>Tên</th>
-								<th>Đơn giá</th>
-								<th>Số lượng</th>
-								<th>Tổng tiền</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="text-center">
-								<td class="product-remove">
-								</td>
 
-								<td class="image-prod">
-									<div class="img" style="background-image: url('/img/zyro-image (10).png');">
-									</div>
-								</td>
-
-								<td class="product-name">
-									<h3>Cà phê trung nguyên</h3>
-								</td>
-
-								<td class="price">120.000 đ</td>
-
-								<td class="quantity">
-									1
-								</td>
-								<td class="total">120.000 đ</td><!-- END TR-->
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-		<form action="">
-			<div class="row justify-content-end" style="background: #fff;
-														border-radius: 5px;
-														box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Ghi chú</h3>
-						<div class="form-group">
-							<input type="text" class="form-control text-left px-3" placeholder="" value="Giao trước 10h trưa cho em nha!" disabled>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Thông tin giao hàng</h3>
-						<div class="form-group">
-							<label for="">Họ tên</label>
-							<input type="text" class="form-control text-left px-3" placeholder="" value="Lê Văn A" disabled>
-						</div>
-						<div class="form-group">
-							<label for="country">Số điện thoại</label>
-							<input type="text" class="form-control text-left px-3" placeholder="" value="1234567890" disabled>
-						</div>
-						<div class="form-group">
-							<label for="country">Đia chỉ</label>
-							<input type="text" class="form-control text-left px-3" placeholder="" value="12 Phan Chu Trinh, Tp Buôn Ma Thuột" disabled>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Tổng tiền</h3>
-						<p class="d-flex">
-							<span>Tạm tính</span>
-							<span>120.000 đ</span>
-						</p>
-						<p class="d-flex">
-							<span>Phí Ship</span>
-							<span>20.000 đ</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>Tổng</span>
-							<span>140.000 đ</span>
-						</p>
-					</div>
-					<p>
-
-						<button style="color: white !important;
-										background-color: #c25f11 !important;
-										border-radius: 2px !important;
-										font-size:18px;
-										width: 100%;
-										padding: 5px 0;
-										cursor: pointer;">
-							Duyệt đơn hàng
-						</button>
-
-						<button style="color: #da1b1b !important;
-										background-color: white !important;
-										border-radius: 2px !important;
-										font-size:18px;
-										width: 100%;
-										border: 1px solid #da1b1b  !important;
-										padding: 5px 0;
-										cursor: pointer;
-										margin-top:20px;">
-							Huỷ đơn hàng
-						</button>
-
-					</p>
-				</div>
-			</div>
-		</form>
-</section>
-
+<div class="d-flex justify-content-between mt-4" style="gap: 20px;">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <h5 class="card-header">Thông tin giao hàng</h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Họ tên khách hàng</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="Lê Văn A" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Số điện thoại khách hàng</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="1234567890" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="10 Hà Huy Tập Tân An Tp Buôn Ma Thuột" disabled>
+                </div>
+                <div>
+                    <label for="exampleFormControlTextarea1" class="form-label">Ghi chú</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>Giao trước 10h cho em nha </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <h5 class="card-header"></h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tạm tính</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="50.000đ" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Phí ship</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="30.000đ" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tổng tiền</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="80.000đ" disabled>
+                </div>
+                <div class="mb-3 demo-inline-spacing">
+                    <a href="" class="btn btn-danger">Huỷ đơn hàng</a>
+                    <a href="" class="btn btn-outline-warning">Xác nhận</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

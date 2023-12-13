@@ -376,5 +376,24 @@ namespace Aram.Controllers
                 return Json(TrangThai);
             }
         }
+
+        public IActionResult TestIndex( int id)
+        {
+            HttpContext.Session.SetInt32("id", id); // => lưu vào sesion để làm tìm kiếm
+
+            var aramContext = _context.SanPham.Where(x => x.CuaHangId == id).Include(x => x.LoaiSP).ToList();
+
+            ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
+            ViewBag.chID = id;
+
+            ViewBag.ListProduct = aramContext;
+
+            return View();
+        }
+
+        public IActionResult FormInput()
+        {
+            return View();
+        }
     }
 }

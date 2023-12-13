@@ -35,6 +35,7 @@
 		</div>
 	</div>
 </div>
+
 <section style="margin-top: 1rem;">
 	<div class="container">
 		<div class="row" style="background-color: white; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
@@ -45,7 +46,7 @@
 				</a>
 			</div>
 			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-				<h3 style="margin-top:6rem; color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
+
 				<!-- <div class="rating d-flex">
 						<p class="text-left mr-4">
 							<a href="#" class="mr-2">5.0</a>
@@ -62,18 +63,19 @@
 							<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
 						</p>
 					</div> -->
-				@{
-					if (ViewBag.ThongTinSanPhamId.TrangThai == true)
-					{
-						<p class="price"><span style="color: #a41a1a; font-size:16px;">Còn hàng</span></p>
-					}
-					else
-					{
-						<p class="price"><span style="color: #a41a1a; font-size:16px;">Hết hàng</span></p>
-					}
-				}
+
+				<p class="price" style="margin-top:4rem;"></p>
+
+				<h3 style=" color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
+
+				Tên cửa hàng:<span style="color: #1C65A1; font-size:16px;">@ViewBag.ThongTinSanPhamId.CuaHang.Ten</span> <br />
+				Địa chỉ:<span style="color: #1C65A1; font-size:16px;"> @ViewBag.ThongTinSanPhamId.CuaHang.DiaChi</span><br />
+				Số điện thoại:<span style="color: #1C65A1; font-size:16px;"> @ViewBag.ThongTinSanPhamId.CuaHang.SoDT</span>
+
+
+
 				<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia.ToString("C3")</span></p>
-				<div class="row mt-4">
+				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group d-flex">
 							<div class="select-wrap">
@@ -104,12 +106,50 @@
 	</div>
 </section>
 
+<section class="ftco-section" style="margin-top: 20px; background: white;">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-center ftco-animate">
+				<h2 class="mb-4">Cửa hàng</h2>
+				<p>Các cửa hàng có bán sản phẩm tương ứng</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<table class="table">
+				<tbody>
+					@{
+						@foreach (var item in ViewBag.ListShop)
+						{
+							<tr style="color: black;">
+								<td>
+									@item.CuaHang.Ten
+								</td>
+								<td>
+									@item.CuaHang.SoDT
+								</td>
+								<td>
+									@item.CuaHang.DiaChi
+								</td>
+								<td>
+									<a asp-action="Shop" asp-controller="Home" asp-route-id="@item.CuaHang.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+
 <section class="ftco-section" style="background: url(/img/z4948448986151_c1d081626f73786c95fd363e3d17c8fa.jpg) no-repeat fixed !important; margin-top: 20px;">
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
 			<div class="col-md-12 heading-section text-center ftco-animate">
 				<h2 class="mb-4">Sản phẩm tương ứng</h2>
-				<p>Các phẩm tương ứng co trong cửa hàng</p>
+				<p>Các phẩm tương ứng của các cửa hàng</p>
 			</div>
 		</div>
 	</div>
@@ -128,16 +168,8 @@
 								<h3><a href="#">@item.Ten</a></h3>
 								<div class="d-flex">
 									<div class="pricing">
-										@{
-											if (item.TrangThai == true)
-											{
-												<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Còn hàng</span></p>
-											}
-											else
-											{
-												<p class="price"><span style=" font-weight:400; font-size:15px; color: #a11212" class="price-sale">Hết hàng</span></p>
-											}
-										}
+										<h3 style="font-size:13px; height: 35px;"><a class="product__trang--thai">@item.CuaHang.Ten</a></h3>
+
 										<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
 									</div>
 								</div>

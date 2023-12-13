@@ -36,14 +36,9 @@ namespace Aram.Controllers
 		{
             PhanQuyen();
             var LoaiSanPham = _context.LoaiSP.ToList();
-			var TongTinSanPham = _context.SanPham.Select(a => new
-			{
-				a.Id,
-				a.Ten, 
-				a.PicData, 
-				a.TrangThai,
-				a.Gia
-			}); 
+
+			var TongTinSanPham = _context.SanPham.Where( a => a.TrangThai == true).Include(a => a.CuaHang).OrderByDescending(a => a.Id).ToList();
+
 			ViewBag.LoaiSanPham = LoaiSanPham;
 			ViewBag.ThongTinSanPham = TongTinSanPham;
 			return View();
@@ -70,7 +65,7 @@ namespace Aram.Controllers
 			{
 				var LoaiSanPham = _context.LoaiSP.ToList();
 
-				var ListProduct = _context.SanPham.Where(a => a.Ten.Contains(search)).ToList();
+				var ListProduct = _context.SanPham.Where(a => a.Ten.Contains(search) && a.TrangThai == true).Include( a => a.CuaHang).ToList();
 
 				ViewBag.LoaiSanPham = LoaiSanPham;
 
@@ -88,9 +83,9 @@ namespace Aram.Controllers
             PhanQuyen();
             var LoaiSanPham = _context.LoaiSP.ToList();
 
-			var SanPham = _context.SanPham.Where(a => a.LoaiSPId == id).ToList();
+			var SanPham = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == id).Include(a => a.CuaHang).OrderByDescending(a => a.Id).ToList();
 
-			ViewBag.LoaiSanPham = LoaiSanPham;
+            ViewBag.LoaiSanPham = LoaiSanPham;
 
 			ViewBag.ThongTinSanPham = SanPham;
 
@@ -101,11 +96,13 @@ namespace Aram.Controllers
 		public IActionResult MainHome() // trang chủ
 		{
 			PhanQuyen();
-            var ListProduct = _context.SanPham.Take(8).ToList();
 
-			var LastProduct = _context.SanPham.OrderBy( a => a.Id).Last(); 
+            var ListProduct = _context.SanPham.Where(a => a.TrangThai == true).Include(a => a.CuaHang).OrderByDescending(a => a.Id).Take(8).ToList();
 
-			ViewBag.LastProduct = LastProduct;
+			var LastProduct = _context.SanPham.Where( a => a.TrangThai == true).Include(a => a.CuaHang).OrderBy( a => a.Id).Last();
+
+
+            ViewBag.LastProduct = LastProduct;
 
 			ViewBag.ListProduct = ListProduct;
 
@@ -115,17 +112,22 @@ namespace Aram.Controllers
 		public IActionResult Product( int id)
 		{
             PhanQuyen();
-            var ThongTinSanPhamId = _context.SanPham.FirstOrDefault( a => a.Id == id );
 
-			var SanPhamInShop = _context.SanPham.Where(a => a.CuaHangId == ThongTinSanPhamId.CuaHangId);
+            var ThongTinSanPhamId = _context.SanPham.Where( a => a.Id == id).Include( a => a.CuaHang).FirstOrDefault() ;
 
-			var Shop = _context.CuaHang.FirstOrDefault(a => a.Id == ThongTinSanPhamId.CuaHangId);
+			var SanPhamInShop = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == ThongTinSanPhamId.LoaiSPId).Include(a => a.CuaHang).OrderByDescending(a => a.Id).Take(16).ToList();
+
+            var Shop = _context.CuaHang.FirstOrDefault(a => a.Id == ThongTinSanPhamId.CuaHangId);
+
+			var ListShop = _context.SanPham.Where(a => a.Ten.Contains(ThongTinSanPhamId.Ten) && a.CuaHang.TrangThai == true).Include(a => a.CuaHang).ToList();
 
 			ViewBag.ThongTinSanPham = SanPhamInShop;
 
 			ViewBag.ThongTinSanPhamId = ThongTinSanPhamId;
 
 			ViewBag.Shop = Shop;
+
+			ViewBag.ListShop = ListShop;
 
 			return View();
 		}
@@ -137,6 +139,20 @@ namespace Aram.Controllers
         {
             return View();
         }
+
+		public IActionResult Shop(int id)
+		{
+			var Shop = _context.CuaHang.FirstOrDefault( a => a.Id == id);
+
+			var ListProduct = _context.SanPham.Where( a => a.TrangThai == true && a.CuaHangId == id).ToList();
+
+			ViewBag.Shop = Shop;	
+
+			ViewBag.ListProduct = ListProduct;	
+
+			return View();
+		}
+
         public IActionResult Privacy()
 		{
 			return View();

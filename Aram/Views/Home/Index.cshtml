@@ -115,16 +115,7 @@
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
 								<h3><a href="#">@item.Ten</a></h3>
-								@{
-									if (item.TrangThai == true)
-									{
-										<h3><a href="#" class="product__trang--thai">Còn Hàng</a></h3>
-									}
-									else
-									{
-										<h3><a href="#" class="product__trang--thai">Hết hàng</a></h3>
-									}
-								}
+								<h3 style="font-size:13px; height: 35px;"><a href="#" class="product__trang--thai">@item.CuaHang.Ten</a></h3>
 								
 								<div class="d-flex">
 									<div class="pricing">

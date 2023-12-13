@@ -2,73 +2,211 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = null ;
 }
 
-<link rel="stylesheet" href="/css/CuaHang/Create.css">
-@if (TempData["Message"] != null)
-{
-    <div class="alert__thongbao" style="display: block;">
-        @TempData["Message"]
-    </div>
-}
-<div style="width: 90%; 
-            margin: 7rem auto; 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Trang chủ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/animate.css">
+
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/css/aos.css">
+
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/css/CuaHang/Create.css">
+</head>
+<body class="goto-here">
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" asp-action="Index" asp-controller="CuaHang">Cửa hàng</a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="DonHang">Đơn hàng</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item active dropdown">
+                        @await Component.InvokeAsync("GiohangWidget")
+                    </li>
+
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link"><i class="fa-solid fa-circle-user" style="font-size: 20px;"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" asp-action="KiemTraDangNhap" asp-controller="TaiKhoan">Thông tin tài khoản</a>
+                            <a class="dropdown-item" asp-action="GioHangDangChoDuyet" asp-controller="GioHang">Đơn hàng</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END nav -->
+    <div style="min-height:120vh !important;">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert__thongbao" style="display: block;">
+                @TempData["Message"]
+            </div>
+        }
+        <div style="width: 90%;
+            margin: 7rem auto;
             padding: 20px 0px;
             background: #fff;">
-    <form asp-action="SearchShop" asp-controller="CuaHang">
-        <div class="main__tieude">
-            <p class="tieu__de">Danh sách cửa hàng</p>
-            <div class="main__tim--kiem">
-                <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" name="search" />
-                <button type="submit" class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-        </div>  
-     </form>
+            <form asp-action="SearchShop" asp-controller="CuaHang">
+                <div class="main__tieude">
+                    <p class="tieu__de">Danh sách cửa hàng</p>
+                    <div class="main__tim--kiem">
+                        <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" name="search" />
+                        <button type="submit" class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+            </form>
 
-    <table class="table">
-        <thead style="background-color: #dad9d9; color: black;">
-            <tr>
-                <th>
-                    Tên cửa hàng
-                </th>
-                <th>
-                    Số DT
-                </th>
-                <th>
-                    Địa chỉ
-                </th>
-                <th>
-                    <a asp-action="Create" class="btn" style=" border-radius: 2px; border:1px solid black; color: black; background-color:white;">Thêm thông tin cửa hàng</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr style="color: black;">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ten)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SoDT)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DiaChi)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
-                        <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<script> 
-    setTimeout(function () {
-        var alertMessage = document.querySelector('.alert__thongbao');
-        alertMessage.style.display = 'none';
-        alertMessage.style.transform = 'translateX(100%)';
-    }, 4000);
-</script>
+            <table class="table">
+                <thead style="background-color: #dad9d9; color: black;">
+                    <tr>
+                        <th>
+                            Tên cửa hàng
+                        </th>
+                        <th>
+                            Số DT
+                        </th>
+                        <th>
+                            Địa chỉ
+                        </th>
+                        <th>
+                            <a asp-action="Create" class="btn" style=" border-radius: 2px; border:1px solid black; color: black; background-color:white;">Thêm thông tin cửa hàng</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="color: black;">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ten)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoDT)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
+                                <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+    <footer style="border-top: 1px solid #be7a65; height: 15rem;   background: #d2ad94 !important;" class="ftco-footer ftco-section">
+        <div class="container">
+            <div class="row">
+            </div>
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <img src="/img/LogoAramGift.png" height="120px" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2" style="color: white !important;">VỀ ARAM GIFT</h2>
+                        "Aram Gift" là website mang đến cho khách hàng những sản phẩm đặc trưng của vùng đất núi rừng Tây Nguyên.
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2"></h2>
+                        <div class="d-flex">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2" style="color: white !important;">THÔNG TIN LIÊN HỆ</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><a href="#"><i class="fa-solid fa-phone"></i>   <span class="text"> Phone: 1234567890</span></a></li>
+                                <li><a href="#"><i class="fa-solid fa-envelope"></i>    <span class="text"> Email: AramGiff@gmail.com</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.stellar.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/jquery.animateNumber.min.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="/js/google-map.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+        setTimeout(function () {
+            var alertMessage = document.querySelector('.alert__thongbao');
+            alertMessage.style.display = 'none';
+            alertMessage.style.transform = 'translateX(100%)';
+        }, 4000);
+    </script>
+
+</body>
+</html>
+
+

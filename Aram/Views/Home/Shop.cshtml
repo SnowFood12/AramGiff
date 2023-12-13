@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+	ViewData["Title"] = "Product";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+	.active__phan--trang {
+		color: white;
+		background-color: #be7a65;
+		padding: 5px 15px;
+		border-radius: 50%;
+	}
+
+	.PhanTrang {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		cursor: pointer;
+	}
+
+		.PhanTrang li {
+			padding: 5px 15px;
+		}
+</style>
+
+<div class="hero-wrap hero-bread" style="background-image: url('/img/zyro-image\ \(11\).png');">
+	<div class="container">
+		<div class="row no-gutters slider-text align-items-center justify-content-center">
+			<div class="col-md-9 ftco-animate text-center">
+				<p class="breadcrumbs"><span>Dự án</span></p>
+				<h1 class="mb-0 bread">Thành phố xanh</h1>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section style="margin-top: 1rem;">
+	<div class="container">
+		<div class="row" style="background-color: white; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+			<div class="col-lg-6 mb-5 ftco-animate">
+				<a class="image-popup">
+					<iframe src="@ViewBag.Shop.LinkMap"
+					style="margin-top:3rem; height: 10rem; width: 100%; border:none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				</a>
+			</div>
+			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+
+				<p class="price" style="margin-top:2rem;"></p>
+
+				<h3 style=" color: black;">@ViewBag.Shop.Ten</h3>
+				Địa chỉ:<span style="color: #1C65A1; font-size:16px;"> @ViewBag.Shop.DiaChi</span><br />
+				Số điện thoại:<span style="color: #1C65A1; font-size:16px;"> @ViewBag.Shop.SoDT</span>
+
+			</div>
+		</div>
+	</div>
+</section>
+<section class="ftco-section" style="background: url(/img/z4948448986151_c1d081626f73786c95fd363e3d17c8fa.jpg) no-repeat fixed !important; margin-top: 20px;">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-center ftco-animate">
+				<h2 class="mb-4">Sản phẩm</h2>
+				<p>Các sản phẩm có bán trong cửa hàng</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			@{
+				@foreach (var item in ViewBag.ListProduct)
+				{
+					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+						<div class="product">
+							<a class="img-prod" style="height: 240px; object-fit: cover;">
+								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = item.Id})"
+									 alt="Colorlib Template">
+							</a>
+							<div class="text py-3 pb-4 px-3 text-center">
+								<h3><a href="#">@item.Ten</a></h3>
+								<div class="d-flex">
+									<div class="pricing">
+										<h3 style="font-size:13px; height: 35px;"><a class="product__trang--thai">@item.CuaHang.Ten</a></h3>
+
+										<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
+									</div>
+								</div>
+								<div class="bottom-area d-flex px-3">
+									<div class="m-auto d-flex">
+										<a asp-action="Product" asp-controller="Home" asp-route-id="@item.Id" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+											<span><i class="fa-solid fa-list"></i></span>
+										</a>
+										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+											<span><i class="fa-solid fa-cart-shopping"></i></span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			}
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col text-center">
+			<div class="block-27">
+				<ul class="PhanTrang">
+					<li class="active__phan--trang"><span>1</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+	let thispage = 1;
+	let limit = 8;
+	let list = document.querySelectorAll('.contaner__content--trangchu')
+
+	function loadItem() {
+		let beginGet = limit * (thispage - 1);
+		let endGet = limit * thispage - 1;
+		list.forEach((item, key) => {
+			if (key >= beginGet && key <= endGet) {
+				item.style.display = 'block';
+			}
+			else {
+				item.style.display = 'none'
+			}
+		})
+		listpage();
+	}
+	loadItem()
+
+	function listpage() {
+		let count = Math.ceil(list.length / limit)
+		document.querySelector('.PhanTrang').innerHTML = '';
+		for (let i = 1; i <= count; i++) {
+			let newpage = document.createElement('li');
+			newpage.innerText = i;
+			if (i == thispage) {
+				newpage.classList.add('active__phan--trang');
+			}
+			newpage.setAttribute('onclick', `changePage(${i})`)
+			document.querySelector('.PhanTrang').appendChild(newpage);
+		}
+	}
+	function changePage(i) {
+		thispage = i;
+		loadItem();
+	}
+</script>
+
+
