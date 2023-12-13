@@ -3,6 +3,7 @@ using Aram.Infrastructure;
 using Aram.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Aram.Controllers
 {
@@ -87,11 +88,11 @@ namespace Aram.Controllers
 		{
             return View();
 		}
-		public IActionResult ChiTietDonHangDangGiao( int id)
+		public IActionResult ChiTietDonHangDangGiao(int id)
 		{
-			var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).ToList();
+			var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude( a => a.CuaHang).ToList();
 
-
+			ViewBag.ListProduct = DonHangChiTiet;
 
             return View();
 		}

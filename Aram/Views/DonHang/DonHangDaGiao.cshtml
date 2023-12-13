@@ -1,84 +1,83 @@
-﻿
-@{
-    ViewData["Title"] = "DonHangDaGiao";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<link rel="stylesheet" href="/css/CuaHang/Create.css">
-<div class="row justify-content-center" style="margin-top: 7rem;">
-    <div class="col-md-10 text-center" style="margin-top: 30px">
-        <ul class="product-category">
-            <li><a asp-action="Index" asp-controller="DonHang">Đơn hàng đang chờ duyệt</a></li>
-            <li><a asp-action="DonHangDangGiao" asp-controller="DonHang">Đơn hàng đang giao</a></li>
-            <li><a asp-action="DonHangDaGiao" asp-controller="DonHang" class="active">Lịch sử giao hàng</a></li>
-        </ul>
+
+<h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="DonHang" class="text-muted fw-light">Đơn hàng <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Đang chờ duyệt</h4>
+
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Tên cửa hàng</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                <tr>
+                    <td><img src="~/img/381399368_3570980826507620_7770188578307080914_n.jpg" style=" object-fit: cover; width:60px; height: 60px;" /></td>
+                    <td>Móc khoá</td>
+                    <td>Cửa hàng lưu niệm tây nguyên</td>
+                    <td>50.000 đ</td>
+                    <td>1</td>
+                    <td>50.000 đ</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-<div style="width: 100%;
-            margin: 20px auto;
-            padding: 20px 0px;
-            background: #fff;">
-    <div class="main__tieude">
-        <p class="tieu__de">Danh sách đơn hàng đã giao</p>
-        <div class="main__tim--kiem">
-            <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" />
-            <button class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+<div class="d-flex justify-content-between mt-4" style="gap: 20px;">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <h5 class="card-header">Thông tin giao hàng</h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Họ tên khách hàng</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="Lê Văn A" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Số điện thoại khách hàng</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="1234567890" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Địa chỉ</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="10 Hà Huy Tập Tân An Tp Buôn Ma Thuột" disabled>
+                </div>
+                <div>
+                    <label for="exampleFormControlTextarea1" class="form-label">Ghi chú</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>Giao trước 10h cho em nha </textarea>
+                </div>
+            </div>
         </div>
     </div>
-
-    <table class="table">
-        <thead style="background-color: #1C65A1; color: white;">
-            <tr>
-                <th>
-                    Tên cửa hàng
-                </th>
-                <th>
-                    Số điện thoại
-                    cửa hàng
-                </th>
-                <th>
-                    Địa chỉ giao hàng
-                </th>
-                <th>
-                    Số điện thoại khách hàng
-                </th>
-                <th>
-                    Ghi chú
-                </th>
-                <th>
-                    Tổng tiền
-                </th>
-                <th>
-
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr style="color: black;">
-                <td>
-                    Lưu niệm Holo
-                </td>
-                <td>
-                    1234567890
-                </td>
-                <td>
-                    12 Phan chu trinh, TP Buôn Ma thuật
-                </td>
-                <td>
-                    1234567890
-                </td>
-                <td>
-                    Giao trước 10h cho em nha!
-                </td>
-                <td>
-                    140.000 đ
-                </td>
-                <td>
-                    <a asp-action="ChiTietDonHangDaGiao" asp-controller="DonHang"><i class="fa-solid fa-list" style="color: #1C65A1 !important; font-size:20px; margin-left: 10px"></i></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <h5 class="card-header"></h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tạm tính</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="50.000đ" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Phí ship</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="30.000đ" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tổng tiền</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="80.000đ" disabled>
+                </div>
+                <div class="mb-3 demo-inline-spacing">
+                    <a href="" class="btn btn-danger">Huỷ đơn hàng</a>
+                    <a href="" class="btn btn-outline-warning">Xác nhận</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-

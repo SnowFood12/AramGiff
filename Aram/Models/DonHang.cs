@@ -19,6 +19,5 @@ namespace Aram.Models
         public TaiKhoan? TaiKhoan { get; set; }
         public virtual ThongTin_NhanHang? ThongTin_NhanHangs { get; set; }
         public virtual ICollection<DonHang_ChiTiet>? DonHang_ChiTiets { get; set; }
-
     }
 }
