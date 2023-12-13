@@ -4,6 +4,7 @@ using Aram.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Net.WebSockets;
 
 namespace Aram.Controllers
 {
@@ -78,8 +79,20 @@ namespace Aram.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("DonHangDangGiao", "GioHang");
         }
-        public IActionResult Details()
+        public IActionResult Details(int id)
 		{
+            var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();
+
+            var ThongTinGiaoHang = _context.ThongTin_NhanHang.FirstOrDefault(a => a.DonHangId == id);
+
+            var TamTinh = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).Sum(a => a.SoLuong * a.SanPham.Gia);
+
+            ViewBag.TamTinh = TamTinh;
+
+            ViewBag.ThongTinGiaoHang = ThongTinGiaoHang;
+
+            ViewBag.ListProduct = DonHangChiTiet;
+
             return View();
 		}
 
@@ -88,9 +101,18 @@ namespace Aram.Controllers
 		{
             return View();
 		}
+
 		public IActionResult ChiTietDonHangDangGiao(int id)
 		{
 			var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude( a => a.CuaHang).ToList();
+
+			var ThongTinGiaoHang = _context.ThongTin_NhanHang.FirstOrDefault( a => a.DonHangId == id);
+
+			var TamTinh = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).Sum(a => a.SoLuong * a.SanPham.Gia);
+
+			ViewBag.TamTinh = TamTinh;
+
+            ViewBag.ThongTinGiaoHang = ThongTinGiaoHang;
 
 			ViewBag.ListProduct = DonHangChiTiet;
 
