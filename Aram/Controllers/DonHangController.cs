@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Net.WebSockets;
+using System.Text.RegularExpressions;
 
 namespace Aram.Controllers
 {
@@ -51,34 +52,7 @@ namespace Aram.Controllers
             Index();
             return RedirectToAction("Index", "DonHang");
 		}
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(string HoTen, string SoDT, string DiaChi, string GhiChu)
-        {
-            var donHang = new DonHang();
-			donHang.TenTK = HttpContext.Session.GetString("Name");
-			_context.Add(donHang);
-			_context.SaveChanges();
-			GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
-			foreach (var item in GioHang.Lines)
-			{
-				var donHang_chiTiet = new DonHang_ChiTiet();
-				donHang_chiTiet.SanPhamId = item.SanPham.Id;
-				donHang_chiTiet.DonHangId = donHang.Id;
-				donHang_chiTiet.SoLuong = item.SoLuong;
-				_context.Add(donHang_chiTiet);
-				_context.SaveChanges();
-			}
-			var TT_NH = new ThongTin_NhanHang();
-			TT_NH.DonHangId = donHang.Id;
-			TT_NH.HoTen = HoTen;
-			TT_NH.SoDT = SoDT;
-			TT_NH.DiaChi = DiaChi;
-			TT_NH.GhiChu = GhiChu;
-			_context.Add(TT_NH);
-			_context.SaveChanges();
-			return RedirectToAction("DonHangDangGiao", "GioHang");
-        }
+        
         public IActionResult Details(int id)
 		{
             var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();

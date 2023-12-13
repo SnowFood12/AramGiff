@@ -35,7 +35,7 @@
 		</div>
 	</div>
 </div>
-<form method="post" asp-action="AddToGioHang" asp-controller="Giohang" asp-route-Id="@ViewBag.ThongTinSanPhamId.Id">
+<form method="post" asp-action="AddToGioHang" asp-controller="Giohang" asp-route-sanPhamId="@ViewBag.ThongTinSanPhamId.Id">
 	<section style="margin-top: 1rem;">
 	<div class="container">
 		<div class="row" style="background-color: white; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
@@ -71,7 +71,7 @@
 							</span>
 						</div>
 					</div>
-					<a asp-action="ProductAddGioHang" asp-controller="Giohang" asp-route-id="@ViewBag.ThongTinSanPhamId.Id" style="color: #ec951c; font-size: 18px; padding: 5px 10px; border-radius:2px !important; border: 1px solid;" class="btn">Thêm vào giỏ hàng</a>
+					<a asp-action="AddToGioHang" asp-controller="Giohang" asp-route-sanPhamId="@ViewBag.ThongTinSanPhamId.Id" style="color: #ec951c; font-size: 18px; padding: 5px 10px; border-radius:2px !important; border: 1px solid;" class="btn">Thêm vào giỏ hàng</a>
 					<input type="submit" style="color: white !important; 
 												font-size: 18px; 
 												padding: 5px 10px; 
