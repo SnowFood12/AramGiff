@@ -138,7 +138,7 @@
 					<h3>Tổng tiền</h3>
 					<p class="d-flex">
 						<span>Tạm tính</span>
-						<span id="TamTinh"> 100.00 </span>
+						<span id="TamTinh"> @Model.TamTinh().ToString("C3")</span>
 					</p>
 					<p class="d-flex">
 						<span>Phí Ship</span>
@@ -148,7 +148,7 @@
 					<p class="d-flex total-price">
 							<span>Tổng</span>
 							<span id="TongTien">
-								99999
+								@Model.TongTien().ToString("C3")
 								</span>
 						</p>
 				</div>

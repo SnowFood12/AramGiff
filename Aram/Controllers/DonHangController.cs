@@ -8,6 +8,7 @@ namespace Aram.Controllers
 {
 	public class DonHangController : Controller
 	{
+		public GioHang? GioHang { get; set; }
 		private readonly AramContext _context;
 
 		public DonHangController( AramContext context)

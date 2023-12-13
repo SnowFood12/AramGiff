@@ -60,13 +60,16 @@ namespace Aram.Controllers
 			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
 			GioHang_line.SoLuong++;
 			HttpContext.Session.SetJson("giohang", GioHang);
-			
+
+			var DonGia = GioHang_line.SanPham.Gia;
 
 			var json = new
 			{
-				SoLuong = GioHang_line.SoLuong,	
-				TongTien = GioHang.TongTien()
-			};
+                SoLuong = GioHang_line.SoLuong,
+                TongTienSanPham = GioHang_line.TongTienSp(),
+                TamTinh = GioHang.TamTinh(),
+                TongTien = GioHang.TongTien(),
+            };
 
 			return Json(json);
 
@@ -80,10 +83,15 @@ namespace Aram.Controllers
 			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
 			GioHang_line.SoLuong--;
 			HttpContext.Session.SetJson("giohang", GioHang);
-			var json = new
+
+            var DonGia = _context.SanPham.FirstOrDefault( a => a.Id == id);
+            var json = new
 			{
-				TongTien = GioHang.TongTien()
-			};
+                SoLuong = GioHang_line.SoLuong,
+                TongTienSanPham = GioHang_line.TongTienSp(),
+                TamTinh = GioHang.TamTinh(),
+                TongTien = GioHang.TongTien(),
+            };
 
 			return Json(json);
 

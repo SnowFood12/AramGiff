@@ -24,13 +24,13 @@ for (var i = 0; i < tang.length; i++) {
             data: { id: id },
             dataType: 'json',
             success: function (result) {
-                let vndString = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                let vndString = result.tongTienSanPham.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                let tamTinh = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                let tamTinh = result.tamTinh.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                var tongTienGioHang = result.tongTien + 20;
+                let Tong = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                let Tong = tongTienGioHang.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                console.log(result);
 
                 tongTien.innerHTML = vndString;
                 tamtinh.innerHTML = tamTinh;
@@ -58,13 +58,13 @@ for (var i = 0; i < giam.length; i++) {
                 data: { id: id },
                 dataType: 'json',
                 success: function (result) {
-                    let vndString = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                    let vndString = result.tongTienSanPham.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                    let tamTinh = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                    let tamTinh = result.tamTinh.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                    var tongTienGioHang = result.tongTien + 20;
+                    let Tong = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                    let Tong = tongTienGioHang.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                    console.log(result);
 
                     tongTien.innerHTML = vndString;
                     tamtinh.innerHTML = tamTinh;
