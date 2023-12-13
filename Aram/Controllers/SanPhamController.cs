@@ -44,6 +44,8 @@ namespace Aram.Controllers
             ViewBag.chID = id;
 
             ViewBag.ListProduct = aramContext;
+
+            ViewBag.TrangThai = "Tất cả";
             return View();
         }
 
@@ -92,6 +94,8 @@ namespace Aram.Controllers
             ViewBag.chID = id;
 
             ViewBag.ListProduct = aramContext;
+
+            ViewBag.TrangThai = "Còn hàng";
             return View("Index");
         }
         // => hết hàng 
@@ -105,6 +109,8 @@ namespace Aram.Controllers
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
             ViewBag.chID = id;
             ViewBag.ListProduct = aramContext;
+
+            ViewBag.TrangThai = "Hết hàng";
             return View("Index");
         }
 
