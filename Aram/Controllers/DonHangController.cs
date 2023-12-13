@@ -1,28 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aram.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aram.Controllers
 {
 	public class DonHangController : Controller
 	{
-        public void PhanQuyen()
-        {
-            string Name = HttpContext.Session.GetString("Name");
-            if (Name == "admin1234" && Name != null)
-            {
-                ViewBag.PhanQuyen = true;
-            }
-            else
-            {
-                ViewBag.PhanQuyen = false;
-            }
-        }
-        public IActionResult Index()
+		private readonly AramContext _context;
+
+
+		public DonHangController( AramContext context)
 		{
-			PhanQuyen();
+			_context = context;
+		}
+		public IActionResult Index()
+		{
+			var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+
+			var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+
+			var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+
+			ViewBag.ChoDuyet = ListDonHang; 
+
+			ViewBag.DangGiao = DangGiao; 
+
+			ViewBag.DaGiao = DaGiao;
+
+			ViewBag.DemChoDuyet = ListDonHang.Count();
+			ViewBag.DemDangGiao = DangGiao.Count();
+			ViewBag.DemDaGiao = DaGiao.Count();
 
             return View();
 		}
-		public IActionResult Details()
+
+		// duyệt đơn
+		public IActionResult DuyetDon(int id)
+		{
+			var DonHang = _context.DonHang.FirstOrDefault( a => a.Id == id);
+
+			DonHang.TrangThaiDH = "Đang giao"; 
+
+			_context.DonHang.Update(DonHang);
+			_context.SaveChanges();
+
+            Index();
+            return RedirectToAction("Index", "DonHang");
+        }
+
+        public IActionResult Details()
 		{
             return View();
 		}
@@ -32,8 +58,12 @@ namespace Aram.Controllers
 		{
             return View();
 		}
-		public IActionResult ChiTietDonHangDangGiao()
+		public IActionResult ChiTietDonHangDangGiao( int id)
 		{
+			var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).ToList();
+
+
+
             return View();
 		}
 
