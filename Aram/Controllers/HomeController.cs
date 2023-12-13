@@ -117,7 +117,7 @@ namespace Aram.Controllers
 
 			var SanPhamInShop = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == ThongTinSanPhamId.LoaiSPId).Include(a => a.CuaHang).OrderByDescending(a => a.Id).Take(16).ToList();
 
-            var Shop = _context.CuaHang.FirstOrDefault(a => a.Id == ThongTinSanPhamId.CuaHangId);
+            var Shop = _context.CuaHang.FirstOrDefault(a => a.Id  == ThongTinSanPhamId.CuaHangId);
 
 			var ListShop = _context.SanPham.Where(a => a.Ten.Contains(ThongTinSanPhamId.Ten) && a.CuaHang.TrangThai == true).Include(a => a.CuaHang).ToList();
 

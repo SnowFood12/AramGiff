@@ -190,7 +190,8 @@ namespace Aram.Controllers
                         throw;
                     }
                 }
-                TempData["Message"] = "Cập nhật thông tin của hàng thành công";
+
+                TempData["Message"] = "Cập nhật cửa hàng thành công";
                 return RedirectToAction(nameof(Index));
             }
             return View(cuaHang);
