@@ -86,7 +86,7 @@
 									<td class="total" id="t @item.SanPham.Id">@((item.SanPham.Gia * item.SoLuong)?.ToString("C3"))></td>
 
 									<td class="product-remove">
-										<a @* href="/GioHang/XoaSPGioHang?Id=@item.Id" *@ style="border:none; cursor:pointer;">
+										<a href="/GioHang/XoaSPGioHang?Id=@item.SanPham.Id" style="border:none; cursor:pointer;">
 											<i class="fa-solid fa-xmark" style="color: brown; font-size:20px;"></i>
 										</a>
 

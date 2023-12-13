@@ -17,7 +17,7 @@
 				line.SoLuong += soluong;
 			}
 		}
-		public void RemoveSanPham(SanPham sanPham) => Lines.Remove(Lines.Where(p => p.SanPham.Id == sanPham.Id).FirstOrDefault());
+		public void RemoveSanPham(int Id) => Lines.Remove(Lines.Where(p => p.SanPham.Id == Id).FirstOrDefault());
 		public int TongTien() => (int)Lines.Sum(p => p.SanPham.Gia * p.SoLuong);
 		public void Clear() => Lines.Clear();
 

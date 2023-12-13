@@ -13,7 +13,7 @@ namespace Aram.Models
         [StringLength(50, ErrorMessage = "Tên không được dài quá 50 ký tự")]
 		[Required(ErrorMessage = "Tên không được để trống")]
 		public string? Ten { get; set; }
-        [Range(10000, int.MaxValue, ErrorMessage = "Giá phải lớn hơn 10K")]
+        [Range(10, int.MaxValue, ErrorMessage = "Giá phải lớn hơn 10K")]
         [Required(ErrorMessage = "Giá không được để trống")]
 		public int? Gia { get; set; }
         public byte[]? PicData { get; set; }

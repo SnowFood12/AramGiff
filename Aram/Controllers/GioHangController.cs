@@ -83,7 +83,7 @@ namespace Aram.Controllers
 		[HttpGet]
 		public JsonResult GiamSoLuong(int id)
 		{
-			var GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+			GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
 			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
 			GioHang_line.SoLuong--;
 			HttpContext.Session.SetJson("giohang", GioHang);
@@ -95,16 +95,16 @@ namespace Aram.Controllers
 			return Json(json);
 
 		}
-		/*public IActionResult XoaSPGioHang(int Id)
+		public IActionResult XoaSPGioHang(int Id)
 		{
-			var DonHan_CT = _context.GioHang_ChiTiet.FirstOrDefault(a => a.Id == Id);
-			if (DonHan_CT != null)
+            GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+            GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == Id);
+            if (GioHang.Lines != null)
 			{
-				_context.GioHang_ChiTiet.Remove(DonHan_CT);
-				_context.SaveChanges();
-				return RedirectToAction(nameof(Index));
-			}
-			return RedirectToAction(nameof(Index));
+				GioHang.RemoveSanPham(Id);
+                HttpContext.Session.SetJson("giohang", GioHang);
+            }
+			return RedirectToAction(nameof(Index), GioHang);
 		}
 		// đơn hàng đang chờ admin duyệt
 		public IActionResult GioHangDangChoDuyet()
@@ -112,7 +112,7 @@ namespace Aram.Controllers
 			PhanQuyen();
 
 			return View();
-		}*/
+		}
 
 		// chi tiết đơn hàng đang chở duyệt
 
