@@ -35,8 +35,8 @@
 		</div>
 	</div>
 </div>
-
-<section style="margin-top: 1rem;">
+<form method="post" asp-action="AddToGioHang" asp-controller="Giohang" asp-route-Id="@ViewBag.ThongTinSanPhamId.Id">
+	<section style="margin-top: 1rem;">
 	<div class="container">
 		<div class="row" style="background-color: white; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 			<div class="col-lg-6 mb-5 ftco-animate">
@@ -45,46 +45,18 @@
 						 class="img-fluid" alt="Colorlib Template" style="margin-top:3rem; height: 25rem; width: 100%; object-fit: cover;" />
 				</a>
 			</div>
-			<form method="post" asp-action="AddToGioHang" asp-controller="Giohang" asp-route-Id="@ViewBag.ThongTinSanPhamId.Id">
+			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+					<p class="price" style="margin-top:4rem;"></p>
 
-				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-					<h3 style="margin-top:6rem; color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
-					<!-- <div class="rating d-flex">
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2">5.0</a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-							</p>
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-							</p>
-							<p class="text-left">
-								<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-							</p>
-						</div> -->
-					@{
-						if (ViewBag.ThongTinSanPhamId.TrangThai == true)
-						{
-							<p class="price"><span style="color: #a41a1a; font-size:16px;">Còn hàng</span></p>
-						}
-						else
-						{
-							<p class="price"><span style="color: #a41a1a; font-size:16px;">Hết hàng</span></p>
-						}
-					}
+					<h3 style=" color: black;">@ViewBag.ThongTinSanPhamId.Ten</h3>
+
+					Tên cửa hàng:<span style="color: #1C65A1; font-size:16px;">@ViewBag.ThongTinSanPhamId.CuaHang.Ten</span> <br />
+					Địa chỉ:<span style="color: #1C65A1; font-size:16px;"> @ViewBag.ThongTinSanPhamId.CuaHang.DiaChi</span><br />
+					Số điện thoại:<span style="color: #1C65A1; font-size:16px;"> @ViewBag.ThongTinSanPhamId.CuaHang.SoDT</span>
+
 					<p class="price"><span style="color: #ec4b1c; font-weight:600;">@ViewBag.ThongTinSanPhamId.Gia.ToString("C3")</span></p>
 					<div class="row mt-4">
-						<div class="col-md-6">
-							<div class="form-group d-flex">
-								<div class="select-wrap">
-								</div>
-							</div>
-						</div>
-						<div class="w-100"></div>
-						<div class="input-group col-md-6 d-flex mb-3">
+						<div class="input-group col-md-6 d-flex mb-3" style="width:100%;">
 							<span class="input-group-btn mr-2">
 								<button type="button" class="quantity-left-minus btn" id="minus" data-field="">
 									<i class="fa-solid fa-minus"></i>
@@ -98,14 +70,55 @@
 								</button>
 							</span>
 						</div>
-						<div class="w-100"></div>
 					</div>
-					<a asp-action="ProductAddGioHang" asp-controller="Giohang" asp-route-id="@ViewBag.ThongTinSanPhamId.Id" style="color: black; font-size: 18px; padding: 5px 10px;" type="button" class="btn btn-outline-dark">Thêm vào giỏ hàng</a>
-					<input type="submit" as asp style="color: #a11212 ; font-size: 18px; padding: 5px 10px;" type="button" class="btn btn-dark">Mua ngay</input>
+					<a asp-action="ProductAddGioHang" asp-controller="Giohang" asp-route-id="@ViewBag.ThongTinSanPhamId.Id" style="color: #ec4b1c; font-size: 18px; padding: 5px 10px; border-radius:2px !important; border: 1px solid;" class="btn">Thêm vào giỏ hàng</a>
+					<input type="submit" style="color: white !important; 
+												font-size: 18px; 
+												padding: 5px 10px; 
+												border-radius:2px !important; 
+												background: #d71111 !important;
+												border: none;" class="btn btn-dark" value="Mua ngay" />
 				</div>
 
+		</div>
+	</div>
+</section>
+</form>
 
-			</form>
+<section class="ftco-section" style="margin-top: 20px; background: white;">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-12 heading-section text-center ftco-animate">
+				<h2 class="mb-4">Cửa hàng</h2>
+				<p>Các cửa hàng có bán sản phẩm tương ứng</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<table class="table">
+				<tbody>
+					@{
+						@foreach (var item in ViewBag.ListShop)
+						{
+							<tr style="color: black;">
+								<td>
+									@item.CuaHang.Ten
+								</td>
+								<td>
+									@item.CuaHang.SoDT
+								</td>
+								<td>
+									@item.CuaHang.DiaChi
+								</td>
+								<td>
+									<a asp-action="Shop" asp-controller="Home" asp-route-id="@item.CuaHang.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
 		</div>
 	</div>
 </section>
@@ -114,7 +127,7 @@
 	<div class="container">
 		<div class="row justify-content-center mb-3 pb-3">
 			<div class="col-md-12 heading-section text-center ftco-animate">
-				<h2 class="mb-4">Sản phẩm tương ứng</h2>
+				<h2 class="mb-4">Sản phẩm</h2>
 				<p>Các phẩm tương ứng của các cửa hàng</p>
 			</div>
 		</div>

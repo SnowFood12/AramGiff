@@ -1,47 +1,92 @@
 ﻿@model Aram.Models.CuaHang
+@{
+    Layout = null;
+}
 
+<link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet" />
 
-<link rel="stylesheet" href="/css/CuaHang/Create.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<!-- Icons. Uncomment required icon fonts -->
+<link rel="stylesheet" href="~/LayoutAdmin/assets/vendor/fonts/boxicons.css" />
 
+<!-- Core CSS -->
+<link rel="stylesheet" href="~/LayoutAdmin/assets/vendor/css/core.css" class="template-customizer-core-css" />
+<link rel="stylesheet" href="~/LayoutAdmin/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+<link rel="stylesheet" href="~/LayoutAdmin/assets/css/demo.css" />
 
-<div class="row_aram">
-    <div class="col-md-4">
-        <span style="font-size: 20px;">Thêm thông tin cửa hàng</span>
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Tên cửa hàng</label>
-                <input asp-for="Ten" class="form-control" />
-                <span asp-validation-for="Ten" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Số điện thoại</label>
-                <input asp-for="SoDT" class="form-control" />
-                <span asp-validation-for="SoDT" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label class="control-label">Địa chỉ</label>
-                <input asp-for="DiaChi" class="form-control" />
-                <span asp-validation-for="DiaChi" class="text-danger"></span>
-            </div>
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="~/LayoutAdmin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-            <div class="form-group">
-                <label class="control-label">Link map</label>
-                <input asp-for="LinkMap" class="form-control" />
-                <span asp-validation-for="LinkMap" class="text-danger"></span>
-            </div>
+<!-- Page CSS -->
+<!-- Helpers -->
+<script src="~/LayoutAdmin/assets/vendor/js/helpers.js"></script>
 
-            <div class="form-group--btn">
-                <input type="submit" value="Tạo" class="btn__them" />
-                <div>
-                    <a asp-action="Index" type="button" class="btn__them">Quay lại</a>
-                </div>
-            </div>
-        </form>
-    </div>
+<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+<script src="~/LayoutAdmin/assets/js/config.js"></script>
+
+<div class="card mb-4 p-5">
+    <h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="CuaHang" class="text-muted fw-light">Cửa hàng <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Thêm thông tin cửa hàng</h4>
+    <form asp-action="Create" class="row g-3" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" value="admin1234" disabled>
+        </div>
+        <div class="col-md-6">
+            <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="validationServer03" class="form-label">Tên cửa thàng</label>
+            <input asp-for="Ten" class="form-control">
+            <span asp-validation-for="Ten" style="color: #da1616;"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="validationServer05" class="form-label">Số điện thoại</label>
+            <input asp-for="SoDT" class="form-control">
+            <span asp-validation-for="SoDT" style="color: #da1616;"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="validationServer05" class="form-label">Địa chỉ</label>
+            <input asp-for="DiaChi" class="form-control">
+            <span asp-validation-for="DiaChi" style="color: #da1616;"></span>
+
+        </div>
+        <div class="col-md-6">
+            <label for="validationServer03" class="form-label">Link Map</label>
+            <input asp-for="LinkMap" class="form-control">
+            <span asp-validation-for="LinkMap" style="color: #da1616;"></span>
+
+        </div>
+        <div class="col-12">
+            <button class="btn btn-outline-warning" type="submit">Thêm thông tin cửa hàng</button>
+        </div>
+    </form>
 </div>
+
+<script src="~/LayoutAdmin/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="~/LayoutAdmin/assets/vendor/libs/popper/popper.js"></script>
+<script src="~/LayoutAdmin/assets/vendor/js/bootstrap.js"></script>
+<script src="~/LayoutAdmin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="~/LayoutAdmin/assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+<!-- Vendors JS -->
+<!-- Main JS -->
+<script src="~/LayoutAdmin/assets/js/main.js"></script>
+
+<!-- Page JS -->
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
 
 

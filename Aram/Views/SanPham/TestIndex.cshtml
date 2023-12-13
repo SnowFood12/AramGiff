@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Aram.Models.SanPham>
+﻿
 @{
     ViewData["Title"] = "TestIndex";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -37,7 +37,10 @@
 </form>
 <h4 class="fw-bold py-3 mb-4"><a href="" class="text-muted fw-light">Cửa hàng  <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Danh sách sản phẩm của "Cửa hàng lưu niệm Tây Nguyên"</h4>
 <!-- Basic Bootstrap Table -->
-
+<div class="alert alert-success alert-dismissible" id="alert" role="alert" style="position:absolute; top: 7rem ; right: 0px; z-index: 9; display: none;">
+    This is a success dismissible alert — check it out!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <div class="card">
     <div class="table-responsive text-nowrap">
         <table class="table">
@@ -58,7 +61,7 @@
             <tbody class="table-border-bottom-0">
                 @{
                     int dem = 0;
-                    @foreach (var item in Model)
+                    @foreach (var item in ViewBag.ListProduct)
                     {
                         dem++;
                         <tr>
@@ -66,18 +69,18 @@
                                 @dem
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Ten)
+                                @item.Ten
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Gia)
+                                @item.Gia
                             </td>
                             <td>
                                 <img src="@Url.Action("GetImage", "SanPham", new { id = item.Id })" style="height:50px;">
                             </td>
                             <td>
-                                <label class="form-check form-switch" for="@item.Id">
-                                    <input type="checkbox" id="@item.Id" name="TrangThai" class="form-check-input" data-id="@item.Id">
-                                    <div class="form-check-label" onclick="DoiTrangThai(@item.Id)"></div>
+                                <label class="form-check form-switch toggle" onclick="DoiTrangThai(@item.Id)" for="@item.Id">
+                                    <input type="checkbox" id="@item.Id" name="TrangThai" class="form-check-input check" data-id="@item.Id">
+                                    <div class="form-check-label slider"></div>
                                 </label>
                             </td>
                             <td>

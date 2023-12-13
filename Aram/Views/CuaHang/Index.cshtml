@@ -1,142 +1,80 @@
 ﻿@model IEnumerable<Aram.Models.CuaHang>
-
 @{
     ViewData["Title"] = "Index";
-    Layout = null ;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<form>
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        </div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Trang chủ</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/animate.css">
-
-    <link rel="stylesheet" href="/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/css/magnific-popup.css">
-
-    <link rel="stylesheet" href="/css/aos.css">
-
-    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/css/jquery.timepicker.css">
-
-
-    <link rel="stylesheet" href="/css/flaticon.css">
-    <link rel="stylesheet" href="/css/icomoon.css">
-    <link rel="stylesheet" href="/css/style.css">
-
-    <link rel="stylesheet" href="/css/CuaHang/Create.css">
-</head>
-<body class="goto-here">
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" asp-action="Index" asp-controller="CuaHang">Cửa hàng</a>
-                            <a class="dropdown-item" asp-action="Index" asp-controller="DonHang">Đơn hàng</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item active dropdown">
-                        @await Component.InvokeAsync("GiohangWidget")
-                    </li>
-
-                    <li class="nav-item active dropdown">
-                        <a class="nav-link"><i class="fa-solid fa-circle-user" style="font-size: 20px;"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" asp-action="KiemTraDangNhap" asp-controller="TaiKhoan">Thông tin tài khoản</a>
-                            <a class="dropdown-item" asp-action="GioHangDangChoDuyet" asp-controller="GioHang">Đơn hàng</a>
-                        </div>
-                    </li>
-                    <li class="nav-item"></li>
-                </ul>
+        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                    <input type="text"
+                           class="form-control border-0 shadow-none"
+                           placeholder="Search..." />
+                </div>
             </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                <li class="nav-item lh-1 me-3">
+                    <a href=""><i class="bx bx-search fs-4 lh-0"></i></a>
+                </li>
+
+                <!-- User -->
+                <!--/ User -->
+            </ul>
         </div>
     </nav>
-    <!-- END nav -->
-    <div style="min-height:120vh !important;">
-        @if (TempData["Message"] != null)
-        {
-            <div class="alert__thongbao" style="display: block;">
-                @TempData["Message"]
-            </div>
-        }
-        <div style="width: 90%;
-            margin: 7rem auto;
-            padding: 20px 0px;
-            background: #fff;">
-            <form asp-action="SearchShop" asp-controller="CuaHang">
-                <div class="main__tieude">
-                    <p class="tieu__de">Danh sách cửa hàng</p>
-                    <div class="main__tim--kiem">
-                        <input type="text" placeholder="Tìm kiếm" class="ipt__tim--kiem" name="search" />
-                        <button type="submit" class="btn__tim--kiem"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </div>
-                </div>
-            </form>
+</form>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible" id="alert" role="alert" style="position:absolute; top: 7rem ; right: 0px; z-index: 9; display: none;">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<h4 class="fw-bold py-3 mb-4"><a class="text-muted fw-light">Cửa hàng <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Danh sách cửa hàng</h4>
+<!-- Basic Bootstrap Table -->
 
-    <table class="table">
-        <thead style="background-color: #dad9d9; color: black;">
-            <tr>
-                <th>
-                    Tên cửa hàng
-                </th>
-                <th>
-                    Số điện thoại
-                </th>
-                <th>
-                    Địa chỉ
-                </th>
-                <th>
-                    <a asp-action="Create" class="btn" style=" border-radius: 2px; border:1px solid black; color: black; background-color:white;">Thêm thông tin cửa hàng</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr style="color: black;">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ten)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SoDT)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DiaChi)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="color: #448c8d !important; font-size:20px; margin-left: 10px"></i></a> |
-                        <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="color: #d11515 !important; font-size:20px; margin-left: 10px"></i></a>
-                    </td>
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color:white !important;">Tên cửa hàng</th>
+                    <th style="color:white !important;">Số điện thoại</th>
+                    <th style="color:white !important;">Địa chỉ</th>
+                    <th style="color:white !important;">
+                        <a asp-action="Create" asp-controller="CuaHang">
+                            <i class="fa-solid fa-circle-plus" style="font-size:20px;"></i>
+                        </a>
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Ten)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoDT)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                        <td style="display: flex; align-items:center; justify-content: space-evenly;">
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="font-size:18px; color: #448c8d !important;"></i></a>
+
+                            <a asp-controller="SanPham" asp-action="TestIndex" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
+
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash" style="font-size:18px; color: #d11515 !important;"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<script> 
-    setTimeout(function () {
-        var alertMessage = document.querySelector('.alert__thongbao');
-        alertMessage.style.display = 'none';
-        alertMessage.style.transform = 'translateX(100%)';
-    }, 4000);
-</script>
+<div class="content-backdrop fade"></div>

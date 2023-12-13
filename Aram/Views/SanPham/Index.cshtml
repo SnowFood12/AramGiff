@@ -54,8 +54,9 @@
 <link rel="stylesheet" href="/css/CuaHang/Create.css">
 @if (TempData["Message"] != null)
 {
-    <div class="alert__thongbao" style="display: block;">
+    <div class="alert alert-success alert-dismissible" id="alert" role="alert" style="position:absolute; top: 7rem ; right: 0px; z-index: 9; display: none;">
         @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 <div class="alert__thongbao1">
@@ -143,5 +144,3 @@
         </tbody>
     </table>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/js/SanPham/SanPham.js"></script>

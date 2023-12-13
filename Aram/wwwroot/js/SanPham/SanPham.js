@@ -1,9 +1,4 @@
-﻿setTimeout(function () {
-    var alertMessage = document.querySelector('.alert__thongbao');
-    alertMessage.style.display = 'none';
-    alertMessage.style.transform = 'translateX(100%)';
-}, 4000);
-
+﻿
 var cbk = document.querySelectorAll('.check')
 
 function LoadTrangThai() {
@@ -25,6 +20,7 @@ function LoadTrangThai() {
 }
 LoadTrangThai()
 function DoiTrangThai(i) {
+    console.log(1);
     var bol = confirm('Bạn có muốn đổi trạng thái của phẩm sản phẩm này không?')
     if (bol) {
         $.ajax({
@@ -44,7 +40,7 @@ function DoiTrangThai(i) {
             }
         });
 
-        var alertMessage = document.querySelector('.alert__thongbao1');
+        var alertMessage = document.getElementById('alert');
 
         alertMessage.innerText = "Cập nhật trạng thái sản phẩm thành công"
         alertMessage.style.display = 'block';
