@@ -60,18 +60,11 @@ namespace Aram.Controllers
 			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
 			GioHang_line.SoLuong++;
 			HttpContext.Session.SetJson("giohang", GioHang);
-
-			// tính tổng tiền giỏ hàng
-	/*		var tenTK = HttpContext.Session.GetString("Name");
-			var gioHang = _context.GioHang.Where(p => p.TenTK == tenTK).FirstOrDefault();
-			var gioHang_ChiTiet = _context.GioHang_ChiTiet.Include(p => p.SanPham).Where(p => p.GioHangId == gioHang.Id).ToList();*/
-			// tạm tính
-			/*int TamTinh = (int)gioHang_ChiTiet.Sum(p => p.SanPham.Gia * p.SoLuong);*/
-
+			
 
 			var json = new
 			{
-				/*TongTien = GioHang.TongTien(),*/
+				SoLuong = GioHang_line.SoLuong,	
 				TongTien = GioHang.TongTien()
 			};
 

@@ -11,9 +11,12 @@ for (var i = 0; i < tang.length; i++) {
     tang[i].addEventListener('click', function () {
         var id = this.dataset.id;
         var soluong = document.getElementById(`${id}`)
+
         var sl = soluong.value
         var slTang = ++sl
         soluong.value = slTang;
+        var tongTien = document.getElementById(`t ${id}`)
+
         var tongTien = document.getElementById(`t ${id}`)
         $.ajax({
             url: '/GioHang/TangSoLuong',
@@ -23,9 +26,10 @@ for (var i = 0; i < tang.length; i++) {
             success: function (result) {
                 let vndString = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                let tamTinh = result.tamTinh.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                let tamTinh = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                var tongTienGioHang = result.tamTinh + 20;
+                var tongTienGioHang = result.tongTien + 20;
+
                 let Tong = tongTienGioHang.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
                 tongTien.innerHTML = vndString;
@@ -54,12 +58,12 @@ for (var i = 0; i < giam.length; i++) {
                 data: { id: id },
                 dataType: 'json',
                 success: function (result) {
-                    console.log(result)
                     let vndString = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                    let tamTinh = result.tamTinh.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+                    let tamTinh = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
-                    var tongTienGioHang = result.tamTinh + 20;
+                    var tongTienGioHang = result.tongTien + 20;
+
                     let Tong = tongTienGioHang.toLocaleString().replace(/,/g, ',') + ',000 ₫';
 
                     tongTien.innerHTML = vndString;
