@@ -172,8 +172,8 @@ namespace Aram.Controllers
                     string maOTP = GenerateOTP();
                     SendEmail(LuuEmail, maOTP);
                     currentOTP = maOTP;
-                    // Đặt hẹn giờ reset OTP sau 2 phút
-                    otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
+                    // Đặt hẹn giờ reset OTP sau 5 phút
+                    otpResetTimer = new System.Timers.Timer(5 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
                     otpResetTimer.Elapsed += (sender, e) => ResetOTP();
                     otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
                     otpResetTimer.Start();
@@ -395,7 +395,7 @@ namespace Aram.Controllers
                 LuuEmail = taiKhoan.Email;
 				currentOTP = maOTP;
 				// Đặt hẹn giờ reset OTP sau 2 phút
-				otpResetTimer = new System.Timers.Timer(2 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
+				otpResetTimer = new System.Timers.Timer(5 * 60 * 1000); // 2 phút = 2 * 60 * 1000 miligiây
 				otpResetTimer.Elapsed += (sender, e) => ResetOTP();
 				otpResetTimer.AutoReset = true; // Đặt lại thành true để hẹn giờ tự động lặp lại
 				otpResetTimer.Start();
