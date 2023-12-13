@@ -8,7 +8,6 @@ namespace Aram.Controllers
 	{
 		private readonly AramContext _context;
 
-
 		public DonHangController( AramContext context)
 		{
 			_context = context;
@@ -37,18 +36,17 @@ namespace Aram.Controllers
 		// duyệt đơn
 		public IActionResult DuyetDon(int id)
 		{
-			var DonHang = _context.DonHang.FirstOrDefault( a => a.Id == id);
+            var DonHang = _context.DonHang.FirstOrDefault(a => a.Id == id);
 
-			DonHang.TrangThaiDH = "Đang giao"; 
+            DonHang.TrangThaiDH = "Đang giao";
 
-			_context.DonHang.Update(DonHang);
-			_context.SaveChanges();
+            _context.DonHang.Update(DonHang);
+            _context.SaveChanges();
 
             Index();
             return RedirectToAction("Index", "DonHang");
-        }
-
-        public IActionResult Details()
+		}
+		public IActionResult Details()
 		{
             return View();
 		}
