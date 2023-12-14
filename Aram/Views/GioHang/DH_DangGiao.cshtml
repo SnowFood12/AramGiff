@@ -1,4 +1,4 @@
-﻿
+﻿@model List<DonHang>
 @{
     ViewData["Title"] = "DonHangDangGiao";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,8 +21,8 @@
     <div class="col-md-10 text-center" style="margin-top: 30px">
         <ul class="product-category">
             <li><a asp-action="DH_ChoDuyet" asp-controller="GioHang">Đơn hàng đang chờ duyệt</a></li>
-            <li><a asp-action="DonHangDangGiao" asp-controller="GioHang" class="active">Đơn hàng đang giao</a></li>
-            <li><a asp-action="DonHangDaNhan" asp-controller="GioHang" >Đơn hàng đã nhận</a></li>
+            <li><a asp-action="DH_DangGiao" asp-controller="GioHang" class="active">Đơn hàng đang giao</a></li>
+            <li><a asp-action="DH_DaNhan" asp-controller="GioHang">Đơn hàng đã nhận</a></li>
         </ul>
     </div>
 </div>
@@ -39,16 +39,16 @@
         <thead style="background-color: #18588d; color: white;">
             <tr>
                 <th>
-                    Tên cửa hàng
+                    STT
                 </th>
                 <th>
-                    Liên hệ hỗ trợ
+                    Số điện thoại
                 </th>
                 <th>
-                    Địa chỉ giao hàng
+                    Địa chỉ
                 </th>
                 <th>
-                    Ghi chú
+                    Thời gian đặt hàng
                 </th>
                 <th>
                     Tổng tiền
@@ -58,28 +58,33 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr style="color: black;">
-                <td>
-                    Lưu niệm Holo
-                </td>
-                <td>
-                    1234567890
-                </td>
-                <td>
-                    12 Phan chu trinh, TP Buôn Ma thuật
-                </td>
-                <td>
-                    Giao trước 10h cho em nha!
-                </td>
-                <td>
-                    140.000 đ
-                </td>
-                <td>
-                    <a asp-action="ChiTietDonHangDangGiao" asp-controller="GioHang"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
-                </td>
-            </tr>
-        </tbody>
+        @foreach (var item in Model)
+        {
+            int dem = 1;
+            <tbody>
+                <tr style="color: black;">
+                    <td>
+                        @(dem++)
+                    </td>
+                    <td>
+                        @item.ThongTin_NhanHangs.SoDT
+                    </td>
+                    <td>
+                        @item.ThongTin_NhanHangs.DiaChi
+                    </td>
+                    <td>
+                        @item.ThoiGianTaoDon.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @((item.DonHang_ChiTiets.Sum(x => x.SanPham.Gia * x.SoLuong) + 20)?.ToString("C3"))
+                    </td>
+                    <td>
+                        <a asp-action="CT_DH_DangGiao" asp-controller="GioHang"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        }
+       
     </table>
 </div>
 
