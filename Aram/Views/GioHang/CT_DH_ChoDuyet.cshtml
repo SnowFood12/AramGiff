@@ -1,4 +1,4 @@
-﻿
+﻿@model List<DonHang_ChiTiet>
 @{
     ViewData["Title"] = "ChiTietGioHangDangChoDuyet";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -45,26 +45,30 @@
 								<th>Tổng tiền</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="text-center">
-								<td class="product-remove">
-								</td>
-								<td class="image-prod">
-									<div class="img" style="background-image: url('/img/zyro-image (10).png');">
-									</div>
-								</td>
+						@foreach (var item in Model)
+						{
+							<tbody>
+								<tr class="text-center">
+									<td class="product-remove">
+									</td>
+									<td class="image-prod">
+										<img src="" class="img" style="background-image: url('/img/zyro-image (10).png');">
+										</img>
+									</td>
 
-								<td class="product-name">
-									<h3>Cà phê trung nguyên</h3>
-								</td>
+									<td class="product-name">
+										<h3>@item.SanPham.Ten</h3>
+									</td>
 
-								<td class="price">120.000 đ</td>
+									<td class="price">@(item.SanPham.Gia?.ToString("C3")) </td>
 
-								<td class="quantity">
-									1
-								</td>
-								<td class="total">120.000 đ</td><!-- END TR-->
-						</tbody>
+									<td class="quantity">
+										@item.SoLuong
+									</td>
+									<td class="total">@((item.SoLuong * item.SanPham.Gia)?.ToString("C3"))</td><!-- END TR-->
+							</tbody>
+						}
+				
 					</table>
 				</div>
 			</div>
@@ -105,7 +109,7 @@
 						<h3>Tổng tiền</h3>
 						<p class="d-flex">
 							<span>Tạm tính</span>
-							<span>120.000 đ</span>
+							<span>@ViewBag.TamTinh.ToString("C3")</span>
 						</p>
 						<p class="d-flex">
 							<span>Phí Ship</span>
@@ -114,11 +118,11 @@
 						<hr>
 						<p class="d-flex total-price">
 							<span>Tổng</span>
-							<span>140.000 đ</span>
+							<span>  @((ViewBag.TamTinh + 20).ToString("C3"))  </span>
 						</p>
 					</div>
 					<p>
-						<button style="color: #da1b1b !important;
+						<a asp-action="HuyDon_ChuaDuyet" asp-controller="Giohang" asp-route-Id="@ViewBag.DonHangId" style="color: #da1b1b !important;
 										background-color: white !important;
 										border-radius: 2px !important;
 										font-size:18px;
@@ -128,7 +132,7 @@
 										cursor: pointer;
 										margin-top:20px;">
 							Huỷ đơn hàng
-						</button>
+						</a>
 					</p>
 				</div>
 			</div>

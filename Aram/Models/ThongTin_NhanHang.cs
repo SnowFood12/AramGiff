@@ -25,6 +25,5 @@ namespace Aram.Models
         [ForeignKey("DonHang")]
         public int DonHangId { get; set; }
         public DonHang? DonHang { get; set; }
-
     }
 }
