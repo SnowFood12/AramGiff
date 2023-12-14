@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Net.WebSockets;
+using System.Linq;
 
 namespace Aram.Controllers
 {
@@ -115,14 +116,27 @@ namespace Aram.Controllers
         public IActionResult MainHome() // trang chủ
 		{
 
-            var ListProduct = _context.SanPham.Where(a => a.TrangThai == true).Include(a => a.CuaHang).OrderByDescending(a => a.Id).Take(8).ToList();
+			var ListProduct = _context.SanPham.Where(a => a.TrangThai == true)
+							.Join(_context.DonHang_ChiTiet, a => a.Id, dh => dh.SanPhamId, (a, dh) => new
+							{
+								a.Ten, 
+								a.PicData, 
+								a.CuaHang, 
+								a.Gia, 
+								a.Id,  
+								a.LoaiSPId, 
+								dh.SoLuong
+							}).OrderByDescending( a => a.SoLuong).ToList();
+
+			var List = ListProduct.DistinctBy(a => a.Id).Take(8).ToList();
+
 
 			var LastProduct = _context.SanPham.Where( a => a.TrangThai == true).Include(a => a.CuaHang).OrderBy( a => a.Id).Last();
 
 
             ViewBag.LastProduct = LastProduct;
 
-			ViewBag.ListProduct = ListProduct;
+			ViewBag.ListProduct = List;
 
             return View();
 		}
@@ -148,27 +162,32 @@ namespace Aram.Controllers
 
 			return View();
 		}
-		public IActionResult Invoice()
+
+        public IActionResult Shop(int id)
+        {
+            var Shop = _context.CuaHang.FirstOrDefault(a => a.Id == id);
+
+            var ListProduct = _context.SanPham.Where(a => a.TrangThai == true && a.CuaHangId == id).ToList();
+
+            ViewBag.Shop = Shop;
+
+            ViewBag.ListProduct = ListProduct;
+
+            return View();
+        }
+
+
+
+
+        public IActionResult Invoice()
 		{
 			return View();
 		}
+
         public IActionResult ListInvoice()
         {
             return View();
         }
-
-		public IActionResult Shop(int id)
-		{
-			var Shop = _context.CuaHang.FirstOrDefault( a => a.Id == id);
-
-			var ListProduct = _context.SanPham.Where( a => a.TrangThai == true && a.CuaHangId == id).ToList();
-
-			ViewBag.Shop = Shop;	
-
-			ViewBag.ListProduct = ListProduct;	
-
-			return View();
-		}
 
         public IActionResult Privacy()
 		{
