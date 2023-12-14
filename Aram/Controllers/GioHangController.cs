@@ -131,7 +131,7 @@ namespace Aram.Controllers
 					_context.Add(TT_NH);
 					_context.SaveChanges();
 					HttpContext.Session.Remove("giohang");
-				return RedirectToAction("GioHangDangChoDuyet", "GioHang");
+				return RedirectToAction("DH_ChoDuyet", "GioHang");
 				}
 			return RedirectToAction("Index");
 		}
@@ -256,7 +256,7 @@ namespace Aram.Controllers
 				donHang = _context.DonHang.Where(x => x.TenTK == tenTK).Include(x => x.ThongTin_NhanHangs).Include(x => x.DonHang_ChiTiets).ThenInclude(a => a.SanPham).ToList();
 				donHang_dangGiao = donHang.Where(x => x.TrangThai == true && x.TrangThaiDH == "Đang giao").ToList();
 			}
-			return View();
+			return View(donHang_dangGiao);
 		}
         // Chi tiết đơn hàng đang giao
         public IActionResult CT_DH_DangGiao()
@@ -269,9 +269,19 @@ namespace Aram.Controllers
         // đơn hàng đã nhận 
         public IActionResult DonHangDaNhan()
         {
-            PhanQuyen();
-
-            return View();
+            var tenTK = HttpContext.Session.GetString("Name");
+            var donHang = new List<DonHang>();
+            var donHang_daGiao = new List<DonHang>();
+            if (tenTK == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
+            else
+            {
+                donHang = _context.DonHang.Where(x => x.TenTK == tenTK).Include(x => x.ThongTin_NhanHangs).Include(x => x.DonHang_ChiTiets).ThenInclude(a => a.SanPham).ToList();
+                donHang_daGiao = donHang.Where(x => x.TrangThai == true && x.TrangThaiDH == "Đã giao").ToList();
+            }
+            return View(donHang_daGiao);
         }
 
         // Chi tiết đơn hàng đã nhận
