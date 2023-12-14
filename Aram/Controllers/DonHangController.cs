@@ -61,7 +61,7 @@ namespace Aram.Controllers
             ViewBag.DemDangGiao = DangGiao.Count();
             ViewBag.DemDaGiao = DaGiao.Count();
 
-            ViewBag.TinhTrang = "Huỷ đơn";
+            ViewBag.TinhTrang = "Đã huỷ";
 
             return View("Index");
 		}
@@ -89,6 +89,7 @@ namespace Aram.Controllers
 
             return View("Index");
         }
+        //==============================================================================================
 
 
         // duyệt đơn
@@ -167,6 +168,8 @@ namespace Aram.Controllers
             _context.SaveChanges();
 
             Index();
+            TempData["Message"] = "Giiao hàng thành công";
+
             return RedirectToAction("Index", "DonHang");
 		}
 
@@ -226,9 +229,21 @@ namespace Aram.Controllers
 		{
             return View();
 		}
-		public IActionResult ChiTietDonHangDaGiao()
+		public IActionResult ChiTietDonHangDaGiao(int id)
 		{
-			return View();
-		}
+            var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();
+
+            var ThongTinGiaoHang = _context.ThongTin_NhanHang.FirstOrDefault(a => a.DonHangId == id);
+
+            var TamTinh = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).Sum(a => a.SoLuong * a.SanPham.Gia);
+
+            ViewBag.TamTinh = TamTinh;
+
+            ViewBag.ThongTinGiaoHang = ThongTinGiaoHang;
+
+            ViewBag.ListProduct = DonHangChiTiet;
+
+            return View();
+        }
 	}
 }
