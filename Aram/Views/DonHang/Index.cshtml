@@ -28,12 +28,6 @@
                 <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">@ViewBag.DemDangGiao</span>
             </button>
         </li>
-        <li class="nav-item">
-            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-messages" aria-controls="navs-justified-messages" aria-selected="false">
-                Lịch sử đơn hàng
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">@ViewBag.DemDaGiao</span>
-            </button>
-        </li>
     </ul>
 
     <div class="tab-content">
@@ -83,7 +77,7 @@
         </div>
 @*         ======================== *@
 
-@*         đơn hàng đăng giao  *@
+@*         đơn hàng đang giao  *@
         <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
             <table class="table">
                 <thead class="table-dark">
@@ -92,7 +86,6 @@
                         <th style="color:white !important;">Họ tên</th>
                         <th style="color:white !important;">Số điện thoại</th>
                         <th style="color:white !important;">Địa chỉ</th>
-                        <th style="color:white !important;">Thời gian</th>
                         <th style="color:white !important;">Tổng tiền</th>
                         <th style="color:white !important;"></th>
                     </tr>
@@ -113,7 +106,6 @@
                                 <td>@item.ThongTin_NhanHangs.HoTen</td>
                                 <td>@item.ThongTin_NhanHangs.SoDT</td>
                                 <td>@item.ThongTin_NhanHangs.DiaChi</td>
-                                <td>@item.ThoiGianTaoDon.ToString("C3")</td>
                                 <td>
                                     @((tong + 20).ToString("C3"))
                                 </td>
@@ -131,70 +123,6 @@
         </div>
 @*         ======================= *@
 
-@*         lịch sử đơn hàng *@
-        <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
-            <div class="btn-group mb-3">
-                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    @ViewBag.TinhTrang
-                </button>
-                <ul class="dropdown-menu" style="">
-                    <li><a class="dropdown-item" asp-action="Index" asp-controller="DonHang">Tất cả</a></li>
-                    <li><a class="dropdown-item" asp-action="HuyDon">Đã huỷ</a></li>
-                    <li><a class="dropdown-item" asp-action="GiaoThanhCong">Đã giao</a></li>
-                </ul>
-            </div>
-            <table class="table">
-                <thead class="table-dark">
-                    <tr>
-                        <th style="color:white !important;">STT</th>
-                        <th style="color:white !important;">Họ tên</th>
-                        <th style="color:white !important;">Số điện thoại</th>
-                        <th style="color:white !important;">Thời gian</th>
-                        <th style="color:white !important;">Tổng tiền</th>
-                        <th style="color:white !important;">Tình trạng</th>
-                        <th style="color:white !important;"></th>
-                    </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                    @{
-                        int dem2 = 0;
-                        @foreach (var item in ViewBag.DaGiao)
-                        {
-                            int tong = 0;
-                            foreach (var item1 in item.DonHang_ChiTiets)
-                            {
-                                tong += item1.SoLuong * item1.SanPham.Gia;
-                            }
-                            dem++;
-                            <tr>
-                                <td>@dem</td>
-                                <td>@item.ThongTin_NhanHangs.HoTen</td>
-                                <td>@item.ThongTin_NhanHangs.SoDT</td>
-                                <td>@item.ThoiGianTaoDon.ToString("dd/MM/yyyy HH:mm")</td>
-                                <td>
-                                    @((tong + 20).ToString("C3"))
-                                </td>
-                                @{
-                                    if ( item.TrangThai == true)
-                                    {
-                                        <td style="color: #448c8d !important;">Đã giao</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="color: #d11515 !important;">Đã huỷ</td>
-                                    }
-                                }
-                                <td style="display: flex; align-items:center; gap:20px;">
-                                    <a asp-action="Details" asp-controller="DonHang" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    }
-
-                </tbody>
-            </table>
-        </div>
-        @* ======================== *@
     </div>
 </div>
 

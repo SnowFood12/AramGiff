@@ -76,15 +76,9 @@
                     <a class="app-brand-link">
                         <h4 class="fw-bold demo menu-text fw-bolder ms-2">AramGift</h4>
                     </a>
-
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                    </a>
                 </div>
-
-                <div class="menu-inner-shadow"></div>
-
                 <ul class="menu-inner py-1">
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Quản lý cửa hàng</span></li>
                     <li class="menu-item">
                         <a asp-action="Index" asp-controller="CuaHang" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-table"></i>
@@ -94,12 +88,33 @@
                     <!-- Forms & Tables -->
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Đơn hàng</span></li>
 
-                    <li class="menu-item">
-                        <a asp-action="Index" asp-controller="DonHang" class="menu-link">
+                    <li class="menu-item open" style="">
+                        <a class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-detail"></i>
-                            <div>Đơn hàng</div>
+                            <div>Quản lý đơn hàng</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-action="Index" asp-controller="DonHang" class="menu-link">
+                                    <div>Đơn hàng</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-action="LichSuDonHang" asp-controller="DonHang" class="menu-link">
+                                    <div>Lịch sử đơn hàng</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+                </ul>
+
+                <ul class="menu-inner" style="position:absolute; bottom:-43.5rem;">
+                    <li class="menu-item active">
+                    <a asp-action="DangXuat" asp-controller="TaiKhoan" class="menu-link">
+                        <i class="bx bx-log-out-circle"></i> 
+                        <div>Đăng xuất</div>
+                    </a>
+                </li>
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -121,9 +136,6 @@
                         <div class="container-fluid d-flex flex-md-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3">
                             <div>
                                 <a href="" target="_blank" class="footer-text fw-bolder">AramGift</a>
-                            </div>
-                            <div>
-                                <a asp-action="DangXuat" asp-controller="TaiKhoan" class="btn btn-sm btn-outline-danger"><i class="bx bx-log-out-circle"></i> Đăng xuất</a>
                             </div>
                         </div>
                     </footer>

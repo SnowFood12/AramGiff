@@ -79,7 +79,8 @@
                     <input type="email" class="form-control" id="exampleFormControlInput1" value="@((ViewBag.TamTinh + 20).ToString("C3"))" disabled>
                 </div>
                 <div class="mb-3 demo-inline-spacing">
-                    <a asp-action="HuyDonHang" asp-controller="DonHang" asp-route-id="@ViewBag.ThongTinGiaoHang.DonHangId" class="btn btn-outline-danger">Huỷ đơn hàng</a>
+                    <a asp-action="Index" asp-controller="DonHang" class="btn btn-success">Quay lại</a>
+                    <a asp-action="HuyDonHang" asp-controller="DonHang" asp-route-id="@ViewBag.ThongTinGiaoHang.DonHangId" class="btn btn-outline-danger">Xác nhận huỷ</a>
                 </div>
             </div>
         </div>
