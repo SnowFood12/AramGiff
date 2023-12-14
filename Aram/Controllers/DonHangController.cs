@@ -23,20 +23,31 @@ namespace Aram.Controllers
             var ListDonHang = new List<DonHang>();
 
             ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true)
-                .Include(x => x.ThongTin_NhanHangs)
-                .Include(x => x.DonHang_ChiTiets)
-                .ThenInclude(x=> x.SanPham)
-                .ToList();
-                         
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(x => x.ThongTin_NhanHangs)
+                    .Include(x => x.DonHang_ChiTiets)
+                    .ThenInclude(x=> x.SanPham)
+                    .ToList();
 
-            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
 
-			var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+			var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
 
 			ViewBag.ChoDuyet = ListDonHang;
             
 
             ViewBag.DangGiao = DangGiao; 
+
 
 			ViewBag.DaGiao = DaGiao;
 
@@ -48,6 +59,7 @@ namespace Aram.Controllers
 
             return View();
 		}
+
         public int Tong(int Id)
         {
             var ListDonHang = new List<DonHang>();
@@ -62,11 +74,29 @@ namespace Aram.Controllers
 		// đơn hàng huỷ
 		public IActionResult HuyDon()
 		{
-            var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var ListDonHang = new List<DonHang>();
 
-            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(x => x.ThongTin_NhanHangs)
+                    .Include(x => x.DonHang_ChiTiets)
+                    .ThenInclude(x => x.SanPham)
+                    .ToList();
 
-            var DaGiao = _context.DonHang.Where(a => a.TrangThai == false).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
+
+            var DaGiao = _context.DonHang.Where(a => a.TrangThai == false)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
+
             ViewBag.ChoDuyet = ListDonHang;
 
             ViewBag.DangGiao = DangGiao;
@@ -85,11 +115,28 @@ namespace Aram.Controllers
 		// đơn hàng giao thành công
 		public IActionResult GiaoThanhCong()
 		{
-            var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var ListDonHang = new List<DonHang>();
 
-            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(x => x.ThongTin_NhanHangs)
+                    .Include(x => x.DonHang_ChiTiets)
+                    .ThenInclude(x => x.SanPham)
+                    .ToList();
 
-            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã Giao").Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
+
+            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
 
             ViewBag.ChoDuyet = ListDonHang;
 
@@ -183,6 +230,8 @@ namespace Aram.Controllers
             var DonHang = _context.DonHang.FirstOrDefault(a => a.Id == id);
 
             DonHang.TrangThaiDH = "Đã giao";
+
+            DonHang.ThoiGianTaoDon = DateTime.Now;
 
             _context.DonHang.Update(DonHang);
             _context.SaveChanges();
