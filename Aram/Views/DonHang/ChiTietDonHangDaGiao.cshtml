@@ -4,7 +4,7 @@
 }
 
 
-<h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="DonHang" class="text-muted fw-light">Đơn hàng <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Đang chờ duyệt</h4>
+<h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="DonHang" class="text-muted fw-light">Đơn hàng <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Lịch sử đơn hàng</h4>
 
 <div class="card">
     <div class="table-responsive text-nowrap">
@@ -77,10 +77,6 @@
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Tổng tiền</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" value="@((ViewBag.TamTinh + 20).ToString("C3"))" disabled>
-                </div>
-                <div class="mb-3 demo-inline-spacing">
-                    <a href="" class="btn btn-danger">Huỷ đơn hàng</a>
-                    <a href="" class="btn btn-outline-warning">Đã giao</a>
                 </div>
             </div>
         </div>
