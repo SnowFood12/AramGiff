@@ -121,6 +121,7 @@ namespace Aram.Controllers
             Index();
             return RedirectToAction("Index", "DonHang");
 		}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(string HoTen, string SoDT, string DiaChi, string GhiChu)
@@ -150,6 +151,7 @@ namespace Aram.Controllers
 			return RedirectToAction("DonHangDangGiao", "GioHang");
         }
 
+
         public IActionResult Details(int id)
 		{
             var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();
@@ -159,6 +161,8 @@ namespace Aram.Controllers
             var TamTinh = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).Sum(a => a.SoLuong * a.SanPham.Gia);
 
             ViewBag.TamTinh = TamTinh;
+
+            ViewBag.IdDonHang = id;
 
             ViewBag.ThongTinGiaoHang = ThongTinGiaoHang;
 
