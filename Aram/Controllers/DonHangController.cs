@@ -251,6 +251,25 @@ namespace Aram.Controllers
         }
 
         //====================================================================
+
+        // tìm kiếm đơn hàng theo này
+        public IActionResult Search( DateTime search)
+        {
+            string ab = search.Date.ToString();
+            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false && a.ThoiGianTaoDon.Day == search.Day)
+            .OrderByDescending(a => a.ThoiGianTaoDon)
+            .Include(a => a.ThongTin_NhanHangs)
+            .Include(a => a.DonHang_ChiTiets)
+            .ThenInclude(a => a.SanPham)
+            .ToList();
+
+            ViewBag.DaGiao = DaGiao;
+
+            ViewBag.Search = search; 
+
+            ViewBag.TinhTrang = "Tất cả";
+            return View("LichSuDonHang");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(string HoTen, string SoDT, string DiaChi, string GhiChu)

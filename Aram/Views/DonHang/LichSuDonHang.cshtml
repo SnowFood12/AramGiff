@@ -13,16 +13,24 @@
 }
 <h4 class="fw-bold py-3 mb-4"><a href="" class="text-muted fw-light">Lịch sử đơn hàng</a></h4>
 <!-- Basic Bootstrap Table -->
-<div class="btn-group mb-3">
-    <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
-        @ViewBag.TinhTrang
-    </button>
-    <ul class="dropdown-menu" style="">
-        <li><a class="dropdown-item" asp-action="LichSuDonHang" asp-controller="DonHang">Tất cả</a></li>
-        <li><a class="dropdown-item" asp-action="HuyDon">Đã huỷ</a></li>
-        <li><a class="dropdown-item" asp-action="GiaoThanhCong">Đã giao</a></li>
-    </ul>
-</div>
+
+<form asp-action="Search" asp-controller="DonHang" class="d-flex align-items-center" style="gap:10px;">
+    <div class="btn-group mb-3">
+        <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+            @ViewBag.TinhTrang
+        </button>
+        <ul class="dropdown-menu" style="">
+            <li><a class="dropdown-item" asp-action="LichSuDonHang" asp-controller="DonHang">Tất cả</a></li>
+            <li><a class="dropdown-item" asp-action="HuyDon">Đã huỷ</a></li>
+            <li><a class="dropdown-item" asp-action="GiaoThanhCong">Đã giao</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="search" />
+    </div>
+    <button class="btn btn-icon btn-outline-secondary mb-3" type="submit"><i class="bx bx-search fs-4 lh-0"></i></button>
+</form>
 <div class="card">
 
     <table class="table">
@@ -77,4 +85,3 @@
     </table>
 
 </div>
-

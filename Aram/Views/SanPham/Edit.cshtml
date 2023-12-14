@@ -34,7 +34,7 @@
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="~/LayoutAdmin/assets/js/config.js"></script>
 <div class="card mb-4 p-5">
-    <h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="SanPham" asp-route-id="@ViewBag.chID" class="text-muted fw-light">Danh sách sản phẩm của "Cửa hàng lưu niệm Tây Nguyên" <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Thêm thông tin sản phẩm</h4>
+    <h4 class="fw-bold py-3 mb-4"><a asp-action="Index" asp-controller="SanPham" asp-route-id="@ViewBag.chID" class="text-muted fw-light">Danh sách sản phẩm <i class="fa-solid fa-chevron-right" style="font-size:18px;"></i> </a>Thêm thông tin sản phẩm</h4>
     <form class="row g-3" asp-action="Edit" asp-controller="SanPham" asp-route-id="@ViewBag.spID" enctype="multipart/form-data" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-md-6">
