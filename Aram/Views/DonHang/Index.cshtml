@@ -1,4 +1,6 @@
-﻿@{
+﻿@model DonHang
+
+@{
     ViewData["Title"] = "TestIndex";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -40,6 +42,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th style="color:white !important;">Số thứ tự</th>
+                        <th style="color:white !important;">Tên tài khoản</th>
                         <th style="color:white !important;">Số điện thoại</th>
                         <th style="color:white !important;">Địa chỉ</th>
                         <th style="color:white !important;">Thời gian đặt hàng</th>
@@ -49,17 +52,23 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @{
-                        int dem = 0; 
+                        int dem = 0;
                         @foreach (var item in ViewBag.ChoDuyet)
                         {
+                            int tong = 0;
+                            foreach (var item1 in item.DonHang_ChiTiets)
+                            {
+                                tong += item1.SoLuong *  item1.SanPham.Gia;
+                            }
                             dem++;
                             <tr>
                                 <td>@dem</td>
+                                <td>@item.ThongTin_NhanHangs.HoTen</td>
                                 <td>@item.ThongTin_NhanHangs.SoDT</td>
                                 <td>@item.ThongTin_NhanHangs.DiaChi</td>
-                                <td>@item.ThoiGianTaoDon.ToString("dd/MM/yyyy")</td>
+                                <td>@item.ThoiGianTaoDon</td>
                                 <td>
-                                    200.000đ
+                                    @((tong + 20).ToString("C3"))
                                 </td>
                                 <td style="display: flex; align-items:center; gap:20px;">
                                     <a asp-route-id="@item.Id" asp-action="DuyetDon" asp-controller="DonHang"><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>

@@ -12,7 +12,7 @@ namespace Aram.Controllers
 	public class DonHangController : Controller
 	{
 		public GioHang? GioHang { get; set; }
-		private readonly AramContext _context;
+        private readonly AramContext _context;
 
 		public DonHangController( AramContext context)
 		{
@@ -20,15 +20,23 @@ namespace Aram.Controllers
 		}
 		public IActionResult Index()
 		{
-			var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var ListDonHang = new List<DonHang>();
 
-			var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true)
+                .Include(x => x.ThongTin_NhanHangs)
+                .Include(x => x.DonHang_ChiTiets)
+                .ThenInclude(x=> x.SanPham)
+                .ToList();
+                         
+
+            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
 
 			var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
 
-			ViewBag.ChoDuyet = ListDonHang; 
+			ViewBag.ChoDuyet = ListDonHang;
+            
 
-			ViewBag.DangGiao = DangGiao; 
+            ViewBag.DangGiao = DangGiao; 
 
 			ViewBag.DaGiao = DaGiao;
 
@@ -40,6 +48,15 @@ namespace Aram.Controllers
 
             return View();
 		}
+        public int Tong(int Id)
+        {
+            var ListDonHang = new List<DonHang>();
+
+            ListDonHang = _context.DonHang.Where(x => x.Id == Id)
+                .Include(a => a.DonHang_ChiTiets)
+                .ThenInclude(a => a.SanPham).ToList();
+            return ListDonHang.Count();
+        }
 
 		// lọc đơn hàng
 		// đơn hàng huỷ
@@ -50,7 +67,6 @@ namespace Aram.Controllers
             var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
 
             var DaGiao = _context.DonHang.Where(a => a.TrangThai == false).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-
             ViewBag.ChoDuyet = ListDonHang;
 
             ViewBag.DangGiao = DangGiao;
