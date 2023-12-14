@@ -39,7 +39,8 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th style="color:white !important;">Số thứ tự</th>
+                        <th style="color:white !important;">STT</th>
+                        <th style="color:white !important;">Họ tên</th>
                         <th style="color:white !important;">Số điện thoại</th>
                         <th style="color:white !important;">Địa chỉ</th>
                         <th style="color:white !important;">Thời gian đặt hàng</th>
@@ -55,11 +56,12 @@
                             dem++;
                             <tr>
                                 <td>@dem</td>
+                                <td>@item.ThongTin_NhanHangs.HoTen</td>
                                 <td>@item.ThongTin_NhanHangs.SoDT</td>
                                 <td>@item.ThongTin_NhanHangs.DiaChi</td>
                                 <td>@item.ThoiGianTaoDon.ToString("dd/MM/yyyy")</td>
                                 <td>
-                                    200.000đ
+                                    100
                                 </td>
                                 <td style="display: flex; align-items:center; gap:20px;">
                                     <a asp-route-id="@item.Id" asp-action="DuyetDon" asp-controller="DonHang"><i class="fa-solid fa-check" style="font-size:18px; color: #448c8d !important;"></i></a>
@@ -80,7 +82,8 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th style="color:white !important;">Số thứ tự</th>
+                        <th style="color:white !important;">STT</th>
+                        <th style="color:white !important;">Họ tên</th>
                         <th style="color:white !important;">Số điện thoại</th>
                         <th style="color:white !important;">Địa chỉ</th>
                         <th style="color:white !important;">Thời gian đặt hàng</th>
@@ -96,6 +99,7 @@
                             dem1++;
                             <tr>
                                 <td>@dem1</td>
+                                <td>@item.ThongTin_NhanHangs.HoTen</td>
                                 <td>@item.ThongTin_NhanHangs.SoDT</td>
                                 <td>@item.ThongTin_NhanHangs.DiaChi</td>
                                 <td>@item.ThoiGianTaoDon.ToString("dd/MM/yyyy")</td>
@@ -131,9 +135,9 @@
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th style="color:white !important;">Số thứ tự</th>
+                        <th style="color:white !important;">STT</th>
+                        <th style="color:white !important;">Họ tên</th>
                         <th style="color:white !important;">Số điện thoại</th>
-                        <th style="color:white !important;">Địa chỉ</th>
                         <th style="color:white !important;">Thời gian đặt hàng</th>
                         <th style="color:white !important;">Tổng tiền</th>
                         <th style="color:white !important;">Tình trạng</th>
@@ -148,8 +152,8 @@
                             dem2++;
                             <tr>
                                 <td>@dem2</td>
+                                <td>@item.ThongTin_NhanHangs.HoTen</td>
                                 <td>@item.ThongTin_NhanHangs.SoDT</td>
-                                <td>@item.ThongTin_NhanHangs.DiaChi</td>
                                 <td>@item.ThoiGianTaoDon.ToString("dd/MM/yyyy")</td>
                                 <td>
                                     200.000đ
