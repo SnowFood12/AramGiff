@@ -4,6 +4,7 @@ using Aram.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Net.WebSockets;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -58,6 +59,8 @@ namespace Aram.Controllers
 			}
 			return View("Index", GioHang);
 		}
+
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult AddToDonHang(string HoTen, string SoDT, string DiaChi, string GhiChu)
@@ -190,33 +193,74 @@ namespace Aram.Controllers
 			return RedirectToAction(nameof(Index), GioHang);
 		}
 		// đơn hàng đang chờ admin duyệt
-		public IActionResult GioHangDangChoDuyet()
+		public IActionResult DH_ChoDuyet()
 		{
-			PhanQuyen();
-
-			return View();
+			var tenTK = HttpContext.Session.GetString("Name");
+			var donHang = new List<DonHang>();
+			var donHang_choDuyet = new List<DonHang>();
+            if (tenTK == null)
+			{
+				return RedirectToAction("DangNhap", "TaiKhoan");
+			}
+			else 
+			{
+				donHang = _context.DonHang.Where(x => x.TenTK == tenTK).Include(x => x.ThongTin_NhanHangs).Include(x => x.DonHang_ChiTiets).ThenInclude(a =>a.SanPham).ToList();
+                donHang_choDuyet = donHang.Where(x => x.TrangThai == true && x.TrangThaiDH == "Chờ duyệt").ToList();
+            }
+			return View(donHang_choDuyet);
 		}
 
 		// chi tiết đơn hàng đang chở duyệt
 
-		public IActionResult ChiTietGioHangDangChoDuyet()
+		public IActionResult CT_DH_ChoDuyet(int Id)
 		{
-            PhanQuyen();
-
-            return View();
+			var DH_CT = _context.DonHang_ChiTiet.Where(x => x.DonHangId == Id).Include(x => x.SanPham).ToList();
+			int TamTinh = 0;
+			if(DH_CT != null)
+			{
+                TamTinh = (int)DH_CT.Sum(x => x.SanPham.Gia * x.SoLuong);
+                ViewBag.TamTinh = TamTinh;
+				ViewBag.DonhangId = Id;
+			}
+            return View(DH_CT);
 		}
-
-		// đơn hàng đang giao
-		public IActionResult DonHangDangGiao()
+		public IActionResult HuyDon_ChuaDuyet(int Id)
 		{
-            PhanQuyen();
-
-            return View();
+            var donHang = _context.DonHang.Where(x=> x.Id == Id && x.TrangThaiDH == "Chờ duyệt").FirstOrDefault();
+			if (donHang != null && donHang.TrangThai == true)
+			{
+				donHang.TrangThai = false;
+				_context.DonHang.Update(donHang);
+				TempData["Message"] = "huỷ đơn hàng thành công!";
+				_context.SaveChanges();
+				return RedirectToAction(nameof(DH_ChoDuyet));
+			}
+			else
+			{
+				TempData["Message"] = "Đơn hàng đang được duyệt, không thể hủy đơn!";
+                return RedirectToAction(nameof(CT_DH_ChoDuyet));
+            }
+        }
+        // đơn hàng đang giao
+        public IActionResult DH_DangGiao()
+		{
+			var tenTK = HttpContext.Session.GetString("Name");
+			var donHang = new List<DonHang>();
+			var donHang_dangGiao = new List<DonHang>();
+			if (tenTK == null)
+			{
+				return RedirectToAction("DangNhap", "TaiKhoan");
+			}
+			else
+			{
+				donHang = _context.DonHang.Where(x => x.TenTK == tenTK).Include(x => x.ThongTin_NhanHangs).Include(x => x.DonHang_ChiTiets).ThenInclude(a => a.SanPham).ToList();
+				donHang_dangGiao = donHang.Where(x => x.TrangThai == true && x.TrangThaiDH == "Đang giao").ToList();
+			}
+			return View();
 		}
         // Chi tiết đơn hàng đang giao
-        public IActionResult ChiTietDonHangDangGiao()
+        public IActionResult CT_DH_DangGiao()
         {
-            PhanQuyen();
 
             return View();
         }
