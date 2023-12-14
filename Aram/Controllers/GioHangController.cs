@@ -267,7 +267,7 @@ namespace Aram.Controllers
 
 
         // đơn hàng đã nhận 
-        public IActionResult DonHangDaNhan()
+        public IActionResult DH_DaNhan()
         {
             var tenTK = HttpContext.Session.GetString("Name");
             var donHang = new List<DonHang>();
@@ -285,7 +285,7 @@ namespace Aram.Controllers
         }
 
         // Chi tiết đơn hàng đã nhận
-        public IActionResult ChiTietDonHangDaNhan()
+        public IActionResult CT_DH_DaNhan()
         {
             PhanQuyen();
 
