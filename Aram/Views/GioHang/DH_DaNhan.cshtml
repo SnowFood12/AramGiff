@@ -58,31 +58,34 @@
                 </th>
             </tr>
         </thead>
-        @foreach (var item in Model)
-        {
-            int dem = 1;
-            <tbody>
-                <tr style="color: black;">
-                    <td>
-                        @(dem++)
-                    </td>
-                    <td>
-                        @item.ThongTin_NhanHangs.SoDT
-                    </td>
-                    <td>
-                        @item.ThongTin_NhanHangs.DiaChi
-                    </td>
-                    <td>
-                        @item.ThoiGianTaoDon.ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @((item.DonHang_ChiTiets.Sum(x => x.SanPham.Gia * x.SoLuong) + 20)?.ToString("C3"))
-                    </td>
-                    <td>
-                        <a asp-action="CT_DH_DaNhan" asp-controller="GioHang"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
-                    </td>
-                </tr>
-            </tbody>
+        @{
+            int dem = 0;
+            @foreach (var item in Model)
+            {
+                dem++;
+                <tbody>
+                    <tr style="color: black;">
+                        <td>
+                            @dem
+                        </td>
+                        <td>
+                            @item.ThongTin_NhanHangs.SoDT
+                        </td>
+                        <td>
+                            @item.ThongTin_NhanHangs.DiaChi
+                        </td>
+                        <td>
+                            @item.ThoiGianTaoDon.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @((item.DonHang_ChiTiets.Sum(x => x.SanPham.Gia * x.SoLuong) + 20)?.ToString("C3"))
+                        </td>
+                        <td>
+                            <a asp-action="CT_DH_DaNhan" asp-controller="GioHang"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
         }
     </table>
 </div>
