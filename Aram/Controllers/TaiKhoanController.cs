@@ -280,11 +280,7 @@ namespace Aram.Controllers
 					taiKhoan = _context.TaiKhoan.FirstOrDefault(x => x.TenTK == taiKhoan.TenTK && x.MatKhau == taiKhoan.MatKhau);
 					if (taiKhoan != null)
                     {
-                        LuuTenTK = taiKhoan.TenTK;
-/*                        LuuHoTen = taiKhoan.HoTen;
-						LuuSDT = taiKhoan.SoDT;
-                        LuuEmail = taiKhoan.Email;
-                        LuuGioiTinh = taiKhoan.GioiTinh;*/
+                        
                         if ( taiKhoan.LoaiTK == false)
                         {
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
@@ -296,7 +292,11 @@ namespace Aram.Controllers
                         {
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
                             TempData["Message"] = "Đăng nhập tài khoản thành công!";
-
+                            LuuTenTK = taiKhoan.TenTK;
+                            LuuHoTen = taiKhoan.HoTen;
+                            LuuSDT = taiKhoan.SoDT;
+                            LuuEmail = taiKhoan.Email;
+                            LuuGioiTinh = (bool)taiKhoan.GioiTinh;
                             return RedirectToAction("MainHome", "Home");
                         }
 
