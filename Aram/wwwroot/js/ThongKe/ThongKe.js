@@ -43,7 +43,7 @@ $.ajax({
         var data = {
             labels: id ,
             datasets: [{
-                label: 'Đơn',
+                label: 'Đơn hàng đã được giao',
                 data: soLuong,
                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -63,7 +63,7 @@ $.ajax({
 
         // Tạo biểu đồ cột
         var myChart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: data,
             options: options
         });
