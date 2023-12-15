@@ -21,18 +21,6 @@ namespace Aram.Controllers
         {
             _context = context;
         }
-        public void PhanQuyen()
-        {
-            string Name = HttpContext.Session.GetString("Name");
-            if (Name == "admin1234" && Name != null)
-            {
-                ViewBag.PhanQuyen = true;
-            }
-            else
-            {
-                ViewBag.PhanQuyen = false;
-            }
-        }
         // GET: SanPhams
         public IActionResult Index(int id)
         {
@@ -52,7 +40,6 @@ namespace Aram.Controllers
         // tìm kiếm thông tin sản phẩm
         public async Task<IActionResult> Search(string search)
         {
-            PhanQuyen();
             int id = HttpContext.Session.GetInt32("id") ?? 0;
 
             ViewBag.chName = _context.CuaHang.Where(x => x.Id == id).FirstOrDefault();
@@ -66,6 +53,8 @@ namespace Aram.Controllers
 
                 ViewBag.ListProduct = ListProduct;
 
+                ViewBag.TrangThai = "Tất cả";
+
                 return View("Index");
             }
             else
@@ -76,6 +65,8 @@ namespace Aram.Controllers
 
                 ViewBag.ListProduct = ListProduct;
 
+                ViewBag.TrangThai = "Tất cả";
+
                 return View("Index");
             }
         }
@@ -85,7 +76,6 @@ namespace Aram.Controllers
         // => còn hàng 
         public IActionResult ConHang()
         {
-            PhanQuyen();
             int id = HttpContext.Session.GetInt32("id") ?? 0;
 
             var aramContext = _context.SanPham.Where(a => a.TrangThai == true && a.CuaHangId == id); 
@@ -101,7 +91,6 @@ namespace Aram.Controllers
         // => hết hàng 
         public IActionResult HetHang()
         {
-            PhanQuyen();
             int id = HttpContext.Session.GetInt32("id") ?? 0;
 
             var aramContext = _context.SanPham.Where(a => a.TrangThai == false && a.CuaHangId == id);
@@ -118,7 +107,6 @@ namespace Aram.Controllers
 
         public IActionResult GetImage(int id)
         {
-            PhanQuyen();
             SanPham image = _context.SanPham.Find(id);
             if (image.PicData != null)
             {
@@ -133,7 +121,6 @@ namespace Aram.Controllers
         // GET: SanPhams/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            PhanQuyen();
             if (id == null || _context.SanPham == null)
             {
                 return NotFound();
@@ -154,7 +141,6 @@ namespace Aram.Controllers
         // GET: SanPhams/Create
         public IActionResult Create(int chID)
         {
-            PhanQuyen();
             ViewBag.chID = chID;
            /* ViewData["CuaHangId"] = new SelectList(_context.CuaHang, "Id", "Id", chID);*/
             var loaisps = new SelectList(_context.LoaiSP, "Id", "Ten");
@@ -169,7 +155,6 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SanPham sanPham, IFormFile? imageSP)
         {
-            PhanQuyen();
             if (sanPham.Ten != null)
             {
                 sanPham.Ten = Regex.Replace(sanPham.Ten.Trim(), @"\s+", " ");
@@ -222,7 +207,6 @@ namespace Aram.Controllers
         // GET: SanPhams/Edit/5
         public async Task<IActionResult> Edit(int? id, int chID)
         {
-            PhanQuyen();
             if (id == null || _context.SanPham == null)
             {
                 return NotFound();
@@ -295,7 +279,6 @@ namespace Aram.Controllers
         // GET: SanPhams/Delete/5
         public async Task<IActionResult> Delete(int? id, int chID)
         {
-            PhanQuyen();
             if (id == null || _context.SanPham == null)
             {
                 return NotFound();
@@ -318,7 +301,6 @@ namespace Aram.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, int chID)
         {
-            PhanQuyen();
             if (_context.SanPham == null)
             {
                 return Problem("Entity set 'AramContext.SanPham'  is null.");

@@ -44,6 +44,7 @@ function changePage(i) {
 
 // tim kiếm có gợi ý
 
+
 var timkiem = document.getElementById('timkiem')
 
 var goi__y = document.querySelector('.goi__y')
@@ -58,7 +59,7 @@ timkiem.addEventListener('input', function (event) {
 		dataType: 'json',
 		success: function (result) {
 			if (result == null || result.length == 0) {
-				goi__y.style.visibility = 'hidden'				
+				goi__y.style.visibility = 'hidden'								
 			}
 			else {
 				goi__y.style.visibility = 'visible'

@@ -28,18 +28,6 @@ namespace Aram.Controllers
             _context = context;
             _config = config;
         }
-        public void PhanQuyen()
-        {
-            string Name = HttpContext.Session.GetString("Name");
-            if (Name == "admin1234" && Name != null)
-            {
-                ViewBag.PhanQuyen = true;
-            }
-            else
-            {
-                ViewBag.PhanQuyen = false;
-            }
-        }
         public IActionResult KiemTraDangNhap()
         {
             string Name = HttpContext.Session.GetString("Name"); 
@@ -55,7 +43,6 @@ namespace Aram.Controllers
 
         public IActionResult Index()
         {
-            PhanQuyen();
             if (LuuTenTK == null)
             {
                 return RedirectToAction("DangNhap", "TaiKhoan");
@@ -286,7 +273,7 @@ namespace Aram.Controllers
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
                             TempData["Message"] = "Đăng nhập tài khoản thành công!";
 
-                            return RedirectToAction("Index", "CuaHang");
+                            return RedirectToAction("ThongKe", "DonHang");
                         }
                         else
                         {

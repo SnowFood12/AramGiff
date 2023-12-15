@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "LichSuDonHang";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible" id="alert" role="alert" style="position:absolute; top: 7rem ; right: 0px; z-index: 9;">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<h4 class="fw-bold py-3 mb-4"><a href="" class="text-muted fw-light">Lịch sử đơn hàng</a></h4>
+<!-- Basic Bootstrap Table -->
+
+<form asp-action="Search" asp-controller="DonHang" class="d-flex align-items-center" style="gap:10px;">
+    <div class="btn-group mb-3">
+        <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+            @ViewBag.TinhTrang
+        </button>
+        <ul class="dropdown-menu" style="">
+            <li><a class="dropdown-item" asp-action="LichSuDonHang" asp-controller="DonHang">Tất cả</a></li>
+            <li><a class="dropdown-item" asp-action="HuyDon">Đã huỷ</a></li>
+            <li><a class="dropdown-item" asp-action="GiaoThanhCong">Đã giao</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="search" />
+    </div>
+    <button class="btn btn-icon btn-outline-secondary mb-3" type="submit"><i class="bx bx-search fs-4 lh-0"></i></button>
+</form>
+<div class="card">
+
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th style="color:white !important;">STT</th>
+                <th style="color:white !important;">Họ tên</th>
+                <th style="color:white !important;">Số điện thoại</th>
+                <th style="color:white !important;">Thời gian</th>
+                <th style="color:white !important;">Tổng tiền</th>
+                <th style="color:white !important;">Tình trạng</th>
+                <th style="color:white !important;"></th>
+            </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+            @{
+                int dem = 0;
+                @foreach (var item in ViewBag.DaGiao)
+                {
+                    int tong = 0;
+                    foreach (var item1 in item.DonHang_ChiTiets)
+                    {
+                        tong += item1.SoLuong * item1.SanPham.Gia;
+                    }
+                    dem++;
+                    <tr>
+                        <td>@dem</td>
+                        <td>@item.ThongTin_NhanHangs.HoTen</td>
+                        <td>@item.ThongTin_NhanHangs.SoDT</td>
+                        <td>@item.ThoiGianTaoDon.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @((tong + 20).ToString("C3"))
+                        </td>
+                        @{
+                            if (item.TrangThai == true)
+                            {
+                                <td style="color: #448c8d !important;">Đã giao</td>
+                            }
+                            else
+                            {
+                                <td style="color: #d11515 !important;">Đã huỷ</td>
+                            }
+                        }
+                        <td style="display: flex; align-items:center; gap:20px;">
+                            <a asp-action="ChiTietDonHangDaGiao" asp-controller="DonHang" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>

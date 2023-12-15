@@ -23,31 +23,31 @@ namespace Aram.Controllers
             var ListDonHang = new List<DonHang>();
 
             ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true)
-                .Include(x => x.ThongTin_NhanHangs)
-                .Include(x => x.DonHang_ChiTiets)
-                .ThenInclude(x=> x.SanPham)
-                .ToList();
-                         
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(x => x.ThongTin_NhanHangs)
+                    .Include(x => x.DonHang_ChiTiets)
+                    .ThenInclude(x=> x.SanPham)
+                    .ToList();
 
-            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
+            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
 
-			var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
 
 			ViewBag.ChoDuyet = ListDonHang;
             
 
             ViewBag.DangGiao = DangGiao; 
 
-			ViewBag.DaGiao = DaGiao;
-
 			ViewBag.DemChoDuyet = ListDonHang.Count();
 			ViewBag.DemDangGiao = DangGiao.Count();
-			ViewBag.DemDaGiao = DaGiao.Count();
-
-			ViewBag.TinhTrang = "Tất cả";
 
             return View();
 		}
+
         public int Tong(int Id)
         {
             var ListDonHang = new List<DonHang>();
@@ -57,55 +57,6 @@ namespace Aram.Controllers
                 .ThenInclude(a => a.SanPham).ToList();
             return ListDonHang.Count();
         }
-
-		// lọc đơn hàng
-		// đơn hàng huỷ
-		public IActionResult HuyDon()
-		{
-            var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-
-            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-
-            var DaGiao = _context.DonHang.Where(a => a.TrangThai == false).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-            ViewBag.ChoDuyet = ListDonHang;
-
-            ViewBag.DangGiao = DangGiao;
-
-            ViewBag.DaGiao = DaGiao;
-
-            ViewBag.DemChoDuyet = ListDonHang.Count();
-            ViewBag.DemDangGiao = DangGiao.Count();
-            ViewBag.DemDaGiao = DaGiao.Count();
-
-            ViewBag.TinhTrang = "Đã huỷ";
-
-            return View("Index");
-		}
-
-		// đơn hàng giao thành công
-		public IActionResult GiaoThanhCong()
-		{
-            var ListDonHang = _context.DonHang.Where(a => a.TrangThaiDH == "Chờ duyệt" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-
-            var DangGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đang giao" && a.TrangThai == true).Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-
-            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã Giao").Include(a => a.DonHang_ChiTiets).Include(a => a.ThongTin_NhanHangs).ToList();
-
-            ViewBag.ChoDuyet = ListDonHang;
-
-            ViewBag.DangGiao = DangGiao;
-
-            ViewBag.DaGiao = DaGiao;
-
-            ViewBag.DemChoDuyet = ListDonHang.Count();
-            ViewBag.DemDangGiao = DangGiao.Count();
-            ViewBag.DemDaGiao = DaGiao.Count();
-
-            ViewBag.TinhTrang = "Đã giao";
-
-            return View("Index");
-        }
-        //==============================================================================================
 
 
         // duyệt đơn
@@ -122,36 +73,7 @@ namespace Aram.Controllers
             return RedirectToAction("Index", "DonHang");
 		}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(string HoTen, string SoDT, string DiaChi, string GhiChu)
-        {
-            var donHang = new DonHang();
-			donHang.TenTK = HttpContext.Session.GetString("Name");
-			_context.Add(donHang);
-			_context.SaveChanges();
-			GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
-			foreach (var item in GioHang.Lines)
-			{
-				var donHang_chiTiet = new DonHang_ChiTiet();
-				donHang_chiTiet.SanPhamId = item.SanPham.Id;
-				donHang_chiTiet.DonHangId = donHang.Id;
-				donHang_chiTiet.SoLuong = item.SoLuong;
-				_context.Add(donHang_chiTiet);
-				_context.SaveChanges();
-			}
-			var TT_NH = new ThongTin_NhanHang();
-			TT_NH.DonHangId = donHang.Id;
-			TT_NH.HoTen = HoTen;
-			TT_NH.SoDT = SoDT;
-			TT_NH.DiaChi = DiaChi;
-			TT_NH.GhiChu = GhiChu;
-			_context.Add(TT_NH);
-			_context.SaveChanges();
-			return RedirectToAction("DonHangDangGiao", "GioHang");
-        }
-
-
+        // chi tiết đơn hàng chờ duyệt
         public IActionResult Details(int id)
 		{
             var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();
@@ -184,6 +106,8 @@ namespace Aram.Controllers
 
             DonHang.TrangThaiDH = "Đã giao";
 
+            DonHang.ThoiGianTaoDon = DateTime.Now;
+
             _context.DonHang.Update(DonHang);
             _context.SaveChanges();
 
@@ -193,6 +117,7 @@ namespace Aram.Controllers
             return RedirectToAction("Index", "DonHang");
 		}
 
+        // Xác nhận huỷ đơn hàng
 		public IActionResult XacNhanHuy(int id)
 		{
             var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();
@@ -219,6 +144,8 @@ namespace Aram.Controllers
 
             DonHang.TrangThai = false;
 
+            DonHang.ThoiGianTaoDon = DateTime.Now;
+
             _context.DonHang.Update(DonHang);
             _context.SaveChanges();
 			TempData["Message"] = "Huỷ đơn hàng thành công";
@@ -226,7 +153,7 @@ namespace Aram.Controllers
             return RedirectToAction("Index", "DonHang");
         }
 
-
+        // Chi tiết đơn hàng đang giao
         public IActionResult ChiTietDonHangDangGiao(int id)
 		{
 			var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude( a => a.CuaHang).ToList();
@@ -237,6 +164,8 @@ namespace Aram.Controllers
 
 			ViewBag.TamTinh = TamTinh;
 
+            ViewBag.IdDonHang = id;
+
             ViewBag.ThongTinGiaoHang = ThongTinGiaoHang;
 
 			ViewBag.ListProduct = DonHangChiTiet;
@@ -244,12 +173,67 @@ namespace Aram.Controllers
             return View();
 		}
 
-		// đơn hàng đã giao
-		public IActionResult DonHangDaGiao()
+		// lịch sử đơn hàng
+		public IActionResult LichSuDonHang()
 		{
+            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false)
+                        .OrderByDescending(a => a.ThoiGianTaoDon)
+                        .Include(a => a.ThongTin_NhanHangs)
+                        .Include(a => a.DonHang_ChiTiets)
+                        .ThenInclude(a => a.SanPham)
+                        .ToList();
+
+            ViewBag.DaGiao = DaGiao;
+
+            ViewBag.DemDaGiao = DaGiao.Count();
+
+            ViewBag.TinhTrang = "Tất cả";
             return View();
 		}
-		public IActionResult ChiTietDonHangDaGiao(int id)
+
+        // đơn hàng huỷ
+        public IActionResult HuyDon()
+        {
+
+
+            var DaGiao = _context.DonHang.Where(a => a.TrangThai == false)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
+
+            ViewBag.DaGiao = DaGiao;
+
+            ViewBag.DemDaGiao = DaGiao.Count();
+
+            ViewBag.TinhTrang = "Đã huỷ";
+
+            return View("LichSuDonHang");
+        }
+
+        // đơn hàng giao thành công
+        public IActionResult GiaoThanhCong()
+        {
+            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" && a.TrangThai == true)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
+
+            ViewBag.DaGiao = DaGiao;
+
+            ViewBag.DemDaGiao = DaGiao.Count();
+
+            ViewBag.TinhTrang = "Đã giao";
+
+            return View("LichSuDonHang");
+        }
+        //==============================================================================================
+
+        // chi tiết lịch sử đơn hàng
+        public IActionResult ChiTietDonHangDaGiao(int id)
 		{
             var DonHangChiTiet = _context.DonHang_ChiTiet.Where(a => a.DonHangId == id).Include(a => a.SanPham).ThenInclude(a => a.CuaHang).ToList();
 
@@ -265,5 +249,96 @@ namespace Aram.Controllers
 
             return View();
         }
-	}
+
+        //====================================================================
+
+        // tìm kiếm đơn hàng theo này
+        public IActionResult Search( DateTime search)
+        {
+            string ab = search.Date.ToString();
+            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false && a.ThoiGianTaoDon.Day == search.Day)
+            .OrderByDescending(a => a.ThoiGianTaoDon)
+            .Include(a => a.ThongTin_NhanHangs)
+            .Include(a => a.DonHang_ChiTiets)
+            .ThenInclude(a => a.SanPham)
+            .ToList();
+
+            ViewBag.DaGiao = DaGiao;
+
+            ViewBag.Search = search; 
+
+            ViewBag.TinhTrang = "Tất cả";
+            return View("LichSuDonHang");
+        }
+
+
+        // Thống kê doanh thu
+        public IActionResult ThongKe()
+        {
+            var ListDonHang = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Month == DateTime.Now.Month).ToList();
+
+            var HomNay = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Date == DateTime.Now.Date).ToList();
+
+            DateTime today = DateTime.Today;
+            DateTime yesterday = today.AddDays(-1);
+
+            var HomQua = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Date == yesterday).ToList();
+
+            ViewBag.DemTong = ListDonHang.Count; 
+
+            ViewBag.DemDay = HomNay.Count;
+
+            ViewBag.HomQua = HomQua.Count;
+
+            return View();
+        }
+
+        // lấy dữ liệu để vẽ biểu đồ
+        [HttpGet]
+        public JsonResult ThongKeDoanhThu()
+        {
+            var revenueData = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Month == DateTime.Now.Month)
+                                              .GroupBy(a => a.ThoiGianTaoDon.Day).Select(s => new
+                                              {
+                                                  Day = s.Select(a => new
+                                                  {
+                                                      a.ThoiGianTaoDon
+                                                  }),
+                                                  Count = s.Count()
+                                              }).ToList(); 
+
+            return Json(revenueData);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(string HoTen, string SoDT, string DiaChi, string GhiChu)
+        {
+            var donHang = new DonHang();
+            donHang.TenTK = HttpContext.Session.GetString("Name");
+            _context.Add(donHang);
+            _context.SaveChanges();
+            GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+            foreach (var item in GioHang.Lines)
+            {
+                var donHang_chiTiet = new DonHang_ChiTiet();
+                donHang_chiTiet.SanPhamId = item.SanPham.Id;
+                donHang_chiTiet.DonHangId = donHang.Id;
+                donHang_chiTiet.SoLuong = item.SoLuong;
+                _context.Add(donHang_chiTiet);
+                _context.SaveChanges();
+            }
+            var TT_NH = new ThongTin_NhanHang();
+            TT_NH.DonHangId = donHang.Id;
+            TT_NH.HoTen = HoTen;
+            TT_NH.SoDT = SoDT;
+            TT_NH.DiaChi = DiaChi;
+            TT_NH.GhiChu = GhiChu;
+            _context.Add(TT_NH);
+            _context.SaveChanges();
+            return RedirectToAction("DonHangDangGiao", "GioHang");
+        }
+
+    }
 }
