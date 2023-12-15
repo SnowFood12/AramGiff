@@ -96,6 +96,16 @@
 							</div>
 						</li>
 						</div>
+
+						<div class="mr-5" style="@ViewBag.Loc">
+							<li class="nav-item active dropdown" style="list-style: none; border:none; border-bottom: 1px solid #dd781a; font-size: 15px; padding: 0px 10px; border-radius: 2px;height:35px !important; outline: none; background: white; margin-right: 20px; color: black !important;">
+								<a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" style="color:black !important;" aria-expanded="false">@ViewBag.SapXep</a>
+								<div class="dropdown-menu" aria-labelledby="dropdown04">
+									<a class="dropdown-item" asp-action="LocSanPhamTheoGia" asp-controller="Home" asp-route-id="3">Giá: Cao đến thấp</a>
+									<a class="dropdown-item" asp-action="LocSanPhamTheoGia" asp-controller="Home" asp-route-id="4">Giá: Thấp đến cao</a>
+								</div>
+							</li>
+						</div>
 						
 						<div class="" style="width: 70%;">
 							<div class="form-group d-flex" style="position:relative;">

@@ -29,7 +29,13 @@ namespace Aram.Controllers
 			ViewBag.LoaiSanPham = LoaiSanPham;
 			ViewBag.ThongTinSanPham = TongTinSanPham;
 
-			ViewBag.An = "visibility: hidden;";
+			HttpContext.Session.Remove("IdLSP");
+
+			HttpContext.Session.Remove("NameProduct");
+
+			ViewBag.An = "display: none;";
+
+			ViewBag.Loc = "display: none;";
 
 			return View();
 		}
@@ -66,7 +72,9 @@ namespace Aram.Controllers
 
 				ViewBag.Txt = search;
 
-				ViewBag.An = "visibility: visible;";
+				ViewBag.An = "display: block;";
+
+				ViewBag.Loc = "display: none;";
 
 				HttpContext.Session.SetString("NameProduct", search); // ==> lọc sản phẩm tìm kiếm theo giá
 
@@ -77,10 +85,13 @@ namespace Aram.Controllers
 			
 
 		}
-		// lọc sản phẩm theo giá
+
+		// lọc sản phẩm theo giá khi tìm kiếm theo tên
 		public IActionResult LocSanPhamTheoGia(int id)
 		{
-			string search = HttpContext.Session.GetString("NameProduct"); 
+			string search = HttpContext.Session.GetString("NameProduct");
+
+			int idLSDP = HttpContext.Session.GetInt32("IdLSP") ?? 0;
 
 			if ( id == 1  )
 			{
@@ -94,13 +105,15 @@ namespace Aram.Controllers
 
 				ViewBag.Txt = search;
 
-				ViewBag.An = "visibility: visible;";
+				ViewBag.An = "display: block;";
+
+				ViewBag.Loc = "display: none;";
 
 				ViewBag.SapXep = "Giá: Thấp đến cao ";
 
 				return View("Index");
 			}
-			else
+			else if ( id == 2 ) 
 			{
 				var LoaiSanPham = _context.LoaiSP.ToList();
 
@@ -112,9 +125,48 @@ namespace Aram.Controllers
 
 				ViewBag.Txt = search;
 
-				ViewBag.An = "visibility: visible;";
+				ViewBag.An = "display: block;";
+
+				ViewBag.Loc = "display: none;";
 
 				ViewBag.SapXep = "Giá: Cao đến thấp";
+
+				return View("Index");
+			}
+			else if ( id == 3)
+			{
+				var LoaiSanPham = _context.LoaiSP.ToList();
+
+				var SanPham = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == idLSDP).Include(a => a.CuaHang).OrderByDescending(a => a.Gia).ToList();
+
+
+				ViewBag.LoaiSanPham = LoaiSanPham;
+
+				ViewBag.ThongTinSanPham = SanPham;
+
+				ViewBag.Loc = "display: block;";
+
+				ViewBag.An = "display: none;";
+
+				ViewBag.SapXep = "Giá: Cao đến thấp";
+
+				return View("Index");
+			}
+			else
+			{
+				var LoaiSanPham = _context.LoaiSP.ToList();
+
+				var SanPham = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == idLSDP).Include(a => a.CuaHang).OrderBy(a => a.Gia).ToList();
+
+				ViewBag.LoaiSanPham = LoaiSanPham;
+
+				ViewBag.ThongTinSanPham = SanPham;
+
+				ViewBag.Loc = "display: block;";
+
+				ViewBag.An = "display: none;";
+
+				ViewBag.SapXep = "Giá: Thấp đến cao";
 
 				return View("Index");
 			}
@@ -125,20 +177,25 @@ namespace Aram.Controllers
 		{
             var LoaiSanPham = _context.LoaiSP.ToList();
 
-			var SanPham = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == id).Include(a => a.CuaHang).OrderByDescending(a => a.Id).ToList();
+			var SanPham = _context.SanPham.Where(a => a.TrangThai == true && a.LoaiSPId == id).Include(a => a.CuaHang).OrderByDescending(a => a.Gia).ToList();
+
+			HttpContext.Session.SetInt32("IdLSP", id);
 
             ViewBag.LoaiSanPham = LoaiSanPham;
 
 			ViewBag.ThongTinSanPham = SanPham;
 
+			ViewBag.Loc = "display: block;";
+
+			ViewBag.An = "display: none;";
+
+			ViewBag.SapXep = "Giá: Cao đến thấp";
+
 			return View("Index");
 		}
 
-
-
         public IActionResult MainHome() // trang chủ
 		{
-
 			var ListProduct = _context.SanPham.Where(a => a.TrangThai == true)
 							.Join(_context.DonHang_ChiTiet, a => a.Id, dh => dh.SanPhamId, (a, dh) => new
 							{
