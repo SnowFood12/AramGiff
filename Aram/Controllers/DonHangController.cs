@@ -252,17 +252,18 @@ namespace Aram.Controllers
 
         //====================================================================
 
-        // tìm kiếm đơn hàng theo này
+        // tìm kiếm đơn hàng theo ngay
         public IActionResult Search( DateTime search)
         {
-            string ab = search.Date.ToString();
-            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false && a.ThoiGianTaoDon.Day == search.Day)
-            .OrderByDescending(a => a.ThoiGianTaoDon)
-            .Include(a => a.ThongTin_NhanHangs)
-            .Include(a => a.DonHang_ChiTiets)
-            .ThenInclude(a => a.SanPham)
-            .ToList();
-
+            var DaGiao = _context.DonHang.Where(a => a.TrangThaiDH == "Đã giao" || a.TrangThai == false && 
+                        a.ThoiGianTaoDon.Day == search.Day && 
+                        a.ThoiGianTaoDon.Month == search.Month && 
+                        a.ThoiGianTaoDon.Year == search.Year)
+                        .OrderByDescending(a => a.ThoiGianTaoDon)
+                        .Include(a => a.ThongTin_NhanHangs)
+                        .Include(a => a.DonHang_ChiTiets)
+                        .ThenInclude(a => a.SanPham)
+                        .ToList();
             ViewBag.DaGiao = DaGiao;
 
             ViewBag.Search = search; 
@@ -302,10 +303,26 @@ namespace Aram.Controllers
                                               {
                                                   Day = s.Select(a => new
                                                   {
-                                                      a.ThoiGianTaoDon
+                                                      a.ThoiGianTaoDon,
                                                   }),
                                                   Count = s.Count()
                                               }).ToList(); 
+
+            return Json(revenueData);
+        }
+        // lấy đơn hàng đã huỷ
+        [HttpGet]
+        public JsonResult DonHangDaHuy()
+        {
+            var revenueData = _context.DonHang.Where(a => a.TrangThai == false && a.ThoiGianTaoDon.Month == DateTime.Now.Month)
+                                              .GroupBy(a => a.ThoiGianTaoDon.Day).Select(s => new
+                                              {
+                                                  Day = s.Select(a => new
+                                                  {
+                                                      a.ThoiGianTaoDon,
+                                                  }),
+                                                  Count = s.Count()
+                                              }).ToList();
 
             return Json(revenueData);
         }
