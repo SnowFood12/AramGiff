@@ -190,6 +190,7 @@ namespace Aram.Controllers
 			return Json(json);
 
 		}
+
 		public IActionResult XoaSPGioHang(int Id)
 		{
             GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
