@@ -275,15 +275,15 @@ namespace Aram.Controllers
 
                             return RedirectToAction("ThongKe", "DonHang");
                         }
-                        else
+                        else if (taiKhoan.LoaiTK == true)
                         {
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
                             TempData["Message"] = "Đăng nhập tài khoản thành công!";
-                            LuuTenTK = taiKhoan.TenTK;
+                            /*LuuTenTK = taiKhoan.TenTK;
                             LuuHoTen = taiKhoan.HoTen;
                             LuuSDT = taiKhoan.SoDT;
                             LuuEmail = taiKhoan.Email;
-                            LuuGioiTinh = (bool)taiKhoan.GioiTinh;
+                            LuuGioiTinh = (bool)taiKhoan.GioiTinh;*/
                             return RedirectToAction("MainHome", "Home");
                         }
 
