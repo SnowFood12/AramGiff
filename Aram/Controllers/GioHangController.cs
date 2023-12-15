@@ -69,7 +69,13 @@ namespace Aram.Controllers
 			bool kt = true;
 			string kiemLoiTen = @"^[a-zA-Z0-9\s\u0080-\u00FF\u0102\u0103\u0110\u0111\u0128\u0129\u0168\u0169\u01A0\u01A1\u01AF\u01B0\u1EA0-\u1EF9]*$";
 			string kiemLoiDT = @"^0\d{9}$";
-			if (HoTen == null)
+            var tenTK = HttpContext.Session.GetString("Name");
+            if (tenTK == null)
+            {
+                kt = false;
+                return  RedirectToAction("DangNhap", "TaiKhoan");
+            }
+            if (HoTen == null)
 			{
 				ViewBag.ktHoTen = "Vui lòng nhập họ Tên";
 				kt = false;
@@ -105,10 +111,11 @@ namespace Aram.Controllers
 				kt = false;
 				return View("Index", GioHang);
 			}
-				if (kt == true)
+			
+            if (kt == true)
 				{
 					var donHang = new DonHang();
-					donHang.TenTK = HttpContext.Session.GetString("Name");
+					donHang.TenTK = tenTK;
 					_context.Add(donHang);
 					_context.SaveChanges();
 					GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
