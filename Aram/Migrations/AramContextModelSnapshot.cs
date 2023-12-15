@@ -57,7 +57,7 @@ namespace Aram.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CUA_HANG", (string)null);
+                    b.ToTable("CUA_HANG");
                 });
 
             modelBuilder.Entity("Aram.Models.DonHang", b =>
@@ -85,7 +85,7 @@ namespace Aram.Migrations
 
                     b.HasIndex("TenTK");
 
-                    b.ToTable("DON_HANG", (string)null);
+                    b.ToTable("DON_HANG");
                 });
 
             modelBuilder.Entity("Aram.Models.DonHang_ChiTiet", b =>
@@ -114,7 +114,7 @@ namespace Aram.Migrations
 
                     b.HasIndex("SanPhamId");
 
-                    b.ToTable("DONHANG_CHITIET", (string)null);
+                    b.ToTable("DONHANG_CHITIET");
                 });
 
             modelBuilder.Entity("Aram.Models.LoaiSP", b =>
@@ -135,7 +135,7 @@ namespace Aram.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LOAI_SP", (string)null);
+                    b.ToTable("LOAI_SP");
                 });
 
             modelBuilder.Entity("Aram.Models.SanPham", b =>
@@ -173,7 +173,7 @@ namespace Aram.Migrations
 
                     b.HasIndex("LoaiSPId");
 
-                    b.ToTable("SAN_PHAM", (string)null);
+                    b.ToTable("SAN_PHAM");
                 });
 
             modelBuilder.Entity("Aram.Models.TaiKhoan", b =>
@@ -211,7 +211,7 @@ namespace Aram.Migrations
 
                     b.HasKey("TenTK");
 
-                    b.ToTable("TAI_KHOAN", (string)null);
+                    b.ToTable("TAI_KHOAN");
                 });
 
             modelBuilder.Entity("Aram.Models.ThongTin_NhanHang", b =>
@@ -246,7 +246,7 @@ namespace Aram.Migrations
                     b.HasIndex("DonHangId")
                         .IsUnique();
 
-                    b.ToTable("THONGTIN_NHANHANG", (string)null);
+                    b.ToTable("THONGTIN_NHANHANG");
                 });
 
             modelBuilder.Entity("Aram.Models.DonHang", b =>

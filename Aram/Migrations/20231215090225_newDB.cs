@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Aram.Migrations
 {
     /// <inheritdoc />
-    public partial class DB : Migration
+    public partial class newDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,7 +51,7 @@ namespace Aram.Migrations
                     TenTK = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     MatKhau = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     HoTen = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    GioiTinh = table.Column<bool>(type: "bit", nullable: false),
+                    GioiTinh = table.Column<bool>(type: "bit", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     SoDT = table.Column<string>(type: "char(10)", nullable: true),
                     NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -93,6 +93,93 @@ namespace Aram.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DON_HANG",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ThoiGianTaoDon = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TrangThaiDH = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    TrangThai = table.Column<bool>(type: "bit", nullable: false),
+                    TenTK = table.Column<string>(type: "nvarchar(15)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DON_HANG", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DON_HANG_TAI_KHOAN_TenTK",
+                        column: x => x.TenTK,
+                        principalTable: "TAI_KHOAN",
+                        principalColumn: "TenTK");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DONHANG_CHITIET",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SoLuong = table.Column<int>(type: "int", nullable: false),
+                    TrangThai = table.Column<bool>(type: "bit", nullable: false),
+                    DonHangId = table.Column<int>(type: "int", nullable: false),
+                    SanPhamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DONHANG_CHITIET", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DONHANG_CHITIET_DON_HANG_DonHangId",
+                        column: x => x.DonHangId,
+                        principalTable: "DON_HANG",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DONHANG_CHITIET_SAN_PHAM_SanPhamId",
+                        column: x => x.SanPhamId,
+                        principalTable: "SAN_PHAM",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "THONGTIN_NHANHANG",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HoTen = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SoDT = table.Column<string>(type: "char(10)", maxLength: 10, nullable: true),
+                    DiaChi = table.Column<string>(type: "ntext", nullable: false),
+                    GhiChu = table.Column<string>(type: "ntext", nullable: true),
+                    DonHangId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_THONGTIN_NHANHANG", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_THONGTIN_NHANHANG_DON_HANG_DonHangId",
+                        column: x => x.DonHangId,
+                        principalTable: "DON_HANG",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DON_HANG_TenTK",
+                table: "DON_HANG",
+                column: "TenTK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DONHANG_CHITIET_DonHangId",
+                table: "DONHANG_CHITIET",
+                column: "DonHangId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DONHANG_CHITIET_SanPhamId",
+                table: "DONHANG_CHITIET",
+                column: "SanPhamId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_SAN_PHAM_CuaHangId",
                 table: "SAN_PHAM",
@@ -102,22 +189,37 @@ namespace Aram.Migrations
                 name: "IX_SAN_PHAM_LoaiSPId",
                 table: "SAN_PHAM",
                 column: "LoaiSPId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_THONGTIN_NHANHANG_DonHangId",
+                table: "THONGTIN_NHANHANG",
+                column: "DonHangId",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "DONHANG_CHITIET");
+
+            migrationBuilder.DropTable(
+                name: "THONGTIN_NHANHANG");
+
+            migrationBuilder.DropTable(
                 name: "SAN_PHAM");
 
             migrationBuilder.DropTable(
-                name: "TAI_KHOAN");
+                name: "DON_HANG");
 
             migrationBuilder.DropTable(
                 name: "CUA_HANG");
 
             migrationBuilder.DropTable(
                 name: "LOAI_SP");
+
+            migrationBuilder.DropTable(
+                name: "TAI_KHOAN");
         }
     }
 }

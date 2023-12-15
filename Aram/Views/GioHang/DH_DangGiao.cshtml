@@ -76,7 +76,7 @@
                             @item.ThongTin_NhanHangs.DiaChi
                         </td>
                         <td>
-                            @item.ThoiGianTaoDon.ToString("dd/MM/yyyy")
+                            @item.ThoiGianTaoDon.ToString("dd/MM/yyyy HH:mm")
                         </td>
                         <td>
                             @((item.DonHang_ChiTiets.Sum(x => x.SanPham.Gia * x.SoLuong) + 20)?.ToString("C3"))

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aram.Migrations
 {
     [DbContext(typeof(AramContext))]
-    [Migration("20231212125101_ttnh")]
-    partial class ttnh
+    [Migration("20231215090225_newDB")]
+    partial class newDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
