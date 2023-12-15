@@ -273,7 +273,7 @@ namespace Aram.Controllers
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
                             TempData["Message"] = "Đăng nhập tài khoản thành công!";
 
-                            return RedirectToAction("Index", "CuaHang");
+                            return RedirectToAction("ThongKe", "DonHang");
                         }
                         else
                         {

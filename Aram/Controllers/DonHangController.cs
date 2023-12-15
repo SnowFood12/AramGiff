@@ -270,6 +270,31 @@ namespace Aram.Controllers
             ViewBag.TinhTrang = "Tất cả";
             return View("LichSuDonHang");
         }
+
+
+        // Thống kê doanh thu
+        public IActionResult ThongKe()
+        {
+            var ListDonHang = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao").ToList();
+
+            var HomNay = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Date == DateTime.Now.Date).ToList();
+
+            ViewBag.DemTong = ListDonHang.Count;
+
+            ViewBag.DemDay = HomNay.Count;
+
+            return View();
+        }
+
+        // lấy dữ liệu để vẽ biểu đồ
+        [HttpGet]
+        public JsonResult ThongKeDoanhThu()
+        {
+            var revenueData = _context.DonHang_ChiTiet.ToList();
+            return Json(revenueData);
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(string HoTen, string SoDT, string DiaChi, string GhiChu)

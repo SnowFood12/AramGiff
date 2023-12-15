@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "ThongKe";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="mb-3">
+    <div class="d-flex justify-content-between gap-3" style="width: 100%;">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                            <h5 class="text-nowrap mb-2">Tổng thu nhập</h5>
+                        </div>
+                    </div>
+                    <span class="d-block mb-1">@ViewBag.DemTong đơn</span>
+                    <h3 class="card-title text-nowrap mb-2">@((ViewBag.DemTong * 20).ToString("C3"))</h3>
+                    <a href=""><small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> Tải file</small></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                            <h5 class="text-nowrap mb-2">Thu nhập hôm nay</h5>
+                        </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">@ViewBag.DemDay đơn</span>
+                    <h3 class="card-title text-nowrap mb-2">@((ViewBag.DemDay * 20).ToString("C3"))</h3>
+                    <small class="text-success fw-semibold">@DateTime.Now.ToString("dd/MM/yyyy")</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/ThongKe/ThongKe.js"></script>
+
+
