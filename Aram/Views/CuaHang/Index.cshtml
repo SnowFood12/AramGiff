@@ -56,7 +56,7 @@
                         <td>@Html.DisplayFor(modelItem => item.Ten)</td>
                         <td>@Html.DisplayFor(modelItem => item.SoDT)</td>
                         <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
-                        <td style="display: flex; align-items:center; justify-content: space-evenly;">
+                        <td style="display: flex; align-items:center; justify-content: space-evenly; gap: 10px;">
                             <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square" style="font-size:18px; color: #448c8d !important;"></i></a>
 
                             <a asp-controller="SanPham" asp-action="Index" asp-route-id="@item.Id"><i class="fa-solid fa-list" style="font-size:18px;"></i></a>

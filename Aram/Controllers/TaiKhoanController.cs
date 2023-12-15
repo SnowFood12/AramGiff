@@ -43,17 +43,18 @@ namespace Aram.Controllers
 
         public IActionResult Index()
         {
-            if (LuuTenTK == null)
+            var tenTK = HttpContext.Session.GetString("Name");
+            if (tenTK == null)
             {
                 return RedirectToAction("DangNhap", "TaiKhoan");
             }
-			var tenTK = HttpContext.Session.GetString("Name");
+            var ThongTinTaiKhoan = _context.TaiKhoan.FirstOrDefault( a => a.TenTK == tenTK );
 
-			ViewBag.TenTK = tenTK;
-            ViewBag.HoTen = LuuHoTen;
-			ViewBag.SDT = LuuSDT;
-            ViewBag.Email = LuuEmail;
-            ViewBag.GioiTinh = LuuGioiTinh;
+			ViewBag.TenTK = ThongTinTaiKhoan.TenTK;
+            ViewBag.HoTen = ThongTinTaiKhoan.HoTen;
+			ViewBag.SDT = ThongTinTaiKhoan.SoDT;
+            ViewBag.Email = ThongTinTaiKhoan.Email;
+            ViewBag.GioiTinh = ThongTinTaiKhoan.GioiTinh;
 			return View();
         }
 
@@ -83,6 +84,7 @@ namespace Aram.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult DangKy(TaiKhoan taiKhoan, string XacNhanMatKhau)
         {
@@ -170,10 +172,12 @@ namespace Aram.Controllers
             }
             return View(taiKhoan);
         }
+
         public IActionResult XacNhanDangKy()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult XacNhanDangKy(string otp)
         {
@@ -223,6 +227,7 @@ namespace Aram.Controllers
             }
             return View();
         }
+
         public IActionResult GuiLaiMaOtp()
         {
             string email = LuuEmail;
@@ -231,10 +236,12 @@ namespace Aram.Controllers
             SendEmail(email, maOTP);
             return RedirectToAction("XacNhanDangKy", "TaiKhoan");
         }
+
         public IActionResult DangNhap()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult DangNhap([Bind("TenTK,MatKhau,HoTen,GioiTinh,Email,SoDT,NgayTao,LoaiTK,TrangThai")] TaiKhoan taiKhoan)
         {
@@ -271,6 +278,7 @@ namespace Aram.Controllers
                         if ( taiKhoan.LoaiTK == false)
                         {
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
+
                             TempData["Message"] = "Đăng nhập tài khoản thành công!";
 
                             return RedirectToAction("ThongKe", "DonHang");
@@ -278,12 +286,13 @@ namespace Aram.Controllers
                         else
                         {
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
-                            TempData["Message"] = "Đăng nhập tài khoản thành công!";
+
+/*                            TempData["Message"] = "Đăng nhập tài khoản thành công!";
                             LuuTenTK = taiKhoan.TenTK;
                             LuuHoTen = taiKhoan.HoTen;
                             LuuSDT = taiKhoan.SoDT;
                             LuuEmail = taiKhoan.Email;
-                            LuuGioiTinh = (bool)taiKhoan.GioiTinh;
+                            LuuGioiTinh = (bool)taiKhoan.GioiTinh;*/
                             return RedirectToAction("MainHome", "Home");
                         }
 
@@ -302,6 +311,7 @@ namespace Aram.Controllers
 
             return View();
         }
+
 		//Phương thức gửi email chứa OTP
 		private void SendEmail(string Email, string otp)
 		{
@@ -326,6 +336,7 @@ namespace Aram.Controllers
 				client.Disconnect(true);
 			}
 		}
+
 		//Hàm tạo OTP ngẫu nhiên
 		private string GenerateOTP()
 		{
@@ -334,12 +345,14 @@ namespace Aram.Controllers
 			int otpNumber = random.Next(100000, 999999);
 			return otpNumber.ToString();
 		}
+
 		public void ResetOTP()
 		{
 			// Tạo mã OTP mới
 			string newOTP = GenerateOTP();
 			currentOTP = newOTP;
 		}
+
 		//Phương thức gửi lại mã OTP
 		public IActionResult SendOTP()
 		{
@@ -349,11 +362,14 @@ namespace Aram.Controllers
 			SendEmail(email, maOTP);
 			return RedirectToAction("NhapOTP", "TaiKhoan");
 		}
+
 		private System.Timers.Timer otpResetTimer;
+
         public IActionResult QuenMatKhau()
         {
             return View();
         }
+
         [HttpPost]
 		public IActionResult QuenMatKhau(TaiKhoan taiKhoan)
         {
@@ -395,10 +411,12 @@ namespace Aram.Controllers
             }
 			return View();
 		}
+
         public IActionResult NhapOTP()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult NhapOTP(string otp)
         {
@@ -426,10 +444,12 @@ namespace Aram.Controllers
 
 			return View();
         }
+
         public IActionResult DoiMatKhauMoi()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult DoiMatKhauMoi(TaiKhoan taiKhoan, string XacNhanMatKhauMoi)
         {
@@ -470,6 +490,7 @@ namespace Aram.Controllers
             }
             return View();
         }
+
         public IActionResult DangXuat()
         {
             HttpContext.Session.Remove("Name");
