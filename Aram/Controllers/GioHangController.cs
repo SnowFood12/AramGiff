@@ -75,72 +75,74 @@ namespace Aram.Controllers
                 kt = false;
                 return  RedirectToAction("DangNhap", "TaiKhoan");
             }
+
             if (HoTen == null)
 			{
 				ViewBag.ktHoTen = "Vui lòng nhập họ Tên";
 				kt = false;
-				return View("Index",GioHang);
 			} else if(HoTen.Length > 50)
 			{
-				ViewBag.ktHoTen = "Tên không được dài quá 50 Ký tự!";
+                ViewBag.ktHoTen = "Tên không được dài quá 50 Ký tự!";
 				kt = false;
-				return View("Index", GioHang);
 			}
 			else if (!Regex.IsMatch(HoTen, kiemLoiTen))
 			{
 				ViewBag.ktHoTen = "Tên không được chứa ký tự đặc biệt!";
 				kt = false;
-				return View("Index", GioHang);
 			}
 
 			if (SoDT == null)
 			{
 				ViewBag.ktDT = "Số điện thoại không được trống!";
 				kt = false;
-				return View("Index", GioHang);
 			}
 			else if (!Regex.IsMatch(SoDT, kiemLoiDT))
 			{
 				ViewBag.ktDT = "Số điện thoại không hợp lệ!";
 				kt = false;
-				return View("Index", GioHang);
 			}
 			if (DiaChi == null)
 			{
 				ViewBag.ktDiaChi = "Địa chỉ không được trống!";
 				kt = false;
-				return View("Index", GioHang);
 			}
-			
-            if (kt == true)
-				{
-					var donHang = new DonHang();
-					donHang.TenTK = tenTK;
-					_context.Add(donHang);
-					_context.SaveChanges();
-					GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
-					foreach (var item in GioHang.Lines)
-					{
-						var donHang_chiTiet = new DonHang_ChiTiet();
-						donHang_chiTiet.SanPhamId = item.SanPham.Id;
-						donHang_chiTiet.DonHangId = donHang.Id;
-						donHang_chiTiet.SoLuong = item.SoLuong;
-						_context.Add(donHang_chiTiet);
-						_context.SaveChanges();
-					}
-					var TT_NH = new ThongTin_NhanHang();
-					TT_NH.DonHangId = donHang.Id;
-					TT_NH.HoTen = HoTen;
-					TT_NH.SoDT = SoDT;
-					TT_NH.DiaChi = DiaChi;
-					TT_NH.GhiChu = GhiChu;
-					TT_NH.DonHangId = donHang.Id;
-					_context.Add(TT_NH);
-					_context.SaveChanges();
-					HttpContext.Session.Remove("giohang");
-				return RedirectToAction("DH_ChoDuyet", "GioHang");
-				}
-			return RedirectToAction("Index");
+
+			if(kt == false)
+			{
+                ViewBag.inputHoTen = HoTen;
+                ViewBag.inputSoDT = SoDT;
+                ViewBag.inputDiaChi = DiaChi;
+                ViewBag.inputGhiChu = GhiChu;
+                return View("Index", GioHang);
+            }
+			else
+			{
+                var donHang = new DonHang();
+                donHang.TenTK = tenTK;
+                _context.Add(donHang);
+                _context.SaveChanges();
+                GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+                foreach (var item in GioHang.Lines)
+                {
+                    var donHang_chiTiet = new DonHang_ChiTiet();
+                    donHang_chiTiet.SanPhamId = item.SanPham.Id;
+                    donHang_chiTiet.DonHangId = donHang.Id;
+                    donHang_chiTiet.SoLuong = item.SoLuong;
+                    _context.Add(donHang_chiTiet);
+                    _context.SaveChanges();
+                }
+                var TT_NH = new ThongTin_NhanHang();
+                TT_NH.DonHangId = donHang.Id;
+                TT_NH.HoTen = HoTen;
+                TT_NH.SoDT = SoDT;
+                TT_NH.DiaChi = DiaChi;
+                TT_NH.GhiChu = GhiChu;
+                TT_NH.DonHangId = donHang.Id;
+                _context.Add(TT_NH);
+                _context.SaveChanges();
+                HttpContext.Session.Remove("giohang");
+                return RedirectToAction("DH_ChoDuyet", "GioHang");
+            }
 		}
 		//=======================================================
 

@@ -111,27 +111,27 @@
 					<h3>Ghi chú</h3>
 					<p>Nhập ghi chú vào trường thông tin</p>
 					<div class="form-group">
-						<textarea type="text" class="form-control text-left px-3" placeholder="" style="height:13rem !important; padding: 10px 0px; resize: none;" name="GhiChu"></textarea>
+							<textarea type="text" class="form-control text-left px-3" placeholder="" style="height:13rem !important; padding: 10px 0px; resize: none;" name="GhiChu" value="@ViewBag.inputGhiChu"></textarea>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 				<div class="cart-total mb-3">
 					<h3>Thông tin giao hàng</h3>
-					<p>Nhập thông tin nhận hàng của bạn</p>
+					<p >Nhập thông tin nhận hàng của bạn</p>
 					<div class="form-group">
 						<label >Họ tên</label>
-						<input type="text" class="form-control text-left px-3" placeholder="" name="HoTen">
+							<input type="text" class="form-control text-left px-3" placeholder="" name="HoTen" value="@ViewBag.inputHoTen">
 							<span style="color:red;">@ViewBag.ktHoTen</span>
 					</div>
 					<div class="form-group">
 							<label for="SoDT">Số điện thoại</label>
-						<input type="text" class="form-control text-left px-3" placeholder="" name="SoDT">
+							<input type="text" class="form-control text-left px-3" placeholder="" name="SoDT" value="@ViewBag.inputSoDT">
 							<span style="color:red;">@ViewBag.ktDT</span>
 					</div>
 					<div class="form-group">
 							<label for="DiaChi">Đia chỉ</label>
-						<input type="text" class="form-control text-left px-3" placeholder="" name="DiaChi">
+							<input type="text" class="form-control text-left px-3" placeholder="" name="DiaChi" value="@ViewBag.inputDiaChi">
 							<span style="color:red;">@ViewBag.ktDiaChi</span>
 					</div>
 				</div>
