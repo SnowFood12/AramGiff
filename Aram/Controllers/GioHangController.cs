@@ -41,13 +41,32 @@ namespace Aram.Controllers
 			/*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
 			return View(GioHang);
         }
-		public IActionResult AddToGioHang(int sanPhamId, int? quantity)
+        /*public IActionResult AddToGioHang(int sanPhamId, int? quantity)
 		{
 			SanPham? sanPham = _context.SanPham.FirstOrDefault(s => s.Id == sanPhamId);
 			if (sanPham != null)
 			{
 				GioHang = HttpContext.Session.GetJson<GioHang>("giohang") ?? new GioHang();
-                if(quantity != null)
+				if (quantity != null)
+				{
+					GioHang.AddItem(sanPham, (int)quantity);
+				}
+				else
+				{
+					GioHang.AddItem(sanPham, 1);
+				}
+				HttpContext.Session.SetJson("giohang", GioHang);
+			}
+			return View("Index", GioHang);
+		}*/
+
+        public IActionResult AddToGioHang(int sanPhamId, int? quantity, string? returnUrl)
+        {
+            SanPham? sanPham = _context.SanPham.FirstOrDefault(s => s.Id == sanPhamId);
+            if (sanPham != null)
+            {
+                GioHang = HttpContext.Session.GetJson<GioHang>("giohang") ?? new GioHang();
+                if (quantity != null)
                 {
                     GioHang.AddItem(sanPham, (int)quantity);
                 }
@@ -55,13 +74,20 @@ namespace Aram.Controllers
                 {
                     GioHang.AddItem(sanPham, 1);
                 }
-				HttpContext.Session.SetJson("giohang", GioHang);
-			}
-			return View("Index", GioHang);
-		}
+                HttpContext.Session.SetJson("giohang", GioHang);
+            }
 
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return View("Index", GioHang);
+            }
+            else
+            {
+                return Redirect(returnUrl);
+            }
+        }
 
-		[HttpPost]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult AddToDonHang(string HoTen, string SoDT, string DiaChi, string GhiChu)
 		{
