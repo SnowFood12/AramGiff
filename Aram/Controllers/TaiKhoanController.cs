@@ -287,11 +287,6 @@ namespace Aram.Controllers
                         {
                             HttpContext.Session.SetString("Name", taiKhoan.TenTK);
                             TempData["Message"] = "Đăng nhập tài khoản thành công!";
-                            /*LuuTenTK = taiKhoan.TenTK;
-                            LuuHoTen = taiKhoan.HoTen;
-                            LuuSDT = taiKhoan.SoDT;
-                            LuuEmail = taiKhoan.Email;
-                            LuuGioiTinh = (bool)taiKhoan.GioiTinh;*/
                             return RedirectToAction("MainHome", "Home");
                         }
 
