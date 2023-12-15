@@ -1,4 +1,4 @@
-﻿
+﻿@model List<DonHang_ChiTiet>
 @{
     ViewData["Title"] = "ChiTietDonHangDangGiao";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,9 +18,9 @@
 <div class="row justify-content-center">
 	<div class="col-md-10 text-center" style="margin-top: 30px">
 		<ul class="product-category">
-			<li><a asp-action="GioHangDangChoDuyet" asp-controller="GioHang">Đơn hàng đang chờ duyệt</a></li>
-			<li><a asp-action="DonHangDangGiao" asp-controller="GioHang" class="active">Đơn hàng đang giao</a></li>
-			<li><a asp-action="DonHangDaNhan" asp-controller="GioHang">Đơn hàng đã nhận</a></li>
+			<li><a asp-action="DH_ChoDuyet" asp-controller="GioHang">Đơn hàng đang chờ duyệt</a></li>
+			<li><a asp-action="DH_DangGiao" asp-controller="GioHang" class="active">Đơn hàng đang giao</a></li>
+			<li><a asp-action="DH_DaNhan" asp-controller="GioHang">Đơn hàng đã nhận</a></li>
 		</ul>
 	</div>
 </div>
@@ -45,26 +45,30 @@
 								<th>Tổng tiền</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="text-center">
-								<td class="product-remove">
-								</td>
-								<td class="image-prod">
-									<div class="img" style="background-image: url('/img/zyro-image (10).png');">
-									</div>
-								</td>
+						@foreach (var item in Model)
+						{
+							<tbody>
+								<tr class="text-center">
+									<td class="product-remove">
+									</td>
+									<td class="image-prod">
+										<img src="@Url.Action("GetImage", "SanPham", new { id = item.SanPham.Id})" class="img" style="background-image: url('/img/zyro-image (10).png');">
+										</img>
+									</td>
 
-								<td class="product-name">
-									<h3>Cà phê trung nguyên</h3>
-								</td>
+									<td class="product-name">
+										<h3>@item.SanPham.Ten</h3>
+									</td>
 
-								<td class="price">120.000 đ</td>
+									<td class="price">@item.SanPham.Gia</td>
 
-								<td class="quantity">
-									1
-								</td>
-								<td class="total">120.000 đ</td><!-- END TR-->
-						</tbody>
+									<td class="quantity">
+										@item.SoLuong
+									</td>
+									<td class="total"> @((item.SoLuong * item.SanPham.Gia)?.ToString("C3")) </td><!-- END TR-->
+							</tbody>
+
+						}
 					</table>
 				</div>
 			</div>
@@ -78,7 +82,7 @@
 					<div class="cart-total mb-3">
 						<h3>Bình luận</h3>
 						<div class="form-group">
-							<textarea type="text" class="form-control text-left px-3" placeholder="" disabled style="height:13rem !important; padding: 10px 0px; resize: none;"></textarea>
+							<textarea type="text" class="form-control text-left px-3" placeholder="" disabled style="height:13rem !important; padding: 10px 0px; resize: none;" value="@ViewBag.TT_NH.GhiChu"></textarea>
 						</div>
 					</div>
 				</div>
@@ -88,15 +92,15 @@
 						<p>Trợ giúp liên hệ: 1234567890</p>
 						<div class="form-group">
 							<label for="">Họ tên</label>
-							<input type="text" class="form-control text-left px-3" placeholder="" disabled>
+							<input type="text" class="form-control text-left px-3" placeholder="" disabled value="@ViewBag.TT_NH.HoTen">
 						</div>
 						<div class="form-group">
 							<label for="country">Số điện thoại</label>
-							<input type="text" class="form-control text-left px-3" placeholder="" disabled>
+							<input type="text" class="form-control text-left px-3" placeholder="" disabled value="@ViewBag.TT_NH.SoDT">
 						</div>
 						<div class="form-group">
 							<label for="country">Đia chỉ</label>
-							<input type="text" class="form-control text-left px-3" placeholder="" disabled>
+							<input type="text" class="form-control text-left px-3" placeholder="" disabled value="@ViewBag.TT_NH.DiaChi">
 						</div>
 					</div>
 				</div>

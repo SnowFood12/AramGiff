@@ -232,7 +232,9 @@ namespace Aram.Controllers
                 ViewBag.TamTinh = TamTinh;
 				ViewBag.DonhangId = Id;
 			}
-            return View(DH_CT);
+			var TT_NH = _context.ThongTin_NhanHang.FirstOrDefault(x => x.DonHangId == Id);
+			ViewBag.TT_NH = TT_NH;
+			return View(DH_CT);
 		}
 		public IActionResult HuyDon_ChuaDuyet(int Id)
 		{
@@ -269,10 +271,19 @@ namespace Aram.Controllers
 			return View(donHang_dangGiao);
 		}
         // Chi tiết đơn hàng đang giao
-        public IActionResult CT_DH_DangGiao()
+        public IActionResult CT_DH_DangGiao(int Id)
         {
-
-            return View();
+			var DH_CT = _context.DonHang_ChiTiet.Where(x => x.DonHangId == Id).Include(x => x.SanPham).ToList();
+			int TamTinh = 0;
+			if (DH_CT != null)
+			{
+				TamTinh = (int)DH_CT.Sum(x => x.SanPham.Gia * x.SoLuong);
+				ViewBag.TamTinh = TamTinh;
+				ViewBag.DonhangId = Id;
+			}
+			var TT_NH = _context.ThongTin_NhanHang.FirstOrDefault(x => x.DonHangId == Id);
+			ViewBag.TT_NH = TT_NH;
+			return View(DH_CT);
         }
 
 
@@ -295,11 +306,22 @@ namespace Aram.Controllers
         }
 
         // Chi tiết đơn hàng đã nhận
-        public IActionResult CT_DH_DaNhan()
+        public IActionResult CT_DH_DaNhan(int Id)
         {
-            PhanQuyen();
-
-            return View();
+            var DH_CT = _context.DonHang_ChiTiet.Where(x => x.DonHangId == Id).Include(x => x.SanPham)
+				.Include(x => x.DonHang)
+				.ThenInclude(x => x.ThongTin_NhanHangs)
+				.ToList();
+			int TamTinh = 0;
+            if (DH_CT != null)
+            {
+                TamTinh = (int)DH_CT.Sum(x => x.SanPham.Gia * x.SoLuong);
+                ViewBag.TamTinh = TamTinh;
+                ViewBag.DonhangId = Id;
+            }
+			var TT_NH = _context.ThongTin_NhanHang.FirstOrDefault(x => x.DonHangId == Id);
+			ViewBag.TT_NH = TT_NH;
+			return View(DH_CT);
         }
 
     }
