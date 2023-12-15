@@ -4,22 +4,46 @@
 var id = [];
 var soLuong = []
 
+// lấy số ngày trong tháng
+var currentDate = new Date();
+var month = currentDate.getMonth() + 1;
+
+function printAllDaysInMonth(month, year) {
+    var date = new Date(year, month, 1);
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (var day = 1; day <= daysInMonth; day++) {
+        date.setDate(day);
+        id.push(day)
+        soLuong.push(0);
+
+    }
+}
+printAllDaysInMonth(month, 2023);
+// =====================================
 $.ajax({
     url: '/DonHang/ThongKeDoanhThu', // Đường dẫn API của bạn
     method: 'GET',
     success: function (response) {
         response.forEach(function (item) {
-            id.push(item.id);
-            soLuong.push(item.soLuong);
-        })
+            item.day.forEach(function (i) {
+                var date = new Date(i.thoiGianTaoDon);
+                var day = date.getDate();
+                for (var i = 0; i < id.length; i++) {
+                    if (i === day) {
+                        soLuong[i - 1] = item.count;
+                    }
+                }
+            }); 
 
+        })
         var ctx = document.getElementById('myChart').getContext('2d');
 
         // Dữ liệu cho biểu đồ
         var data = {
             labels: id ,
             datasets: [{
-                label: 'Thu nhập',
+                label: 'Đơn',
                 data: soLuong,
                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -45,6 +69,7 @@ $.ajax({
         });
     }
 })
+
 
 
 // Tạo biểu đồ cột

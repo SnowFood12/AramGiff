@@ -275,13 +275,20 @@ namespace Aram.Controllers
         // Thống kê doanh thu
         public IActionResult ThongKe()
         {
-            var ListDonHang = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao").ToList();
+            var ListDonHang = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Month == DateTime.Now.Month).ToList();
 
             var HomNay = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Date == DateTime.Now.Date).ToList();
 
-            ViewBag.DemTong = ListDonHang.Count;
+            DateTime today = DateTime.Today;
+            DateTime yesterday = today.AddDays(-1);
+
+            var HomQua = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Date == yesterday).ToList();
+
+            ViewBag.DemTong = ListDonHang.Count; 
 
             ViewBag.DemDay = HomNay.Count;
+
+            ViewBag.HomQua = HomQua.Count;
 
             return View();
         }
@@ -290,7 +297,16 @@ namespace Aram.Controllers
         [HttpGet]
         public JsonResult ThongKeDoanhThu()
         {
-            var revenueData = _context.DonHang_ChiTiet.ToList();
+            var revenueData = _context.DonHang.Where(a => a.TrangThai == true && a.TrangThaiDH == "Đã giao" && a.ThoiGianTaoDon.Month == DateTime.Now.Month)
+                                              .GroupBy(a => a.ThoiGianTaoDon.Day).Select(s => new
+                                              {
+                                                  Day = s.Select(a => new
+                                                  {
+                                                      a.ThoiGianTaoDon
+                                                  }),
+                                                  Count = s.Count()
+                                              }).ToList(); 
+
             return Json(revenueData);
         }
 
