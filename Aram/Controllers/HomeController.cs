@@ -279,11 +279,18 @@ namespace Aram.Controllers
 		public IActionResult Product( int id)
 		{
 
-            var ThongTinSanPhamId = _context.SanPham.Where( a => a.Id == id).Include( a => a.CuaHang).FirstOrDefault() ;
+            var ThongTinSanPhamId = _context.SanPham.Where( a => a.Id == id && a.TrangThai == true).Include( a => a.CuaHang).FirstOrDefault() ;
 
-			var SanPhamInShop = _context.SanPham.Where(a => a.TrangThai == true && a.Ten.Contains(ThongTinSanPhamId.Ten) || a.LoaiSPId == ThongTinSanPhamId.LoaiSPId).Include(a => a.CuaHang).OrderByDescending(a => a.Gia).Take(16).ToList();
+			var SanPhamInShop = _context.SanPham
+			.Where(sp => sp.Id != id
+						 && (sp.Ten.Contains(ThongTinSanPhamId.Ten) || sp.LoaiSPId == ThongTinSanPhamId.LoaiSPId))
+			.Include(sp => sp.CuaHang)
+			.OrderByDescending(sp => EF.Functions.Like(sp.Ten, $"%{ThongTinSanPhamId.Ten}%"))
+			.ThenByDescending(sp => sp.LoaiSPId == ThongTinSanPhamId.LoaiSPId)
+			.Take(16)
+			.ToList();
 
-            var Shop = _context.CuaHang.FirstOrDefault(a => a.Id  == ThongTinSanPhamId.CuaHangId);
+			var Shop = _context.CuaHang.FirstOrDefault(a => a.Id  == ThongTinSanPhamId.CuaHangId);
 
 			var ListShop = _context.SanPham.Where(a => a.Ten.Contains(ThongTinSanPhamId.Ten) && a.CuaHang.TrangThai == true).Include(a => a.CuaHang).ToList();
 
