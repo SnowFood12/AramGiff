@@ -232,6 +232,26 @@ namespace Aram.Controllers
         }
         //==============================================================================================
 
+        // đơn hàng trong hôm nay
+        public IActionResult HomNay()
+        {
+            var DaGiao = _context.DonHang.Where(a => a.ThoiGianTaoDon.Day == DateTime.Now.Day && a.ThoiGianTaoDon.Month == DateTime.Now.Month)
+                    .OrderByDescending(a => a.ThoiGianTaoDon)
+                    .Include(a => a.ThongTin_NhanHangs)
+                    .Include(a => a.DonHang_ChiTiets)
+                    .ThenInclude(a => a.SanPham)
+                    .ToList();
+
+            ViewBag.DaGiao = DaGiao;
+
+            ViewBag.DemDaGiao = DaGiao.Count();
+
+            ViewBag.TinhTrang = "Hôm nay";
+
+            return View("LichSuDonHang");
+        }
+
+
         // chi tiết lịch sử đơn hàng
         public IActionResult ChiTietDonHangDaGiao(int id)
 		{
@@ -326,6 +346,7 @@ namespace Aram.Controllers
 
             return Json(revenueData);
         }
+
 
 
         [HttpPost]

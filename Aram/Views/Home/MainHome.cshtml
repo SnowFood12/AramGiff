@@ -104,6 +104,7 @@
         </div>
     </div>
 </section>
+
 @if (TempData["Message"] != null)
 {
     <div class="alert__thongbao">
@@ -111,6 +112,7 @@
         @TempData["Message"]
     </div>
 }
+
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
@@ -237,7 +239,7 @@
     </div>
 </section>
 
-<section class="ftco-section ftco-partner">
+@* <section class="ftco-section ftco-partner">
     <div class="container">
         <div class="row">
             <div class="col-sm ftco-animate">
@@ -257,7 +259,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> *@
 <script>
     setTimeout(function () {
         var alertMessage = document.querySelector('.alert__thongbao');

@@ -49,7 +49,7 @@
         </div>
         <div class="col-md-6">
             <label asp-for="PicData" for="validationServer05" class="form-label">Thêm hình ảnh</label>
-            <input asp-for="PicData" type="file" class="form-control" name="imageSP">
+            <input asp-for="PicData" type="file" class="form-control" name="imageSP" onchange="displayImage(this)">
             <span asp-validation-for="PicData" style="color: #da1616;"></span>
         </div>
         <div class="col-md-6">
@@ -70,7 +70,6 @@
     function displayImage(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 document.getElementById('myImage').src = e.target.result;
             };
@@ -79,6 +78,8 @@
         }
     }
 </script>
+
+
 
 <script src="~/LayoutAdmin/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="~/LayoutAdmin/assets/vendor/libs/popper/popper.js"></script>
