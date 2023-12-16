@@ -72,11 +72,19 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-5 text-center">
 				<ul class="product-category">
-					<li><a asp-action="Index" asp-controller="Home" class="active">Tất cả</a></li>
+					<li><a asp-action="Index" asp-controller="Home" class="@ViewBag.Active">Tất cả</a></li>
 					@{
 						foreach (var item in ViewBag.LoaiSanPham)
 						{
-							<li><a asp-action="LocSanPham" asp-controller="Home" asp-route-id="@item.Id">@item.Ten</a></li>
+							if( item.TrangThai == true)
+							{
+								<li><a asp-action="LocSanPham" asp-controller="Home" asp-route-id="@item.Id" >@item.Ten</a></li>
+							}
+							else
+							{
+								<li><a asp-action="LocSanPham" asp-controller="Home" asp-route-id="@item.Id" class="active">@item.Ten</a></li>
+							}
+
 						}
 					}
 				</ul>

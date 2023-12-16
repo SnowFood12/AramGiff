@@ -37,6 +37,17 @@ namespace Aram.Controllers
 
 			ViewBag.Loc = "display: none;";
 
+			ViewBag.Active = "active";
+
+			// Thay đổi trạng thái tất cả thành true khi vào trang index
+			var NoneBck = _context.LoaiSP.ToList();
+			foreach (var item in NoneBck)
+			{
+				item.TrangThai = true;
+				_context.LoaiSP.Update(item);
+				_context.SaveChanges();
+			}
+
 			return View();
 		}
 
@@ -57,6 +68,18 @@ namespace Aram.Controllers
 				ViewBag.SapXep = "Giá: Cao đến thấp";
 
 				HttpContext.Session.Remove("NameProduct"); // xoá đi khi tìm kiếm == null
+
+				ViewBag.Active = "active";
+
+				// Thay đổi trạng thái tất cả thành true khi vào trang index
+				var NoneBck = _context.LoaiSP.ToList();
+				foreach (var item in NoneBck)
+				{
+					item.TrangThai = true;
+					_context.LoaiSP.Update(item);
+					_context.SaveChanges();
+				}
+
 
 				return RedirectToAction("Index", "Home");
 			}
@@ -79,6 +102,18 @@ namespace Aram.Controllers
 				HttpContext.Session.SetString("NameProduct", search); // ==> lọc sản phẩm tìm kiếm theo giá
 
 				ViewBag.SapXep = "Giá: Cao đến thấp";
+
+				ViewBag.Active = "active";
+
+				// Thay đổi trạng thái tất cả thành true khi vào trang index
+				var NoneBck = _context.LoaiSP.ToList();
+				foreach (var item in NoneBck)
+				{
+					item.TrangThai = true;
+					_context.LoaiSP.Update(item);
+					_context.SaveChanges();
+				}
+
 
 				return View("Index");
 			}
@@ -190,6 +225,26 @@ namespace Aram.Controllers
 			ViewBag.An = "display: none;";
 
 			ViewBag.SapXep = "Giá: Cao đến thấp";
+
+			ViewBag.Active = "";
+
+			// Thay đổi trạng thái để hiển thị màu nền
+			var Loai = _context.LoaiSP.FirstOrDefault(a => a.Id == id);
+
+			Loai.TrangThai = false;
+
+			_context.LoaiSP.Update(Loai);
+			_context.SaveChanges();
+
+			// thay đổi trạng thái thành true để không hiển thị màu nền
+			var NoneBck = _context.LoaiSP.Where(a => a.Id != id).ToList(); 
+			foreach( var item in NoneBck)
+			{
+				item.TrangThai = true;
+				_context.LoaiSP.Update(item);
+				_context.SaveChanges();
+			}
+
 
 			return View("Index");
 		}
