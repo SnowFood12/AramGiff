@@ -63,7 +63,7 @@
 								</button>
 							</span>
 							<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-								   min="1" max="100">
+								    />
 							<span class="input-group-btn ml-2">
 								<button type="button" class="quantity-right-plus btn" id="plus" data-field="">
 									<i class="fa-solid fa-plus"></i>
@@ -99,36 +99,36 @@
 	<div class="container">
 		<div class="row">
 			@{
-				@foreach (var item in ViewBag.ThongTinSanPham)
+					@foreach (var item in ViewBag.ThongTinSanPham)
 				{
-					<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
-						<div class="product">
-							<a class="img-prod" style="height: 240px; object-fit: cover;">
-								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = item.Id})"
-									 alt="Colorlib Template">
-							</a>
-							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">@item.Ten</a></h3>
-								<div class="d-flex">
-									<div class="pricing">
-										<h3 style="font-size:13px; height: 35px;"><a class="product__trang--thai">@item.CuaHang.Ten</a></h3>
+						<div class="col-md-6 col-lg-3 ftco-animate contaner__content--trangchu">
+							<div class="product">
+								<a class="img-prod" style="height: 240px; object-fit: cover;">
+									<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = item.Id})"
+									 	alt="Colorlib Template">
+								</a>
+								<div class="text py-3 pb-4 px-3 text-center">
+								<h3 style="height: 35px;"><a href="#">@item.Ten</a></h3>
+									<div class="d-flex">
+										<div class="pricing">
+											<h3 style="font-size:13px; height: 35px;"><a class="product__trang--thai">@item.CuaHang.Ten</a></h3>
 
-										<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
+											<p class="price"><span class="price-sale">@item.Gia.ToString("C3")</span></p>
+										</div>
 									</div>
-								</div>
-								<div class="bottom-area d-flex px-3">
-									<div class="m-auto d-flex">
-										<a asp-action="Product" asp-controller="Home" asp-route-id="@item.Id" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="fa-solid fa-list"></i></span>
-										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="fa-solid fa-cart-shopping"></i></span>
-										</a>
+									<div class="bottom-area d-flex px-3">
+										<div class="m-auto d-flex">
+											<a asp-action="Product" asp-controller="Home" asp-route-id="@item.Id" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+												<span><i class="fa-solid fa-list"></i></span>
+											</a>
+											<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+											<span><i class="fa-solid fa-cart-plus"></i></span>
+											</a>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 				}
 			}
 		</div>
@@ -158,22 +158,22 @@
 			<table class="table">
 				<tbody>
 					@{
-						@foreach (var item in ViewBag.ListShop)
+							@foreach (var item in ViewBag.ListShop)
 						{
-							<tr style="color: black;">
-								<td>
-									@item.CuaHang.Ten
-								</td>
-								<td>
-									@item.CuaHang.SoDT
-								</td>
-								<td>
-									@item.CuaHang.DiaChi
-								</td>
-								<td>
-									<a asp-action="Shop" asp-controller="Home" asp-route-id="@item.CuaHang.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
-								</td>
-							</tr>
+								<tr style="color: black;">
+									<td>
+										@item.CuaHang.Ten
+									</td>
+									<td>
+										@item.CuaHang.SoDT
+									</td>
+									<td>
+										@item.CuaHang.DiaChi
+									</td>
+									<td>
+										<a asp-action="Shop" asp-controller="Home" asp-route-id="@item.CuaHang.Id"><i class="fa-solid fa-list" style="color: #da4112 !important; font-size:20px; margin-left: 10px"></i></a>
+									</td>
+								</tr>
 						}
 					}
 				</tbody>
@@ -229,9 +229,22 @@
 		input.value = ++dem; 
 	});
 	giam.addEventListener('click', function () {
-		if ( dem == 0 ){
-			dem = 1
+		if (dem == 1) {
+
 		}
-		input.value = --dem;
+		else {
+			input.value = --dem;
+		}
+
 	});
+
+	// người dùng nhập
+	var quantity = document.getElementById('quantity');
+
+	quantity.addEventListener("input", function (event) {
+		var inputValue = event.target.value;
+		var numericValue = inputValue.replace(/\D/g, '');
+		event.target.value = numericValue;
+
+	})
 </script>

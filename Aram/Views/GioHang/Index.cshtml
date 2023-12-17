@@ -7,7 +7,7 @@
 <style>
 	.txt__soluong{
 		width:40px;
-		padding: 0px 5px;
+		padding:0px 5px;
 		border: 1px solid rgb(208 206 206) !important;
 		text-align: center;
 	}
@@ -68,7 +68,7 @@
 										<h3>@item.SanPham.Ten</h3>
 									</td>
 
-									<td class="price">@item.SanPham.Gia</td>
+									<td class="price">@item.SanPham.Gia?.ToString("C3")</td>
 
 									<td class="quantity">
 										<div class="d-flex justify-content-center" style="gap:10px;">
@@ -77,7 +77,7 @@
 											</lable>
 											<input type="text" name="quantity"
 												   class="txt__soluong" value="@item.SoLuong" min="1"
-												   max="100" id="@item.SanPham.Id">
+												   max="100" id="@item.SanPham.Id" data-id="@item.SanPham.Id" />
 											<lable class="btn__them tang" style="height: 30px !important;" data-id="@item.SanPham.Id">
 												<i class="fa-solid fa-plus" style="color: #188D3E !important;"></i>
 											</lable>

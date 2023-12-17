@@ -138,7 +138,7 @@
 								<img class="img-fluid" src="@Url.Action("GetImage", "SanPham", new { id = @item.Id})" alt="Colorlib Template">
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#">@item.Ten</a></h3>
+								<h3 style="height: 35px;"><a href="#">@item.Ten</a></h3>
 								<h3 style="font-size:13px; height: 35px;"><a href="#" class="product__trang--thai">@item.CuaHang.Ten</a></h3>
 								
 								<div class="d-flex">
@@ -152,7 +152,7 @@
 											<span><i class="fa-solid fa-list"></i></span>
 										</a>
 										<a asp-action="AddToGioHang" asp-controller="GioHang" asp-route-sanPhamId="@item.Id" asp-route-returnUrl="/Home/Index" class="buy-now d-flex justify-content-center align-items-center mx-1">
-											<span><i class="fa-solid fa-cart-shopping"></i></span>
+											<span><i class="fa-solid fa-cart-plus"></i></span>
 										</a>
 									</div>
 								</div>

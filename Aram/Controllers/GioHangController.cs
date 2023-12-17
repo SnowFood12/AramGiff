@@ -41,6 +41,7 @@ namespace Aram.Controllers
 			/*ViewBag.TamTinh = (int)gioHangs.Sum(p => p.SanPham.Gia * p.SoLuong);*/
 			return View(GioHang);
         }
+
         /*public IActionResult AddToGioHang(int sanPhamId, int? quantity)
 		{
 			SanPham? sanPham = _context.SanPham.FirstOrDefault(s => s.Id == sanPhamId);
@@ -216,6 +217,30 @@ namespace Aram.Controllers
 			return Json(json);
 
 		}
+
+		// nhập số lượng vào input
+
+		[HttpGet]
+		public JsonResult InpuSoLuong(int id, int SoLuong)
+		{
+			GioHang = HttpContext.Session.GetJson<GioHang>("giohang");
+			var GioHang_line = GioHang.Lines.FirstOrDefault(p => p.SanPham.Id == id);
+			GioHang_line.SoLuong = SoLuong;
+			HttpContext.Session.SetJson("giohang", GioHang);
+
+			var DonGia = _context.SanPham.FirstOrDefault(a => a.Id == id);
+			var json = new
+			{
+				SoLuong = GioHang_line.SoLuong,
+				TongTienSanPham = GioHang_line.TongTienSp(),
+				TamTinh = GioHang.TamTinh(),
+				TongTien = GioHang.TongTien(),
+			};
+
+			return Json(json);
+
+		}
+
 
 		public IActionResult XoaSPGioHang(int Id)
 		{

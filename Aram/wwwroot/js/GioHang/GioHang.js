@@ -74,3 +74,40 @@ for (var i = 0; i < giam.length; i++) {
         }
     });
 }
+
+var txt__soluong = document.querySelectorAll('.txt__soluong'); 
+
+for (var i = 0; i < txt__soluong.length; i++) {
+    txt__soluong[i].addEventListener("input", function (event) {
+        var id = this.dataset.id;
+
+        var inputValue = event.target.value;
+        var numericValue = inputValue.replace(/\D/g, ''); 
+        event.target.value = numericValue;
+
+        var tongTien = document.getElementById(`t ${id}`)
+
+        $.ajax({
+            url: '/GioHang/InpuSoLuong',
+            type: 'GET',
+            data: { id: id, SoLuong: numericValue },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                let vndString = result.tongTienSanPham.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+
+                let tamTinh = result.tamTinh.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+
+                let Tong = result.tongTien.toLocaleString().replace(/,/g, ',') + ',000 ₫';
+
+                tongTien.innerHTML = vndString;
+
+                tamtinh.innerHTML = tamTinh;
+
+                tongtien.innerHTML = Tong;
+            }
+        })
+    })
+}
+
+       

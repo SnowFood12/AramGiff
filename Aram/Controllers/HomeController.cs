@@ -20,6 +20,7 @@ namespace Aram.Controllers
 			_logger = logger;
             _context = context;
         }
+
 		public IActionResult Index()
 		{
             var LoaiSanPham = _context.LoaiSP.ToList();
