@@ -284,7 +284,7 @@ namespace Aram.Controllers
 
 			var SanPhamInShop = _context.SanPham
 			.Where(sp => sp.Id != id
-						 && (sp.Ten.Contains(ThongTinSanPhamId.Ten) || sp.LoaiSPId == ThongTinSanPhamId.LoaiSPId))
+						 && (sp.Ten.Contains(ThongTinSanPhamId.Ten) || sp.LoaiSPId == ThongTinSanPhamId.LoaiSPId) && sp.TrangThai == true)
 			.Include(sp => sp.CuaHang)
 			.OrderByDescending(sp => EF.Functions.Like(sp.Ten, $"%{ThongTinSanPhamId.Ten}%"))
 			.ThenByDescending(sp => sp.LoaiSPId == ThongTinSanPhamId.LoaiSPId)
