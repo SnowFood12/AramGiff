@@ -107,6 +107,7 @@ for (var i = 0; i < txt__soluong.length; i++) {
                 tongtien.innerHTML = Tong;
             }
         })
+       
     })
 }
 
